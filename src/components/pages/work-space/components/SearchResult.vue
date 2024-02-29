@@ -1,11 +1,14 @@
 <script setup lang="ts">
-import type { AlbumDataInterface } from './utils/interface/interface'
+import useWorkSpace from '../utils/hooks/useWorkSpace'
+import type { AlbumDataInterface } from '../utils/interface/interface'
 
 interface SearchResultPropsInterface {
   searchData: AlbumDataInterface[]
 }
 
 const props = defineProps<SearchResultPropsInterface>()
+
+const { handleDragOn } = useWorkSpace()
 </script>
 
 <template>
@@ -18,7 +21,8 @@ const props = defineProps<SearchResultPropsInterface>()
       :src="albumData.image[3]['#text']"
       width="100px"
       height="100px"
+      draggable="true"
+      @dragstart="() => handleDragOn(albumData)"
     />
   </article>
 </template>
-@/components/pages/work-space/utils/interface/interface

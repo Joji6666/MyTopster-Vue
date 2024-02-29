@@ -1,19 +1,10 @@
 <script setup lang="ts">
-import { watch } from 'vue'
-
 import SearchResult from './SearchResult.vue'
 
 import { Input } from 'ant-design-vue'
-import useWorkSpace from './utils/hooks/useWorkSpace'
+import useWorkSpace from '../utils/hooks/useWorkSpace'
 
 const { searchData, handleChange, handleSearch } = useWorkSpace()
-
-watch(searchData, (newValue, oldValue) => {
-  // 이벤트 핸들러 내부에서 새 값과 이전 값에 대한 작업 수행
-  console.log('searchData 값이 변경되었습니다.')
-  console.log('새 값:', newValue)
-  console.log('이전 값:', oldValue)
-})
 </script>
 
 <template>
@@ -31,4 +22,3 @@ watch(searchData, (newValue, oldValue) => {
     <SearchResult :searchData="searchData" />
   </div>
 </template>
-./utils/interface/hooks/useWorkSpace

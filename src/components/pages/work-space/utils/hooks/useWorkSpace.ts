@@ -2,11 +2,22 @@ import type { AlbumDataInterface } from '@/components/pages/work-space/utils/int
 import type { ChangeEvent } from 'ant-design-vue/es/_util/EventInterface'
 import axios from 'axios'
 import { ref } from 'vue'
+import { gridDatasStore, gridOptionStore, selectedImageStore } from '../store/workSpace_store'
+import type {
+  GridOptionInterface,
+  GridPropertiesInterface
+} from '../interface/workSpace_store_interface'
 
 export default function useWorkSpace() {
+  // states
   const albumName = ref<string | undefined>('')
   const artist = ref<string | undefined>('')
   const searchData = ref<AlbumDataInterface[]>([])
+  const gridOption: GridOptionInterface = gridOptionStore
+
+  // values
+
+  //funtions
 
   const handleChange = (e: ChangeEvent, key: string) => {
     switch (key) {
@@ -32,5 +43,31 @@ export default function useWorkSpace() {
     }
   }
 
-  return { albumName, artist, searchData, handleChange, handleSearch }
+  const handleDragOn = (image: AlbumDataInterface) => {
+    selectedImageStore.seletedImage = image
+  }
+
+  const handleDragEnd = (e: any) => {
+    const accessKey = e.target.accessKey
+
+    const foundTile = gridDatasStore.gridDatas.find(
+      (grid: GridPropertiesInterface) => grid.key === accessKey
+    )
+
+    if (foundTile && selectedImageStore.seletedImage) {
+      foundTile.imagePath = selectedImageStore.seletedImage.image[3]['#text']
+      foundTile.title = selectedImageStore.seletedImage.name
+    }
+  }
+
+  return {
+    albumName,
+    artist,
+    searchData,
+    gridOption,
+    handleChange,
+    handleSearch,
+    handleDragOn,
+    handleDragEnd
+  }
 }
