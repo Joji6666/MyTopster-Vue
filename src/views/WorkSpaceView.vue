@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import WorkSpace from '@/components/pages/work-space/WorkSpace.vue'
+import WorkSpace from '@/components/pages/work-space/components/WorkSpace.vue'
 </script>
 
 <template>

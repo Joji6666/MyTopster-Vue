@@ -4,7 +4,7 @@ import { watch } from 'vue'
 import SearchResult from './SearchResult.vue'
 
 import { Input } from 'ant-design-vue'
-import useWorkSpace from './hooks/useWorkSpace'
+import useWorkSpace from './utils/hooks/useWorkSpace'
 
 const { searchData, handleChange, handleSearch } = useWorkSpace()
 
@@ -31,3 +31,4 @@ watch(searchData, (newValue, oldValue) => {
     <SearchResult :searchData="searchData" />
   </div>
 </template>
+./utils/interface/hooks/useWorkSpace

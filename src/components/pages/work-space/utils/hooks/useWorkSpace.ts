@@ -1,4 +1,4 @@
-import type { AlbumDataInterface } from '@/utils/interface'
+import type { AlbumDataInterface } from '@/components/pages/work-space/utils/interface/interface'
 import type { ChangeEvent } from 'ant-design-vue/es/_util/EventInterface'
 import axios from 'axios'
 import { ref } from 'vue'

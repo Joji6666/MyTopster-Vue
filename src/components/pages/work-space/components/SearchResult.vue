@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { AlbumDataInterface } from '@/utils/interface'
+import type { AlbumDataInterface } from './utils/interface/interface'
 
 interface SearchResultPropsInterface {
   searchData: AlbumDataInterface[]
@@ -21,3 +21,4 @@ const props = defineProps<SearchResultPropsInterface>()
     />
   </article>
 </template>
+@/components/pages/work-space/utils/interface/interface
