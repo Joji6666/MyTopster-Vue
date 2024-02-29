@@ -1,5 +1,5 @@
 <script setup lang="ts"></script>
 
 <template>
-  <article class="bg-slate-800 w-full h-full">toolbar</article>
+  <article class="bg-slate-800 w-full h-full"></article>
 </template>

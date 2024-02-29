@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { onMounted } from 'vue'
 import useWorkSpace from '../utils/hooks/useWorkSpace'
 import { gridDatasStore } from '../utils/store/workSpace_store'
 import type { GridPropertiesInterface } from '../utils/interface/workSpace_store_interface'
@@ -11,7 +11,7 @@ onMounted(() => {
   for (let index = 0; index < gridOption.tileLimit; index++) {
     tiles.push({
       width: 15,
-      height: 24,
+      height: 20,
       imagePath: '',
       title: '',
       key: index.toString()
@@ -36,7 +36,7 @@ onMounted(() => {
         <img
           v-show="value.imagePath"
           :src="value.imagePath"
-          :style="{ width: value.width + '%', height: value.height + '%' }"
+          :style="{ width: '100%', height: '100%' }"
         />
       </div>
     </div>
