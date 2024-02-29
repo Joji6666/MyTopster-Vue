@@ -6,18 +6,18 @@ interface SearchResultPropsInterface {
 }
 
 const props = defineProps<SearchResultPropsInterface>()
-console.log(props.searchData)
 </script>
 
 <template>
-  <div>
+  <article class="flex flex-wrap h-full overflow-y-auto mt-10">
+    <h2 class="text-blue-600 font-bold w-full">Result</h2>
     <img
       v-for="(albumData, index) in props.searchData"
       :key="index"
       class="flex p-1"
       :src="albumData.image[3]['#text']"
-      width="50px"
-      height="50px"
+      width="100px"
+      height="100px"
     />
-  </div>
+  </article>
 </template>

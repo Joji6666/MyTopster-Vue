@@ -1,19 +1,20 @@
 <script setup lang="ts">
-import MainView from './views/MainView.vue'
 import './assets/main.css'
 import BaseHeader from './components/layout/BaseHeader.vue'
 import BaseFooter from './components/layout/BaseFooter.vue'
 </script>
 
 <template>
-  <header>
-    <BaseHeader />
-  </header>
-  <main>
-    <MainView />
-  </main>
+  <article class="w-screen h-screen overflow-hidden">
+    <header class="w-screen h-[10%]">
+      <BaseHeader />
+    </header>
+    <main class="w-screen h-[80%] overflow-hidden">
+      <RouterView />
+    </main>
 
-  <footer>
+    <!-- <footer class="w-screen absolute bottom-0 h-[10%]">
     <BaseFooter />
-  </footer>
+  </footer> -->
+  </article>
 </template>
