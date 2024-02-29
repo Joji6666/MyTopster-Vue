@@ -10,8 +10,8 @@ onMounted(() => {
 
   for (let index = 0; index < gridOption.tileLimit; index++) {
     tiles.push({
-      width: 10,
-      height: 15,
+      width: 15,
+      height: 24,
       imagePath: '',
       title: '',
       key: index.toString()
@@ -27,7 +27,7 @@ onMounted(() => {
       <div
         v-for="(value, index) in gridDatasStore.gridDatas"
         :key="index"
-        class="bg-white"
+        class="bg-white ml-1"
         :style="{ width: value.width + '%', height: value.height + '%' }"
         @dragover.prevent
         @drop="handleDragEnd"
@@ -36,7 +36,7 @@ onMounted(() => {
         <img
           v-show="value.imagePath"
           :src="value.imagePath"
-          :style="{ width: value.width + 'px', height: value.height + 'px' }"
+          :style="{ width: value.width + '%', height: value.height + '%' }"
         />
       </div>
     </div>
