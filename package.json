@@ -16,6 +16,7 @@
     "@babel/eslint-parser": "^7.23.10",
     "ant-design-vue": "^4.1.2",
     "axios": "^1.6.7",
+    "html2canvas": "^1.4.1",
     "vue": "^3.4.15",
     "vue-router": "^4.2.5"
   },

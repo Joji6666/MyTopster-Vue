@@ -1,13 +1,15 @@
-import type { AlbumDataInterface } from '@/components/pages/work-space/utils/interface/interface'
-import type { ChangeEvent } from 'ant-design-vue/es/_util/EventInterface'
 import axios from 'axios'
+import html2canvas from 'html2canvas'
 import { ref } from 'vue'
+
 import { gridDatasStore, gridOptionStore, selectedImageStore } from '../store/workSpace_store'
 import type {
   GridOptionInterface,
   GridPropertiesInterface
 } from '../interface/workSpace_store_interface'
 import type { SelectValue } from 'ant-design-vue/es/select'
+import type { AlbumDataInterface } from '@/components/pages/work-space/utils/interface/interface'
+import type { ChangeEvent } from 'ant-design-vue/es/_util/EventInterface'
 
 export default function useWorkSpace() {
   // states
@@ -131,9 +133,6 @@ export default function useWorkSpace() {
   const handleDragEnd = (e: any) => {
     const accessKey = e
 
-    console.log(accessKey, 'access Key')
-    console.log(gridDatasStore.gridDatas)
-
     const foundTile = gridDatasStore.gridDatas.find(
       (grid: GridPropertiesInterface) => grid.key === accessKey
     )
@@ -141,6 +140,22 @@ export default function useWorkSpace() {
     if (foundTile && selectedImageStore.seletedImage) {
       foundTile.imagePath = selectedImageStore.seletedImage.image[3]['#text']
       foundTile.title = selectedImageStore.seletedImage.name
+    }
+  }
+
+  const downloadImage = async (key: string) => {
+    const captureArea: HTMLElement | null = document.querySelector('#captureArea')
+    const type = key === 'png' ? 'image/png' : 'image/jpeg'
+
+    if (captureArea) {
+      const canvas = await html2canvas(captureArea)
+      const image = canvas.toDataURL(type)
+      const link = document.createElement('a')
+      link.download = 'captured-image'
+      link.href = image
+      document.body.appendChild(link)
+      link.click()
+      document.body.removeChild(link)
     }
   }
 
@@ -155,6 +170,7 @@ export default function useWorkSpace() {
     handleSearch,
     handleDragOn,
     handleDragEnd,
-    handleSelect
+    handleSelect,
+    downloadImage
   }
 }
