@@ -7,10 +7,12 @@ import type {
 } from '../interface/workSpace_store_interface'
 
 export const gridOptionStore = reactive<GridOptionInterface>({
-  backgroundColor: '',
+  backgroundColor: '#000000',
   tileLimit: 42,
   gridType: 'type1',
-  tooltipOption: ''
+  tooltipOption: 'none',
+  tooltipBackgroundColor: '#000000',
+  textColor: '#ffffff'
 })
 
 export const topsterDataStore = reactive<TopsterDatasInterface>({

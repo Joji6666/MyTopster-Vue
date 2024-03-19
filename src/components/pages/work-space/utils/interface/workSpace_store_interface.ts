@@ -5,6 +5,8 @@ export interface GridOptionInterface {
   tileLimit: number
   gridType: string
   tooltipOption: string
+  tooltipBackgroundColor: string
+  textColor: string
 }
 
 export interface GridPropertiesInterface {
@@ -13,6 +15,7 @@ export interface GridPropertiesInterface {
   imagePath: string | undefined
   title: string | undefined
   key: string
+  artist: string
 }
 
 export interface GridDatasInterface {

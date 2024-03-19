@@ -31,9 +31,9 @@ export default function useWorkSpace() {
   ]
 
   const tooltipOptions = [
-    { label: 'Type1', value: 'type1' },
-    { label: 'Type2', value: 'type2' },
-    { label: 'Type3', value: 'type3' }
+    { label: 'None', value: 'none' },
+    { label: 'Side', value: 'side' },
+    { label: 'Bottom', value: 'bottom' }
   ]
 
   // funtions
@@ -47,7 +47,8 @@ export default function useWorkSpace() {
           height: 20,
           imagePath: '',
           title: '',
-          key: index.toString()
+          key: index.toString(),
+          artist: ''
         })
       }
       if (index > 9 && index < 22) {
@@ -56,7 +57,8 @@ export default function useWorkSpace() {
           height: 16,
           imagePath: '',
           title: '',
-          key: index.toString()
+          key: index.toString(),
+          artist: ''
         })
       }
 
@@ -66,7 +68,8 @@ export default function useWorkSpace() {
           height: 10,
           imagePath: '',
           title: '',
-          key: index.toString()
+          key: index.toString(),
+          artist: ''
         })
       }
     }
@@ -103,7 +106,8 @@ export default function useWorkSpace() {
             height: 18,
             imagePath: '',
             title: '',
-            key: index.toString()
+            key: index.toString(),
+            artist: ''
           })
         }
         if (index > 9 && index < 22) {
@@ -112,7 +116,8 @@ export default function useWorkSpace() {
             height: 15,
             imagePath: '',
             title: '',
-            key: index.toString()
+            key: index.toString(),
+            artist: ''
           })
         }
 
@@ -122,7 +127,8 @@ export default function useWorkSpace() {
             height: 8,
             imagePath: '',
             title: '',
-            key: index.toString()
+            key: index.toString(),
+            artist: ''
           })
         }
       }
@@ -147,8 +153,28 @@ export default function useWorkSpace() {
     }
   }
 
-  const handleBackgroundColor = (e: any) => {
-    gridOption.backgroundColor = e.target.value
+  const handleColor = (e: any, key: string) => {
+    console.log(e.target.value)
+
+    switch (key) {
+      case 'background':
+        gridOption.backgroundColor = e.target.value
+
+        break
+
+      case 'tooltip':
+        gridOption.tooltipBackgroundColor = e.target.value
+
+        break
+
+      case 'text':
+        gridOption.textColor = e.target.value
+
+        break
+
+      default:
+        break
+    }
   }
 
   const handleDragOn = (image: AlbumDataInterface) => {
@@ -163,9 +189,13 @@ export default function useWorkSpace() {
     )
 
     if (foundTile && selectedImageStore.seletedImage) {
+      console.log(selectedImageStore, 'selected@')
       foundTile.imagePath = selectedImageStore.seletedImage.image[3]['#text']
       foundTile.title = selectedImageStore.seletedImage.name
+      foundTile.artist = selectedImageStore.seletedImage.artist
     }
+
+    console.log(gridDatasStore.gridDatas, 'datas@@')
 
     const files = e.dataTransfer.files
 
@@ -186,7 +216,7 @@ export default function useWorkSpace() {
     const type = key === 'png' ? 'image/png' : 'image/jpeg'
 
     if (captureArea) {
-      const canvas = await html2canvas(captureArea)
+      const canvas = await html2canvas(captureArea, { allowTaint: true, useCORS: true })
       const image = canvas.toDataURL(type)
       const link = document.createElement('a')
       link.download = 'captured-image'
@@ -211,7 +241,7 @@ export default function useWorkSpace() {
     handleDragOn,
     handleDragEnd,
     handleSelect,
-    handleBackgroundColor,
+    handleColor,
     handleTooltip,
     downloadImage
   }

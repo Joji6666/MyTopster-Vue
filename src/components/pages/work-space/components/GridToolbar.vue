@@ -6,7 +6,7 @@ import { downloadButtonStyle } from '@/components/common/common_styles'
 const {
   handleSelect,
   handleTooltip,
-  handleBackgroundColor,
+  handleColor,
   downloadImage,
   gridTypeOptions,
   gridOption,
@@ -32,7 +32,7 @@ const {
         <label class="ml-2 text-white font-bold"> Tooltip </label>
         <Select
           :options="tooltipOptions"
-          v-model:value="gridOption.gridType"
+          v-model:value="gridOption.tooltipOption"
           class="w-[65%]"
           @change="handleTooltip"
         >
@@ -40,9 +40,20 @@ const {
       </div>
 
       <div class="flex items-center justify-between">
-        <label class="ml-2 text-white font-bold"> Background Color </label>
-        <input class="w-[90%]" type="color" @change="handleBackgroundColor" />
+        <label class="w-[35%] ml-2 text-white font-bold"> Background Color </label>
+        <input class="w-[65%]" type="color" @change="(e) => handleColor(e, 'background')" />
       </div>
+
+      <div class="flex items-center justify-between" v-if="gridOption.tooltipOption === 'side'">
+        <label class="w-[35%] ml-2 text-white font-bold"> Tooltip Background Color </label>
+        <input class="w-[65%]" type="color" @change="(e) => handleColor(e, 'tooltip')" />
+      </div>
+
+      <div class="flex items-center justify-between" v-if="gridOption.tooltipOption === 'side'">
+        <label class="w-[35%] ml-2 text-white font-bold"> Tooltip Text Color </label>
+        <input class="w-[65%]" type="color" @change="(e) => handleColor(e, 'text')" />
+      </div>
+
       <div class="flex space-x-1 w-full items-center justify-end">
         <button :class="downloadButtonStyle" @click="() => downloadImage('png')">
           PNG Download
