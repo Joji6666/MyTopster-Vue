@@ -12,6 +12,8 @@ import type { AlbumDataInterface } from '@/components/pages/work-space/utils/int
 import type { ChangeEvent } from 'ant-design-vue/es/_util/EventInterface'
 
 export default function useWorkSpace() {
+  const apiKey = import.meta.env.VITE_API_URL
+
   // states
   const albumName = ref<string | undefined>('')
   const artist = ref<string | undefined>('')
@@ -145,7 +147,7 @@ export default function useWorkSpace() {
 
   const handleSearch = async () => {
     const res = await axios.get(
-      `https://ws.audioscrobbler.com/2.0/?method=album.search&album=${albumName.value}&api_key=f6e2e55391f8359c9453f57680549175&format=json`
+      `https://ws.audioscrobbler.com/2.0/?method=album.search&album=${albumName.value}&api_key=${apiKey}&format=json`
     )
     if (res) {
       console.log(res, 'res !@')
