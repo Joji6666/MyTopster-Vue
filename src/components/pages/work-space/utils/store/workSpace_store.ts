@@ -8,7 +8,7 @@ import type {
 
 export const gridOptionStore = reactive<GridOptionInterface>({
   backgroundColor: '',
-  tileLimit: 24,
+  tileLimit: 42,
   gridType: 'basic'
 })
 

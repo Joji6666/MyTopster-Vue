@@ -2,42 +2,50 @@
 import { onMounted } from 'vue'
 import useWorkSpace from '../utils/hooks/useWorkSpace'
 import { gridDatasStore } from '../utils/store/workSpace_store'
-import type { GridPropertiesInterface } from '../utils/interface/workSpace_store_interface'
-const { handleDragEnd, gridOption } = useWorkSpace()
+
+const { handleDragEnd, gridInit } = useWorkSpace()
 
 onMounted(() => {
-  const tiles: GridPropertiesInterface[] = []
-
-  for (let index = 0; index < gridOption.tileLimit; index++) {
-    tiles.push({
-      width: 15,
-      height: 20,
-      imagePath: '',
-      title: '',
-      key: index.toString()
-    })
-  }
-  gridDatasStore.gridDatas = tiles
+  gridInit()
 })
 </script>
 
 <template>
-  <article class="bg-slate-800 w-full h-full">
-    <div class="flex space-x-1 flex-wrap w-full h-full items-center justify-center">
+  <article class="bg-slate-800 w-full h-full p-4 overflow-y-auto">
+    <div class="grid grid-cols-5 gap-4 mb-4">
       <div
-        v-for="(value, index) in gridDatasStore.gridDatas"
-        :key="index"
-        class="bg-white ml-1"
-        :style="{ width: value.width + '%', height: value.height + '%' }"
+        v-for="(value, index) in gridDatasStore.gridDatas.slice(0, 10)"
+        :key="`large-${index}`"
+        class="aspect-square bg-white"
         @dragover.prevent
-        @drop="handleDragEnd"
+        @drop="handleDragEnd(value.key)"
         :accesskey="index.toString()"
       >
-        <img
-          v-show="value.imagePath"
-          :src="value.imagePath"
-          :style="{ width: '100%', height: '100%' }"
-        />
+        <img v-if="value.imagePath" :src="value.imagePath" class="w-full h-full object-cover" />
+      </div>
+    </div>
+    <div class="grid grid-cols-6 gap-4 mb-4">
+      <div
+        v-for="(value, index) in gridDatasStore.gridDatas.slice(10, 22)"
+        :key="`medium-${index}`"
+        class="aspect-square bg-white"
+        @dragover.prevent
+        @drop="handleDragEnd(value.key)"
+        :accesskey="index.toString()"
+      >
+        <img v-if="value.imagePath" :src="value.imagePath" class="w-full h-full object-cover" />
+      </div>
+    </div>
+    <div class="grid grid-cols-10 gap-4">
+      <div
+        v-for="(value, index) in gridDatasStore.gridDatas.slice(22, 42)"
+        :key="`small-${index}`"
+        class="aspect-square bg-white"
+        @dragover.prevent
+        @drop="handleDragEnd(value.key)"
+        :accesskey="index.toString()"
+      >
+        <img v-if="value.imagePath" :src="value.imagePath" class="w-full h-full object-cover" />
       </div>
     </div>
   </article>
