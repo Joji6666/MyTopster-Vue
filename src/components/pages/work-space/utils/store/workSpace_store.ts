@@ -9,7 +9,8 @@ import type {
 export const gridOptionStore = reactive<GridOptionInterface>({
   backgroundColor: '',
   tileLimit: 42,
-  gridType: 'basic'
+  gridType: 'type1',
+  tooltipOption: ''
 })
 
 export const topsterDataStore = reactive<TopsterDatasInterface>({

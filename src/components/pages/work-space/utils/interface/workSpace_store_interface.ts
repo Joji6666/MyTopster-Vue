@@ -4,6 +4,7 @@ export interface GridOptionInterface {
   backgroundColor: string
   tileLimit: number
   gridType: string
+  tooltipOption: string
 }
 
 export interface GridPropertiesInterface {

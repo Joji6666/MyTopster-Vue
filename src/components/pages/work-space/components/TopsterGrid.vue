@@ -3,7 +3,7 @@ import { onMounted } from 'vue'
 import useWorkSpace from '../utils/hooks/useWorkSpace'
 import { gridDatasStore } from '../utils/store/workSpace_store'
 
-const { handleDragEnd, gridInit } = useWorkSpace()
+const { handleDragEnd, gridInit, gridOption } = useWorkSpace()
 
 onMounted(() => {
   gridInit()
@@ -11,15 +11,20 @@ onMounted(() => {
 </script>
 
 <template>
-  <article class="bg-slate-800 w-full h-full p-4 overflow-y-auto" id="captureArea">
+  <article
+    :style="{ backgroundColor: gridOption.backgroundColor }"
+    class="w-full h-full p-4 overflow-y-auto"
+    id="captureArea"
+  >
     <div class="grid grid-cols-5 gap-4 mb-4">
       <div
         v-for="(value, index) in gridDatasStore.gridDatas.slice(0, 10)"
         :key="`large-${index}`"
         class="aspect-square bg-white"
         @dragover.prevent
-        @drop="handleDragEnd(value.key)"
-        :accesskey="index.toString()"
+        @drop="handleDragEnd"
+        @drop.prevent="handleDragEnd"
+        :accesskey="value.key"
       >
         <img v-if="value.imagePath" :src="value.imagePath" class="w-full h-full object-cover" />
       </div>
@@ -30,8 +35,9 @@ onMounted(() => {
         :key="`medium-${index}`"
         class="aspect-square bg-white"
         @dragover.prevent
-        @drop="handleDragEnd(value.key)"
-        :accesskey="index.toString()"
+        @drop="handleDragEnd"
+        @drop.prevent="handleDragEnd"
+        :accesskey="value.key"
       >
         <img v-if="value.imagePath" :src="value.imagePath" class="w-full h-full object-cover" />
       </div>
@@ -42,8 +48,9 @@ onMounted(() => {
         :key="`small-${index}`"
         class="aspect-square bg-white"
         @dragover.prevent
-        @drop="handleDragEnd(value.key)"
-        :accesskey="index.toString()"
+        @drop="handleDragEnd"
+        @drop.prevent="handleDragEnd"
+        :accesskey="value.key"
       >
         <img v-if="value.imagePath" :src="value.imagePath" class="w-full h-full object-cover" />
       </div>

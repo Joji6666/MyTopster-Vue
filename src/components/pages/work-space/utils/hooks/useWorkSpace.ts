@@ -21,6 +21,21 @@ export default function useWorkSpace() {
 
   // values
 
+  const gridTypeOptions = [
+    { label: 'Type1', value: 'type1' },
+    { label: 'Type2', value: 'type2' },
+    { label: 'Type3', value: 'type3' },
+    { label: 'Type4', value: 'type4' },
+    { label: 'Type5', value: 'type5' },
+    { label: 'Custom', value: 'custom' }
+  ]
+
+  const tooltipOptions = [
+    { label: 'Type1', value: 'type1' },
+    { label: 'Type2', value: 'type2' },
+    { label: 'Type3', value: 'type3' }
+  ]
+
   // funtions
 
   const gridInit = () => {
@@ -116,6 +131,12 @@ export default function useWorkSpace() {
     }
   }
 
+  const handleTooltip = (e: SelectValue) => {
+    if (e && typeof e === 'string') {
+      gridOptionStore.tooltipOption = e
+    }
+  }
+
   const handleSearch = async () => {
     const res = await axios.get(
       `https://ws.audioscrobbler.com/2.0/?method=album.search&album=${albumName.value}&api_key=f6e2e55391f8359c9453f57680549175&format=json`
@@ -126,12 +147,16 @@ export default function useWorkSpace() {
     }
   }
 
+  const handleBackgroundColor = (e: any) => {
+    gridOption.backgroundColor = e.target.value
+  }
+
   const handleDragOn = (image: AlbumDataInterface) => {
     selectedImageStore.seletedImage = image
   }
 
   const handleDragEnd = (e: any) => {
-    const accessKey = e
+    const accessKey = e.target.accessKey
 
     const foundTile = gridDatasStore.gridDatas.find(
       (grid: GridPropertiesInterface) => grid.key === accessKey
@@ -140,6 +165,19 @@ export default function useWorkSpace() {
     if (foundTile && selectedImageStore.seletedImage) {
       foundTile.imagePath = selectedImageStore.seletedImage.image[3]['#text']
       foundTile.title = selectedImageStore.seletedImage.name
+    }
+
+    const files = e.dataTransfer.files
+
+    if (files.length > 0 && files[0].type.startsWith('image/') && foundTile) {
+      const fileReader = new FileReader()
+      fileReader.readAsDataURL(files[0])
+      fileReader.onload = (e: any) => {
+        if (e) {
+          foundTile.imagePath = e.target.result
+          foundTile.title = files[0].name
+        }
+      }
     }
   }
 
@@ -165,12 +203,16 @@ export default function useWorkSpace() {
     searchData,
     gridOption,
     gridType,
+    gridTypeOptions,
+    tooltipOptions,
     gridInit,
     handleChange,
     handleSearch,
     handleDragOn,
     handleDragEnd,
     handleSelect,
+    handleBackgroundColor,
+    handleTooltip,
     downloadImage
   }
 }
