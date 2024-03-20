@@ -8,7 +8,7 @@ const router = useRouter()
 </script>
 
 <template class="w-screen">
-  <header class="w-screen">
+  <header class="w-screen bg-slate-950">
     <Row class="w-full h-[80px] flex">
       <img
         @click="router.push(`/`)"

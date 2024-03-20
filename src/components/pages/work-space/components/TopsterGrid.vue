@@ -11,22 +11,23 @@ onMounted(() => {
 </script>
 
 <template>
-  <article class="flex w-full h-full overflow-y-auto" id="captureArea">
+  <article class="flex w-full h-full" id="captureArea">
     <div
-      class="h-full p-4"
+      class="h-full p-1"
       :style="{
         backgroundColor: gridOption.backgroundColor,
-        width: gridOption.tooltipOption !== 'side' ? '100%' : '70%'
+        width: gridOption.tooltipOption !== 'side' ? '100%' : '75%'
       }"
     >
       <div
-        class="grid mb-4"
+        class="grid mb-2"
         :style="{
           gridTemplateColumns: `repeat(${gridData.col}, minmax(0, 1fr))`,
           gap: `${gridOption.gridGap > 0 ? gridOption.gridGap + 3 : 0}px`
         }"
         v-for="(gridData, index) in gridDatasStore.gridDatas"
         :key="`large-${index}`"
+        v-show="gridData.count > 0"
       >
         <div
           v-for="(value, gridIndex) in gridData.grids"
@@ -68,7 +69,7 @@ onMounted(() => {
       </div>
     </div>
     <div
-      class="w-[30%] h-full flex flex-col"
+      class="w-[25%] h-full flex flex-col"
       v-if="gridOption.tooltipOption === 'side'"
       :style="{ backgroundColor: gridOption.tooltipBackgroundColor, color: gridOption.textColor }"
     >

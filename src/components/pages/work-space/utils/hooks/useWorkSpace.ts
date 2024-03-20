@@ -11,9 +11,14 @@ import type {
 import type { SelectValue } from 'ant-design-vue/es/select'
 import type { AlbumDataInterface } from '@/components/pages/work-space/utils/interface/interface'
 import type { ChangeEvent } from 'ant-design-vue/es/_util/EventInterface'
+import useGridType from './useGridType'
 
 export default function useWorkSpace() {
   const apiKey = import.meta.env.VITE_API_URL
+
+  // hooks
+
+  const { renderBasicType, renderTop10 } = useGridType()
 
   // states
   const albumName = ref<string | undefined>('')
@@ -42,63 +47,7 @@ export default function useWorkSpace() {
   // funtions
 
   const gridInit = () => {
-    const largeTiles: GridPropertiesInterface[] = []
-    const middleTiles: GridPropertiesInterface[] = []
-    const smallTiles: GridPropertiesInterface[] = []
-
-    const largeGridData: GridDataInterface = {
-      col: 5,
-      count: 10,
-      grids: largeTiles
-    }
-
-    const middleGridData: GridDataInterface = {
-      col: 6,
-      count: 12,
-      grids: middleTiles
-    }
-
-    const smallGridData: GridDataInterface = {
-      col: 10,
-      count: 20,
-      grids: smallTiles
-    }
-
-    for (let index = 0; index < gridOptionStore.tileLimit; index++) {
-      if (index < 10) {
-        largeTiles.push({
-          width: 20,
-          height: 20,
-          imagePath: '',
-          title: '',
-          key: index.toString(),
-          artist: ''
-        })
-      }
-      if (index > 9 && index < 22) {
-        middleTiles.push({
-          width: 16,
-          height: 16,
-          imagePath: '',
-          title: '',
-          key: index.toString(),
-          artist: ''
-        })
-      }
-
-      if (index > 21) {
-        smallTiles.push({
-          width: 10,
-          height: 10,
-          imagePath: '',
-          title: '',
-          key: index.toString(),
-          artist: ''
-        })
-      }
-    }
-
-    gridDatasStore.gridDatas = [largeGridData, middleGridData, smallGridData]
+    renderBasicType()
   }
 
   const handleChange = (e: ChangeEvent, key: string) => {
@@ -118,67 +67,19 @@ export default function useWorkSpace() {
   const handleSelect = (e: SelectValue, key: string) => {
     gridType.value = e
 
-    const largeTiles: GridPropertiesInterface[] = []
-    const middleTiles: GridPropertiesInterface[] = []
-    const smallTiles: GridPropertiesInterface[] = []
+    switch (e) {
+      case 'basic':
+        renderBasicType()
 
-    const largeGridData: GridDataInterface = {
-      col: 5,
-      count: 10,
-      grids: largeTiles
-    }
+        break
 
-    const middleGridData: GridDataInterface = {
-      col: 6,
-      count: 12,
-      grids: middleTiles
-    }
+      case 'top10':
+        renderTop10()
 
-    const smallGridData: GridDataInterface = {
-      col: 10,
-      count: 20,
-      grids: smallTiles
-    }
+        break
 
-    let tileLimit = 42
-    if (e === 'basic') {
-      tileLimit = 42
-
-      for (let index = 0; index < tileLimit; index++) {
-        if (index < 10) {
-          largeTiles.push({
-            width: 18,
-            height: 18,
-            imagePath: '',
-            title: '',
-            key: index.toString(),
-            artist: ''
-          })
-        }
-        if (index > 9 && index < 22) {
-          middleTiles.push({
-            width: 15,
-            height: 15,
-            imagePath: '',
-            title: '',
-            key: index.toString(),
-            artist: ''
-          })
-        }
-
-        if (index > 21) {
-          smallTiles.push({
-            width: 8,
-            height: 8,
-            imagePath: '',
-            title: '',
-            key: index.toString(),
-            artist: ''
-          })
-        }
-      }
-
-      gridDatasStore.gridDatas = [largeGridData, middleGridData, smallGridData]
+      default:
+        break
     }
   }
 
@@ -295,6 +196,8 @@ export default function useWorkSpace() {
     const type = key === 'png' ? 'image/png' : 'image/jpeg'
 
     if (captureArea) {
+      const originalHeight = captureArea.style.height
+      captureArea.style.height = 'auto'
       const canvas = await html2canvas(captureArea, { allowTaint: true, useCORS: true })
       const image = canvas.toDataURL(type)
       const link = document.createElement('a')
@@ -303,6 +206,8 @@ export default function useWorkSpace() {
       document.body.appendChild(link)
       link.click()
       document.body.removeChild(link)
+
+      captureArea.style.height = originalHeight
     }
   }
 
