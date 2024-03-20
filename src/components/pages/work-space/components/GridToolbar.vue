@@ -58,7 +58,7 @@ const {
       <div class="flex items-center justify-between">
         <label class="w-[35%] ml-2 text-white font-bold"> Grid Gap </label>
 
-        <Slider class="w-[65%]" :min="0" :max="25" @change="handleGridGap" />
+        <Slider class="w-[65%]" :min="0" :max="25" @change="handleGridGap" :default-value="1" />
       </div>
 
       <div class="flex space-x-1 w-full items-center justify-end">
