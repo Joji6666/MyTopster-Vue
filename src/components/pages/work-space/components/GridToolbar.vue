@@ -45,10 +45,10 @@ const {
         <input class="w-[65%]" type="color" @change="(e) => handleColor(e, 'background')" />
       </div>
 
-      <div class="flex items-center justify-between" v-if="gridOption.tooltipOption !== 'none'">
+      <!-- <div class="flex items-center justify-between" v-if="gridOption.tooltipOption !== 'none'">
         <label class="w-[35%] ml-2 text-white font-bold"> Tooltip Background Color </label>
         <input class="w-[65%]" type="color" @change="(e) => handleColor(e, 'tooltip')" />
-      </div>
+      </div> -->
 
       <div class="flex items-center justify-between" v-if="gridOption.tooltipOption !== 'none'">
         <label class="w-[35%] ml-2 text-white font-bold"> Tooltip Text Color </label>

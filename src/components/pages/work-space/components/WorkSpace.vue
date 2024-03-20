@@ -3,6 +3,10 @@ import { Row, Col } from 'ant-design-vue'
 import SideSearchBarVue from './SideSearchBar.vue'
 import TopsterGrid from './TopsterGrid.vue'
 import GridToolbar from './GridToolbar.vue'
+
+import useWorkSpace from '../utils/hooks/useWorkSpace'
+
+const { gridOption } = useWorkSpace()
 </script>
 
 <template>
@@ -12,7 +16,12 @@ import GridToolbar from './GridToolbar.vue'
         <GridToolbar />
       </Col>
 
-      <Col class="w-[62%] h-full">
+      <Col
+        class="w-[62%] h-full"
+        :style="{
+          backgroundColor: gridOption.backgroundColor
+        }"
+      >
         <TopsterGrid />
       </Col>
       <Col class="w-[19%] h-full fixed right-0 z-20">

@@ -11,9 +11,15 @@ onMounted(() => {
 </script>
 
 <template>
-  <article class="flex w-full h-full" id="captureArea">
+  <article
+    class="flex w-full h-full"
+    :style="{
+      backgroundColor: gridOption.backgroundColor
+    }"
+    id="captureArea"
+  >
     <div
-      class="h-full p-1"
+      class="h-full p-8"
       :style="{
         backgroundColor: gridOption.backgroundColor,
         width: gridOption.tooltipOption !== 'side' ? '100%' : '75%'
@@ -71,7 +77,7 @@ onMounted(() => {
     <div
       class="w-[25%] h-full flex flex-col"
       v-if="gridOption.tooltipOption === 'side'"
-      :style="{ backgroundColor: gridOption.tooltipBackgroundColor, color: gridOption.textColor }"
+      :style="{ backgroundColor: gridOption.backgroundColor, color: gridOption.textColor }"
     >
       <div v-for="(gridData, index) in gridDatasStore.gridDatas" :key="`tootip-${index}`">
         <div
