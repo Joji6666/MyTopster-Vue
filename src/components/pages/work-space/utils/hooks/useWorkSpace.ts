@@ -197,7 +197,7 @@ export default function useWorkSpace() {
 
     if (captureArea) {
       const originalHeight = captureArea.style.height
-      captureArea.style.height = 'auto'
+
       const canvas = await html2canvas(captureArea, { allowTaint: true, useCORS: true })
       const image = canvas.toDataURL(type)
       const link = document.createElement('a')
@@ -206,8 +206,6 @@ export default function useWorkSpace() {
       document.body.appendChild(link)
       link.click()
       document.body.removeChild(link)
-
-      captureArea.style.height = originalHeight
     }
   }
 

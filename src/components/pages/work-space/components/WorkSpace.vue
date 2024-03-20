@@ -12,7 +12,7 @@ import GridToolbar from './GridToolbar.vue'
         <GridToolbar />
       </Col>
 
-      <Col class="w-[62%] h-auto">
+      <Col class="w-[62%] h-full">
         <TopsterGrid />
       </Col>
       <Col class="w-[19%] h-full fixed right-0 z-20">
