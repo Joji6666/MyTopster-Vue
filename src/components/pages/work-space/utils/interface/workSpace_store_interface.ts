@@ -19,8 +19,14 @@ export interface GridPropertiesInterface {
   artist: string
 }
 
+export interface GridDataInterface {
+  col: number
+  count: number
+  grids: GridPropertiesInterface[]
+}
+
 export interface GridDatasInterface {
-  gridDatas: GridPropertiesInterface[]
+  gridDatas: GridDataInterface[]
 }
 
 export interface TopsterDatasInterface {

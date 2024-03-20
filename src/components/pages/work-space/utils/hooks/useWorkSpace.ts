@@ -4,6 +4,7 @@ import { ref } from 'vue'
 
 import { gridDatasStore, gridOptionStore, selectedImageStore } from '../store/workSpace_store'
 import type {
+  GridDataInterface,
   GridOptionInterface,
   GridPropertiesInterface
 } from '../interface/workSpace_store_interface'
@@ -24,11 +25,11 @@ export default function useWorkSpace() {
   // values
 
   const gridTypeOptions = [
-    { label: 'Type1', value: 'type1' },
-    { label: 'Type2', value: 'type2' },
-    { label: 'Type3', value: 'type3' },
-    { label: 'Type4', value: 'type4' },
-    { label: 'Type5', value: 'type5' },
+    { label: 'basic', value: 'basic' },
+    { label: 'Top10', value: 'top10' },
+    { label: 'Top25', value: 'top25' },
+    { label: 'Top50', value: 'top50' },
+    { label: 'Top100', value: 'top100' },
     { label: 'Custom', value: 'custom' }
   ]
 
@@ -41,10 +42,31 @@ export default function useWorkSpace() {
   // funtions
 
   const gridInit = () => {
-    const tiles: GridPropertiesInterface[] = []
+    const largeTiles: GridPropertiesInterface[] = []
+    const middleTiles: GridPropertiesInterface[] = []
+    const smallTiles: GridPropertiesInterface[] = []
+
+    const largeGridData: GridDataInterface = {
+      col: 5,
+      count: 10,
+      grids: largeTiles
+    }
+
+    const middleGridData: GridDataInterface = {
+      col: 6,
+      count: 12,
+      grids: middleTiles
+    }
+
+    const smallGridData: GridDataInterface = {
+      col: 10,
+      count: 20,
+      grids: smallTiles
+    }
+
     for (let index = 0; index < gridOptionStore.tileLimit; index++) {
       if (index < 10) {
-        tiles.push({
+        largeTiles.push({
           width: 20,
           height: 20,
           imagePath: '',
@@ -54,7 +76,7 @@ export default function useWorkSpace() {
         })
       }
       if (index > 9 && index < 22) {
-        tiles.push({
+        middleTiles.push({
           width: 16,
           height: 16,
           imagePath: '',
@@ -65,7 +87,7 @@ export default function useWorkSpace() {
       }
 
       if (index > 21) {
-        tiles.push({
+        smallTiles.push({
           width: 10,
           height: 10,
           imagePath: '',
@@ -76,7 +98,7 @@ export default function useWorkSpace() {
       }
     }
 
-    gridDatasStore.gridDatas = tiles
+    gridDatasStore.gridDatas = [largeGridData, middleGridData, smallGridData]
   }
 
   const handleChange = (e: ChangeEvent, key: string) => {
@@ -94,16 +116,37 @@ export default function useWorkSpace() {
   }
 
   const handleSelect = (e: SelectValue, key: string) => {
-    console.log(e, 'e@', key, 'key@@')
     gridType.value = e
-    const tiles: GridPropertiesInterface[] = []
+
+    const largeTiles: GridPropertiesInterface[] = []
+    const middleTiles: GridPropertiesInterface[] = []
+    const smallTiles: GridPropertiesInterface[] = []
+
+    const largeGridData: GridDataInterface = {
+      col: 5,
+      count: 10,
+      grids: largeTiles
+    }
+
+    const middleGridData: GridDataInterface = {
+      col: 6,
+      count: 12,
+      grids: middleTiles
+    }
+
+    const smallGridData: GridDataInterface = {
+      col: 10,
+      count: 20,
+      grids: smallTiles
+    }
+
     let tileLimit = 42
-    if (e === 'type1') {
+    if (e === 'basic') {
       tileLimit = 42
 
       for (let index = 0; index < tileLimit; index++) {
         if (index < 10) {
-          tiles.push({
+          largeTiles.push({
             width: 18,
             height: 18,
             imagePath: '',
@@ -113,7 +156,7 @@ export default function useWorkSpace() {
           })
         }
         if (index > 9 && index < 22) {
-          tiles.push({
+          middleTiles.push({
             width: 15,
             height: 15,
             imagePath: '',
@@ -124,7 +167,7 @@ export default function useWorkSpace() {
         }
 
         if (index > 21) {
-          tiles.push({
+          smallTiles.push({
             width: 8,
             height: 8,
             imagePath: '',
@@ -135,7 +178,7 @@ export default function useWorkSpace() {
         }
       }
 
-      gridDatasStore.gridDatas = tiles
+      gridDatasStore.gridDatas = [largeGridData, middleGridData, smallGridData]
     }
   }
 
@@ -184,50 +227,54 @@ export default function useWorkSpace() {
   const handleDragEnd = (e: any) => {
     const accessKey = e.target.accessKey
 
-    const foundTile = gridDatasStore.gridDatas.find(
-      (grid: GridPropertiesInterface) => grid.key === accessKey
-    )
+    gridDatasStore.gridDatas.forEach((gridData: GridDataInterface) => {
+      const foundTile = gridData.grids.find(
+        (grid: GridPropertiesInterface) => grid.key === accessKey
+      )
 
-    if (selectedImageStore.isGridDrag) {
-      if (foundTile && selectedImageStore.seletedGrid) {
-        const tempFoundTile = { ...foundTile }
+      if (selectedImageStore.isGridDrag) {
+        if (foundTile && selectedImageStore.seletedGrid) {
+          const tempFoundTile = { ...foundTile }
 
-        foundTile.imagePath = selectedImageStore.seletedGrid.imagePath
-        foundTile.title = selectedImageStore.seletedGrid.title
-        foundTile.artist = selectedImageStore.seletedGrid.artist
+          foundTile.imagePath = selectedImageStore.seletedGrid.imagePath
+          foundTile.title = selectedImageStore.seletedGrid.title
+          foundTile.artist = selectedImageStore.seletedGrid.artist
 
-        if (foundTile.imagePath) {
-          const prevGrid = gridDatasStore.gridDatas.find(
-            (grid: GridPropertiesInterface) => grid.key === selectedImageStore.seletedGrid?.key
-          )
+          if (foundTile.imagePath) {
+            gridDatasStore.gridDatas.forEach((gridData: GridDataInterface) => {
+              const prevGrid = gridData.grids.find(
+                (grid: GridPropertiesInterface) => grid.key === selectedImageStore.seletedGrid?.key
+              )
 
-          if (prevGrid) {
-            prevGrid.imagePath = tempFoundTile.imagePath
-            prevGrid.title = tempFoundTile.title
-            prevGrid.artist = tempFoundTile.artist
+              if (prevGrid) {
+                prevGrid.imagePath = tempFoundTile.imagePath
+                prevGrid.title = tempFoundTile.title
+                prevGrid.artist = tempFoundTile.artist
+              }
+            })
+          }
+        }
+      } else {
+        if (foundTile && selectedImageStore.seletedImage) {
+          foundTile.imagePath = selectedImageStore.seletedImage.image[3]['#text']
+          foundTile.title = selectedImageStore.seletedImage.name
+          foundTile.artist = selectedImageStore.seletedImage.artist
+        }
+
+        const files = e.dataTransfer.files
+
+        if (files.length > 0 && files[0].type.startsWith('image/') && foundTile) {
+          const fileReader = new FileReader()
+          fileReader.readAsDataURL(files[0])
+          fileReader.onload = (e: any) => {
+            if (e) {
+              foundTile.imagePath = e.target.result
+              foundTile.title = files[0].name
+            }
           }
         }
       }
-    } else {
-      if (foundTile && selectedImageStore.seletedImage) {
-        foundTile.imagePath = selectedImageStore.seletedImage.image[3]['#text']
-        foundTile.title = selectedImageStore.seletedImage.name
-        foundTile.artist = selectedImageStore.seletedImage.artist
-      }
-
-      const files = e.dataTransfer.files
-
-      if (files.length > 0 && files[0].type.startsWith('image/') && foundTile) {
-        const fileReader = new FileReader()
-        fileReader.readAsDataURL(files[0])
-        fileReader.onload = (e: any) => {
-          if (e) {
-            foundTile.imagePath = e.target.result
-            foundTile.title = files[0].name
-          }
-        }
-      }
-    }
+    })
 
     selectedImageStore.seletedGrid = null
     selectedImageStore.seletedImage = null

@@ -20,96 +20,17 @@ onMounted(() => {
       }"
     >
       <div
-        class="grid grid-cols-5 mb-4"
-        :style="{ gap: `${gridOption.gridGap > 0 ? gridOption.gridGap + 3 : 0}px` }"
+        class="grid mb-4"
+        :style="{
+          gridTemplateColumns: `repeat(${gridData.col}, minmax(0, 1fr))`,
+          gap: `${gridOption.gridGap > 0 ? gridOption.gridGap + 3 : 0}px`
+        }"
+        v-for="(gridData, index) in gridDatasStore.gridDatas"
+        :key="`large-${index}`"
       >
         <div
-          v-for="(value, index) in gridDatasStore.gridDatas.slice(0, 10)"
-          :key="`large-${index}`"
-          class="flex flex-col"
-        >
-          <div
-            class="aspect-square bg-white"
-            @dragover.prevent
-            @drop="handleDragEnd"
-            @drop.prevent="handleDragEnd"
-            draggable="true"
-            @dragstart="() => handleGridDrag(value)"
-            :accesskey="value.key"
-          >
-            <img
-              v-if="value.imagePath"
-              :src="value.imagePath"
-              class="w-full h-full object-cover"
-              @dragover.prevent
-              @drop="handleDragEnd"
-              @drop.prevent="handleDragEnd"
-              :accesskey="value.key"
-            />
-          </div>
-
-          <div
-            v-if="gridOption.tooltipOption === 'bottom'"
-            :style="{ color: gridOption.textColor }"
-          >
-            <span
-              v-show="value.artist && value.title"
-              class="w-full flex items-center justify-center"
-            >
-              {{ `${value.artist} - ${value.title}` }}
-            </span>
-          </div>
-        </div>
-      </div>
-      <div
-        class="grid grid-cols-6 mb-4"
-        :style="{ gap: `${gridOption.gridGap > 0 ? gridOption.gridGap + 3 : 0}px` }"
-      >
-        <div
-          v-for="(value, index) in gridDatasStore.gridDatas.slice(10, 22)"
-          :key="`medium-${index}`"
-          class="flex flex-col"
-        >
-          <div
-            class="aspect-square bg-white"
-            @dragover.prevent
-            @drop="handleDragEnd"
-            @drop.prevent="handleDragEnd"
-            draggable="true"
-            @dragstart="() => handleGridDrag(value)"
-            :accesskey="value.key"
-          >
-            <img
-              v-if="value.imagePath"
-              :src="value.imagePath"
-              class="w-full h-full object-cover"
-              @dragover.prevent
-              @drop="handleDragEnd"
-              @drop.prevent="handleDragEnd"
-              :accesskey="value.key"
-            />
-          </div>
-
-          <div
-            v-if="gridOption.tooltipOption === 'bottom'"
-            :style="{ color: gridOption.textColor }"
-          >
-            <span
-              v-show="value.artist && value.title"
-              class="w-full flex items-center justify-center"
-            >
-              {{ `${value.artist} - ${value.title}` }}
-            </span>
-          </div>
-        </div>
-      </div>
-      <div
-        class="grid grid-cols-10"
-        :style="{ gap: `${gridOption.gridGap > 0 ? gridOption.gridGap + 3 : 0}px` }"
-      >
-        <div
-          v-for="(value, index) in gridDatasStore.gridDatas.slice(22, 42)"
-          :key="`small-${index}`"
+          v-for="(value, gridIndex) in gridData.grids"
+          :key="`grid-${gridIndex}`"
           class="flex flex-col"
         >
           <div
@@ -151,13 +72,17 @@ onMounted(() => {
       v-if="gridOption.tooltipOption === 'side'"
       :style="{ backgroundColor: gridOption.tooltipBackgroundColor, color: gridOption.textColor }"
     >
-      <span
-        v-show="value.artist && value.title"
-        v-for="(value, index) in gridDatasStore.gridDatas"
-        :key="`tootip-${index}`"
-      >
-        {{ `${index + 1}. ${value.artist} - ${value.title}` }}
-      </span>
+      <div v-for="(gridData, index) in gridDatasStore.gridDatas" :key="`tootip-${index}`">
+        <div
+          v-show="value.artist && value.title"
+          v-for="(value, index) in gridData.grids"
+          :key="`tootip-${index}`"
+        >
+          <span>
+            {{ `${index + 1}. ${value.artist} - ${value.title}` }}
+          </span>
+        </div>
+      </div>
     </div>
   </article>
 </template>
