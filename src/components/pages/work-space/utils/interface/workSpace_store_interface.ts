@@ -28,4 +28,6 @@ export interface TopsterDatasInterface {
 
 export interface SelectedImageStoreInterface {
   seletedImage: AlbumDataInterface | null
+  seletedGrid: GridPropertiesInterface | null
+  isGridDrag: boolean
 }

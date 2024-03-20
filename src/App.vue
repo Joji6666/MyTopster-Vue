@@ -5,7 +5,7 @@ import BaseFooter from './components/layout/BaseFooter.vue'
 </script>
 
 <template>
-  <article class="w-screen h-screen overflow-hidden">
+  <article class="w-screen h-screen overflow-hidden bg-slate-950">
     <header class="w-screen h-[10%]">
       <BaseHeader />
     </header>

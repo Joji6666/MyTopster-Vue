@@ -156,8 +156,6 @@ export default function useWorkSpace() {
   }
 
   const handleColor = (e: any, key: string) => {
-    console.log(e.target.value)
-
     switch (key) {
       case 'background':
         gridOption.backgroundColor = e.target.value
@@ -190,27 +188,55 @@ export default function useWorkSpace() {
       (grid: GridPropertiesInterface) => grid.key === accessKey
     )
 
-    if (foundTile && selectedImageStore.seletedImage) {
-      console.log(selectedImageStore, 'selected@')
-      foundTile.imagePath = selectedImageStore.seletedImage.image[3]['#text']
-      foundTile.title = selectedImageStore.seletedImage.name
-      foundTile.artist = selectedImageStore.seletedImage.artist
-    }
+    if (selectedImageStore.isGridDrag) {
+      if (foundTile && selectedImageStore.seletedGrid) {
+        const tempFoundTile = { ...foundTile }
 
-    console.log(gridDatasStore.gridDatas, 'datas@@')
+        foundTile.imagePath = selectedImageStore.seletedGrid.imagePath
+        foundTile.title = selectedImageStore.seletedGrid.title
+        foundTile.artist = selectedImageStore.seletedGrid.artist
 
-    const files = e.dataTransfer.files
+        if (foundTile.imagePath) {
+          const prevGrid = gridDatasStore.gridDatas.find(
+            (grid: GridPropertiesInterface) => grid.key === selectedImageStore.seletedGrid?.key
+          )
 
-    if (files.length > 0 && files[0].type.startsWith('image/') && foundTile) {
-      const fileReader = new FileReader()
-      fileReader.readAsDataURL(files[0])
-      fileReader.onload = (e: any) => {
-        if (e) {
-          foundTile.imagePath = e.target.result
-          foundTile.title = files[0].name
+          if (prevGrid) {
+            prevGrid.imagePath = tempFoundTile.imagePath
+            prevGrid.title = tempFoundTile.title
+            prevGrid.artist = tempFoundTile.artist
+          }
+        }
+      }
+    } else {
+      if (foundTile && selectedImageStore.seletedImage) {
+        foundTile.imagePath = selectedImageStore.seletedImage.image[3]['#text']
+        foundTile.title = selectedImageStore.seletedImage.name
+        foundTile.artist = selectedImageStore.seletedImage.artist
+      }
+
+      const files = e.dataTransfer.files
+
+      if (files.length > 0 && files[0].type.startsWith('image/') && foundTile) {
+        const fileReader = new FileReader()
+        fileReader.readAsDataURL(files[0])
+        fileReader.onload = (e: any) => {
+          if (e) {
+            foundTile.imagePath = e.target.result
+            foundTile.title = files[0].name
+          }
         }
       }
     }
+
+    selectedImageStore.seletedGrid = null
+    selectedImageStore.seletedImage = null
+    selectedImageStore.isGridDrag = false
+  }
+
+  const handleGridDrag = (grid: GridPropertiesInterface) => {
+    selectedImageStore.seletedGrid = grid
+    selectedImageStore.isGridDrag = true
   }
 
   const downloadImage = async (key: string) => {
@@ -245,6 +271,7 @@ export default function useWorkSpace() {
     handleSelect,
     handleColor,
     handleTooltip,
+    handleGridDrag,
     downloadImage
   }
 }

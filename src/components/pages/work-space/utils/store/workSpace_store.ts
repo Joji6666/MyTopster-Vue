@@ -24,5 +24,7 @@ export const gridDatasStore = reactive<GridDatasInterface>({
 })
 
 export const selectedImageStore = reactive<SelectedImageStoreInterface>({
-  seletedImage: null
+  seletedImage: null,
+  seletedGrid: null,
+  isGridDrag: false
 })

@@ -3,7 +3,7 @@ import { onMounted } from 'vue'
 import useWorkSpace from '../utils/hooks/useWorkSpace'
 import { gridDatasStore } from '../utils/store/workSpace_store'
 
-const { handleDragEnd, gridInit, gridOption } = useWorkSpace()
+const { handleDragEnd, gridInit, gridOption, handleGridDrag } = useWorkSpace()
 
 onMounted(() => {
   gridInit()
@@ -19,7 +19,7 @@ onMounted(() => {
         width: gridOption.tooltipOption !== 'side' ? '100%' : '70%'
       }"
     >
-      <div class="grid grid-cols-5 gap-4 mb-4">
+      <div class="grid grid-cols-5 gap-2 mb-4">
         <div
           v-for="(value, index) in gridDatasStore.gridDatas.slice(0, 10)"
           :key="`large-${index}`"
@@ -27,12 +27,22 @@ onMounted(() => {
           @dragover.prevent
           @drop="handleDragEnd"
           @drop.prevent="handleDragEnd"
+          draggable="true"
+          @dragstart="() => handleGridDrag(value)"
           :accesskey="value.key"
         >
-          <img v-if="value.imagePath" :src="value.imagePath" class="w-full h-full object-cover" />
+          <img
+            v-if="value.imagePath"
+            :src="value.imagePath"
+            class="w-full h-full object-cover"
+            @dragover.prevent
+            @drop="handleDragEnd"
+            @drop.prevent="handleDragEnd"
+            :accesskey="value.key"
+          />
         </div>
       </div>
-      <div class="grid grid-cols-6 gap-4 mb-4">
+      <div class="grid grid-cols-6 gap-2 mb-4">
         <div
           v-for="(value, index) in gridDatasStore.gridDatas.slice(10, 22)"
           :key="`medium-${index}`"
@@ -40,12 +50,22 @@ onMounted(() => {
           @dragover.prevent
           @drop="handleDragEnd"
           @drop.prevent="handleDragEnd"
+          draggable="true"
+          @dragstart="() => handleGridDrag(value)"
           :accesskey="value.key"
         >
-          <img v-if="value.imagePath" :src="value.imagePath" class="w-full h-full object-cover" />
+          <img
+            v-if="value.imagePath"
+            :src="value.imagePath"
+            class="w-full h-full object-cover"
+            @dragover.prevent
+            @drop="handleDragEnd"
+            @drop.prevent="handleDragEnd"
+            :accesskey="value.key"
+          />
         </div>
       </div>
-      <div class="grid grid-cols-10 gap-4">
+      <div class="grid grid-cols-10 gap-1">
         <div
           v-for="(value, index) in gridDatasStore.gridDatas.slice(22, 42)"
           :key="`small-${index}`"
@@ -53,9 +73,19 @@ onMounted(() => {
           @dragover.prevent
           @drop="handleDragEnd"
           @drop.prevent="handleDragEnd"
+          draggable="true"
+          @dragstart="() => handleGridDrag(value)"
           :accesskey="value.key"
         >
-          <img v-if="value.imagePath" :src="value.imagePath" class="w-full h-full object-cover" />
+          <img
+            v-if="value.imagePath"
+            :src="value.imagePath"
+            class="w-full h-full object-cover"
+            @dragover.prevent
+            @drop="handleDragEnd"
+            @drop.prevent="handleDragEnd"
+            :accesskey="value.key"
+          />
         </div>
       </div>
     </div>
