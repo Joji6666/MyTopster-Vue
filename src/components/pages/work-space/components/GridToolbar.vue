@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Select } from 'ant-design-vue'
+import { Select, Slider } from 'ant-design-vue'
 import useWorkSpace from '../utils/hooks/useWorkSpace'
 import { downloadButtonStyle } from '@/components/common/common_styles'
 
@@ -7,6 +7,7 @@ const {
   handleSelect,
   handleTooltip,
   handleColor,
+  handleGridGap,
   downloadImage,
   gridTypeOptions,
   gridOption,
@@ -44,14 +45,20 @@ const {
         <input class="w-[65%]" type="color" @change="(e) => handleColor(e, 'background')" />
       </div>
 
-      <div class="flex items-center justify-between" v-if="gridOption.tooltipOption === 'side'">
+      <div class="flex items-center justify-between" v-if="gridOption.tooltipOption !== 'none'">
         <label class="w-[35%] ml-2 text-white font-bold"> Tooltip Background Color </label>
         <input class="w-[65%]" type="color" @change="(e) => handleColor(e, 'tooltip')" />
       </div>
 
-      <div class="flex items-center justify-between" v-if="gridOption.tooltipOption === 'side'">
+      <div class="flex items-center justify-between" v-if="gridOption.tooltipOption !== 'none'">
         <label class="w-[35%] ml-2 text-white font-bold"> Tooltip Text Color </label>
         <input class="w-[65%]" type="color" @change="(e) => handleColor(e, 'text')" />
+      </div>
+
+      <div class="flex items-center justify-between">
+        <label class="w-[35%] ml-2 text-white font-bold"> Grid Gap </label>
+
+        <Slider class="w-[65%]" :min="0" :max="25" @change="handleGridGap" />
       </div>
 
       <div class="flex space-x-1 w-full items-center justify-end">
@@ -65,3 +72,9 @@ const {
     </div>
   </article>
 </template>
+
+<style scoped>
+::v-deep .ant-slider-rail {
+  background-color: #4b57ff;
+}
+</style>

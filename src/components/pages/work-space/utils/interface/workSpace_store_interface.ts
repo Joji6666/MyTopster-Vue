@@ -7,6 +7,7 @@ export interface GridOptionInterface {
   tooltipOption: string
   tooltipBackgroundColor: string
   textColor: string
+  gridGap: number
 }
 
 export interface GridPropertiesInterface {

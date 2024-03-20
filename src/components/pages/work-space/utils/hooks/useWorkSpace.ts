@@ -239,6 +239,10 @@ export default function useWorkSpace() {
     selectedImageStore.isGridDrag = true
   }
 
+  const handleGridGap = (value: any) => {
+    gridOption.gridGap = value
+  }
+
   const downloadImage = async (key: string) => {
     const captureArea: HTMLElement | null = document.querySelector('#captureArea')
     const type = key === 'png' ? 'image/png' : 'image/jpeg'
@@ -272,6 +276,7 @@ export default function useWorkSpace() {
     handleColor,
     handleTooltip,
     handleGridDrag,
+    handleGridGap,
     downloadImage
   }
 }

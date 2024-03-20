@@ -19,73 +19,130 @@ onMounted(() => {
         width: gridOption.tooltipOption !== 'side' ? '100%' : '70%'
       }"
     >
-      <div class="grid grid-cols-5 gap-2 mb-4">
+      <div
+        class="grid grid-cols-5 mb-4"
+        :style="{ gap: `${gridOption.gridGap > 0 ? gridOption.gridGap + 3 : 0}px` }"
+      >
         <div
           v-for="(value, index) in gridDatasStore.gridDatas.slice(0, 10)"
           :key="`large-${index}`"
-          class="aspect-square bg-white"
-          @dragover.prevent
-          @drop="handleDragEnd"
-          @drop.prevent="handleDragEnd"
-          draggable="true"
-          @dragstart="() => handleGridDrag(value)"
-          :accesskey="value.key"
+          class="flex flex-col"
         >
-          <img
-            v-if="value.imagePath"
-            :src="value.imagePath"
-            class="w-full h-full object-cover"
+          <div
+            class="aspect-square bg-white"
             @dragover.prevent
             @drop="handleDragEnd"
             @drop.prevent="handleDragEnd"
+            draggable="true"
+            @dragstart="() => handleGridDrag(value)"
             :accesskey="value.key"
-          />
+          >
+            <img
+              v-if="value.imagePath"
+              :src="value.imagePath"
+              class="w-full h-full object-cover"
+              @dragover.prevent
+              @drop="handleDragEnd"
+              @drop.prevent="handleDragEnd"
+              :accesskey="value.key"
+            />
+          </div>
+
+          <div
+            v-if="gridOption.tooltipOption === 'bottom'"
+            :style="{ color: gridOption.textColor }"
+          >
+            <span
+              v-show="value.artist && value.title"
+              class="w-full flex items-center justify-center"
+            >
+              {{ `${value.artist} - ${value.title}` }}
+            </span>
+          </div>
         </div>
       </div>
-      <div class="grid grid-cols-6 gap-2 mb-4">
+      <div
+        class="grid grid-cols-6 mb-4"
+        :style="{ gap: `${gridOption.gridGap > 0 ? gridOption.gridGap + 3 : 0}px` }"
+      >
         <div
           v-for="(value, index) in gridDatasStore.gridDatas.slice(10, 22)"
           :key="`medium-${index}`"
-          class="aspect-square bg-white"
-          @dragover.prevent
-          @drop="handleDragEnd"
-          @drop.prevent="handleDragEnd"
-          draggable="true"
-          @dragstart="() => handleGridDrag(value)"
-          :accesskey="value.key"
+          class="flex flex-col"
         >
-          <img
-            v-if="value.imagePath"
-            :src="value.imagePath"
-            class="w-full h-full object-cover"
+          <div
+            class="aspect-square bg-white"
             @dragover.prevent
             @drop="handleDragEnd"
             @drop.prevent="handleDragEnd"
+            draggable="true"
+            @dragstart="() => handleGridDrag(value)"
             :accesskey="value.key"
-          />
+          >
+            <img
+              v-if="value.imagePath"
+              :src="value.imagePath"
+              class="w-full h-full object-cover"
+              @dragover.prevent
+              @drop="handleDragEnd"
+              @drop.prevent="handleDragEnd"
+              :accesskey="value.key"
+            />
+          </div>
+
+          <div
+            v-if="gridOption.tooltipOption === 'bottom'"
+            :style="{ color: gridOption.textColor }"
+          >
+            <span
+              v-show="value.artist && value.title"
+              class="w-full flex items-center justify-center"
+            >
+              {{ `${value.artist} - ${value.title}` }}
+            </span>
+          </div>
         </div>
       </div>
-      <div class="grid grid-cols-10 gap-1">
+      <div
+        class="grid grid-cols-10"
+        :style="{ gap: `${gridOption.gridGap > 0 ? gridOption.gridGap + 3 : 0}px` }"
+      >
         <div
           v-for="(value, index) in gridDatasStore.gridDatas.slice(22, 42)"
           :key="`small-${index}`"
-          class="aspect-square bg-white"
-          @dragover.prevent
-          @drop="handleDragEnd"
-          @drop.prevent="handleDragEnd"
-          draggable="true"
-          @dragstart="() => handleGridDrag(value)"
-          :accesskey="value.key"
+          class="flex flex-col"
         >
-          <img
-            v-if="value.imagePath"
-            :src="value.imagePath"
-            class="w-full h-full object-cover"
+          <div
+            class="aspect-square bg-white"
             @dragover.prevent
             @drop="handleDragEnd"
             @drop.prevent="handleDragEnd"
+            draggable="true"
+            @dragstart="() => handleGridDrag(value)"
             :accesskey="value.key"
-          />
+          >
+            <img
+              v-if="value.imagePath"
+              :src="value.imagePath"
+              class="w-full h-full object-cover"
+              @dragover.prevent
+              @drop="handleDragEnd"
+              @drop.prevent="handleDragEnd"
+              :accesskey="value.key"
+            />
+          </div>
+
+          <div
+            v-if="gridOption.tooltipOption === 'bottom'"
+            :style="{ color: gridOption.textColor }"
+          >
+            <span
+              v-show="value.artist && value.title"
+              class="w-full flex items-center justify-center"
+            >
+              {{ `${value.artist} - ${value.title}` }}
+            </span>
+          </div>
         </div>
       </div>
     </div>
