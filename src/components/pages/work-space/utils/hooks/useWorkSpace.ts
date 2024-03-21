@@ -11,14 +11,11 @@ import type {
 import type { SelectValue } from 'ant-design-vue/es/select'
 import type { AlbumDataInterface } from '@/components/pages/work-space/utils/interface/interface'
 import type { ChangeEvent } from 'ant-design-vue/es/_util/EventInterface'
-import useGridType from './useGridType'
 
 export default function useWorkSpace() {
   const apiKey = import.meta.env.VITE_API_URL
 
   // hooks
-
-  const { renderBasicType, renderTop10 } = useGridType()
 
   // states
   const albumName = ref<string | undefined>('')
@@ -46,8 +43,65 @@ export default function useWorkSpace() {
 
   // funtions
 
+  const createGrids = (largeGridCount: number, middleGridCount: number, smallGridCount: number) => {
+    const largeGridData: GridDataInterface = {
+      col: 5,
+      count: largeGridCount,
+      grids: []
+    }
+
+    const middleGridData: GridDataInterface = {
+      col: 6,
+      count: middleGridCount,
+      grids: []
+    }
+
+    const smallGridData: GridDataInterface = {
+      col: 10,
+      count: smallGridCount,
+      grids: []
+    }
+
+    const totalCount = largeGridCount + middleGridCount + smallGridCount
+
+    for (let index = 0; index < totalCount; index++) {
+      if (index < largeGridData.count) {
+        largeGridData.grids.push({
+          width: 18,
+          height: 18,
+          imagePath: '',
+          title: '',
+          key: index.toString(),
+          artist: ''
+        })
+      }
+      if (index > largeGridData.count - 1 && index < largeGridData.count + middleGridData.count) {
+        middleGridData.grids.push({
+          width: 15,
+          height: 15,
+          imagePath: '',
+          title: '',
+          key: index.toString(),
+          artist: ''
+        })
+      }
+
+      if (index > largeGridData.count + middleGridData.count - 1) {
+        smallGridData.grids.push({
+          width: 8,
+          height: 8,
+          imagePath: '',
+          title: '',
+          key: index.toString(),
+          artist: ''
+        })
+      }
+    }
+    gridDatasStore.gridDatas = [largeGridData, middleGridData, smallGridData]
+  }
+
   const gridInit = () => {
-    renderBasicType()
+    createGrids(10, 12, 20)
   }
 
   const handleChange = (e: ChangeEvent, key: string) => {
@@ -69,12 +123,12 @@ export default function useWorkSpace() {
 
     switch (e) {
       case 'basic':
-        renderBasicType()
+        createGrids(10, 12, 20)
 
         break
 
       case 'top10':
-        renderTop10()
+        createGrids(10, 0, 0)
 
         break
 
