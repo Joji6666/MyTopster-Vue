@@ -29,9 +29,11 @@ export default function useWorkSpace() {
   const gridTypeOptions = [
     { label: 'basic', value: 'basic' },
     { label: 'Top10', value: 'top10' },
-    { label: 'Top25', value: 'top25' },
+    { label: 'Top30', value: 'top30' },
     { label: 'Top50', value: 'top50' },
     { label: 'Top100', value: 'top100' },
+    { label: 'Top100 Small Box', value: 'top100_small' },
+    { label: 'Top50 Small Box', value: 'top50_small' },
     { label: 'Custom', value: 'custom' }
   ]
 
@@ -43,21 +45,28 @@ export default function useWorkSpace() {
 
   // funtions
 
-  const createGrids = (largeGridCount: number, middleGridCount: number, smallGridCount: number) => {
+  const createGrids = (
+    largeGridCount: number,
+    middleGridCount: number,
+    smallGridCount: number,
+    largeGridCol: number,
+    middleGridCol: number,
+    smallGridCol: number
+  ) => {
     const largeGridData: GridDataInterface = {
-      col: 5,
+      col: largeGridCol,
       count: largeGridCount,
       grids: []
     }
 
     const middleGridData: GridDataInterface = {
-      col: 6,
+      col: middleGridCol,
       count: middleGridCount,
       grids: []
     }
 
     const smallGridData: GridDataInterface = {
-      col: 10,
+      col: smallGridCol,
       count: smallGridCount,
       grids: []
     }
@@ -101,7 +110,7 @@ export default function useWorkSpace() {
   }
 
   const gridInit = () => {
-    createGrids(10, 12, 20)
+    createGrids(10, 12, 20, 5, 6, 10)
   }
 
   const handleChange = (e: ChangeEvent, key: string) => {
@@ -123,12 +132,37 @@ export default function useWorkSpace() {
 
     switch (e) {
       case 'basic':
-        createGrids(10, 12, 20)
+        createGrids(10, 12, 20, 5, 6, 10)
 
         break
 
       case 'top10':
-        createGrids(10, 0, 0)
+        createGrids(10, 0, 0, 5, 6, 10)
+
+        break
+
+      case 'top30':
+        createGrids(12, 18, 0, 4, 6, 10)
+
+        break
+
+      case 'top50':
+        createGrids(12, 18, 20, 4, 6, 10)
+
+        break
+
+      case 'top100':
+        createGrids(10, 30, 60, 5, 6, 10)
+
+        break
+
+      case 'top100_small':
+        createGrids(0, 0, 100, 5, 6, 10)
+
+        break
+
+      case 'top50_small':
+        createGrids(0, 0, 50, 5, 6, 10)
 
         break
 
@@ -177,6 +211,20 @@ export default function useWorkSpace() {
 
   const handleDragOn = (image: AlbumDataInterface) => {
     selectedImageStore.seletedImage = image
+  }
+
+  const handleDelete = () => {
+    gridDatasStore.gridDatas.forEach((gridData: GridDataInterface) => {
+      const foundTile = gridData.grids.find(
+        (grid: GridPropertiesInterface) => grid.key === selectedImageStore.seletedGrid?.key
+      )
+
+      if (foundTile) {
+        foundTile.artist = ''
+        foundTile.imagePath = ''
+        foundTile.title = ''
+      }
+    })
   }
 
   const handleDragEnd = (e: any) => {
@@ -287,6 +335,7 @@ export default function useWorkSpace() {
     handleTooltip,
     handleGridDrag,
     handleGridGap,
+    handleDelete,
     downloadImage
   }
 }

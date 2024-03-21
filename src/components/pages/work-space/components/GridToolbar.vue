@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { Select, Slider } from 'ant-design-vue'
+import { SaveOutlined, DeleteOutlined } from '@ant-design/icons-vue'
 import useWorkSpace from '../utils/hooks/useWorkSpace'
 import { downloadButtonStyle } from '@/components/common/common_styles'
 
@@ -8,6 +9,7 @@ const {
   handleTooltip,
   handleColor,
   handleGridGap,
+  handleDelete,
   downloadImage,
   gridTypeOptions,
   gridOption,
@@ -62,12 +64,23 @@ const {
       </div>
 
       <div class="flex space-x-1 w-full items-center justify-end">
-        <button :class="downloadButtonStyle" @click="() => downloadImage('png')">
-          PNG Download
-        </button>
-        <button :class="downloadButtonStyle" @click="() => downloadImage('jpeg')">
-          JPEG Download
-        </button>
+        <div :class="downloadButtonStyle" @click="() => downloadImage('png')">
+          <SaveOutlined />
+          <span>PNG Download</span>
+        </div>
+
+        <div :class="downloadButtonStyle" @click="() => downloadImage('jpeg')">
+          <SaveOutlined />
+          <span>JPEG Download</span>
+        </div>
+      </div>
+      <div class="flex items-center justify-end w-full text-[40px]">
+        <DeleteOutlined
+          class="mr-2"
+          @dragover.prevent
+          @drop="handleDelete"
+          @drop.prevent="handleDelete"
+        />
       </div>
     </div>
   </article>
