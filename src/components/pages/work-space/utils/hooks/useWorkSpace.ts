@@ -113,7 +113,7 @@ export default function useWorkSpace() {
     createGrids(10, 12, 20, 5, 6, 10)
   }
 
-  const handleChange = (e: ChangeEvent, key: string) => {
+  const handleChange = (e: any, key: string) => {
     switch (key) {
       case 'album':
         albumName.value = e.target.value

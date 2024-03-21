@@ -20,8 +20,8 @@ const {
 
 <template class="w-full">
   <article class="bg-slate-800 w-full h-full">
-    <div class="w-full flex flex-col space-y-5">
-      <div class="flex items-center justify-between">
+    <div class="w-full flex flex-col space-y-5 p-1">
+      <div class="flex items-center justify-between mt-10">
         <label class="ml-2 text-white font-bold"> Type </label>
         <Select
           :options="gridTypeOptions"

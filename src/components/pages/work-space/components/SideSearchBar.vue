@@ -9,15 +9,16 @@ const { searchData, handleChange, handleSearch } = useWorkSpace()
 
 <template>
   <div class="flex flex-col bg-slate-800 h-full mr-5 overflow-y-auto">
-    <div class="flex">
+    <form @submit.prevent="handleSearch" class="flex w-full mt-5">
       <Input
         type="text"
         @input="(e) => handleChange(e, 'album')"
-        placeholder="enter: song,album,artist ..."
+        placeholder="enter: song, album, artist ..."
       />
 
-      <button @click="handleSearch" className="bg-blue-800 p-1 rounded-xl">search</button>
-    </div>
+      <button type="submit" class="bg-blue-800 p-1 rounded-xl">search</button>
+    </form>
+    <span class="p-1 text-white text-[12px] font-bold">You can also drop your image</span>
 
     <SearchResult :searchData="searchData" />
   </div>
