@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { Select, Slider } from 'ant-design-vue'
-import { SaveOutlined, DeleteOutlined } from '@ant-design/icons-vue'
+import { Select, Slider, Popconfirm } from 'ant-design-vue'
+import { SaveOutlined, DeleteOutlined, ClearOutlined } from '@ant-design/icons-vue'
 import useWorkSpace from '../utils/hooks/useWorkSpace'
 import { downloadButtonStyle } from '@/components/common/common_styles'
 
@@ -10,6 +10,7 @@ const {
   handleColor,
   handleGridGap,
   handleDelete,
+  handleClear,
   downloadImage,
   gridTypeOptions,
   gridOption,
@@ -74,13 +75,28 @@ const {
           <span>JPEG Download</span>
         </div>
       </div>
-      <div class="flex items-center justify-end w-full text-[40px]">
+      <div class="font-bold rounded-xl flex items-center justify-end w-full mr-2">
+        <span class="text-[12.5px] text-white font-bold">Drag to Delete</span>
         <DeleteOutlined
-          class="mr-2"
+          class="mr-2 text-[40px]"
           @dragover.prevent
           @drop="handleDelete"
           @drop.prevent="handleDelete"
         />
+      </div>
+
+      <div class="flex items-center justify-end text-[40px]">
+        <span class="text-[12.5px] mr-1 text-white font-bold">Clear</span>
+        <Popconfirm
+          title="Are you sure to clear?"
+          placement="rightTop"
+          ok-text="Yes"
+          cancel-text="No"
+          @confirm="handleClear"
+          ok-type="danger"
+        >
+          <ClearOutlined class="mr-2"></ClearOutlined>
+        </Popconfirm>
       </div>
     </div>
   </article>

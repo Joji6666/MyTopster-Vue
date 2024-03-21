@@ -21,7 +21,7 @@ export default function useWorkSpace() {
   const albumName = ref<string | undefined>('')
   const artist = ref<string | undefined>('')
   const searchData = ref<AlbumDataInterface[]>([])
-  const gridType = ref<string | SelectValue>('')
+  const gridType = ref<string | SelectValue>('basic')
   const gridOption: GridOptionInterface = gridOptionStore
 
   // values
@@ -293,6 +293,10 @@ export default function useWorkSpace() {
     gridOption.gridGap = value
   }
 
+  const handleClear = () => {
+    handleSelect(gridType.value, 'clear')
+  }
+
   const downloadImage = async (key: string) => {
     const captureArea: HTMLElement | null = document.querySelector('#captureArea')
     const type = key === 'png' ? 'image/png' : 'image/jpeg'
@@ -336,6 +340,7 @@ export default function useWorkSpace() {
     handleGridDrag,
     handleGridGap,
     handleDelete,
+    handleClear,
     downloadImage
   }
 }
