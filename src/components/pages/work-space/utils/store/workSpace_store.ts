@@ -1,5 +1,7 @@
 import { reactive } from 'vue'
 import type {
+  CustomGridDatasInterface,
+  CustomGridOptionsInterface,
   GridDatasInterface,
   GridOptionInterface,
   SelectedImageStoreInterface,
@@ -24,8 +26,21 @@ export const gridDatasStore = reactive<GridDatasInterface>({
   gridDatas: []
 })
 
+export const customGridDatas = reactive<CustomGridDatasInterface>({
+  customGridDatas: []
+})
+
 export const selectedImageStore = reactive<SelectedImageStoreInterface>({
   seletedImage: null,
   seletedGrid: null,
   isGridDrag: false
+})
+
+export const customGridOptions = reactive<CustomGridOptionsInterface>({
+  largeTileCount: 0,
+  middleTileCount: 0,
+  smallTileCount: 0,
+  row: 0,
+  col: 0,
+  type: 'onlySmall'
 })

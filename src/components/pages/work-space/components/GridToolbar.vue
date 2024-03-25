@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import CustomGridToolbar from './CustomGridToolbar.vue'
 import { Select, Slider, Popconfirm } from 'ant-design-vue'
 import { SaveOutlined, DeleteOutlined, ClearOutlined } from '@ant-design/icons-vue'
 import useWorkSpace from '../utils/hooks/useWorkSpace'
@@ -21,6 +22,8 @@ const {
 <template class="w-full">
   <article class="bg-slate-800 w-full h-full">
     <div class="w-full flex flex-col space-y-5 p-1">
+      <span class="w-full flex items-center justify-center font-bold text-white">Options</span>
+
       <div class="flex items-center justify-between mt-10">
         <label class="ml-2 text-white font-bold"> Type </label>
         <Select
@@ -64,6 +67,8 @@ const {
         <Slider class="w-[65%]" :min="0" :max="25" @change="handleGridGap" :default-value="1" />
       </div>
 
+      <CustomGridToolbar v-if="gridOption.gridType === 'custom'" />
+
       <div class="flex space-x-1 w-full items-center justify-end">
         <div :class="downloadButtonStyle" @click="() => downloadImage('png')">
           <SaveOutlined />
@@ -75,6 +80,7 @@ const {
           <span>JPEG Download</span>
         </div>
       </div>
+
       <div class="font-bold rounded-xl flex items-center justify-end w-full mr-2">
         <span class="text-[12.5px] text-white font-bold">Drag to Delete</span>
         <DeleteOutlined

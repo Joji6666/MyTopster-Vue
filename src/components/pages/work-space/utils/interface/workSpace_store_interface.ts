@@ -1,3 +1,4 @@
+import type { SelectValue } from 'ant-design-vue/es/select'
 import type { AlbumDataInterface } from './interface'
 
 export interface GridOptionInterface {
@@ -23,10 +24,15 @@ export interface GridDataInterface {
   col: number
   count: number
   grids: GridPropertiesInterface[]
+  type?: string
 }
 
 export interface GridDatasInterface {
   gridDatas: GridDataInterface[]
+}
+
+export interface CustomGridDatasInterface {
+  customGridDatas: GridDataInterface[]
 }
 
 export interface TopsterDatasInterface {
@@ -37,4 +43,13 @@ export interface SelectedImageStoreInterface {
   seletedImage: AlbumDataInterface | null
   seletedGrid: GridPropertiesInterface | null
   isGridDrag: boolean
+}
+
+export interface CustomGridOptionsInterface {
+  largeTileCount: number
+  middleTileCount: number
+  smallTileCount: number
+  row: number
+  col: number
+  type: string | SelectValue
 }

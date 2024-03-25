@@ -2,7 +2,12 @@ import axios from 'axios'
 import html2canvas from 'html2canvas'
 import { ref } from 'vue'
 
-import { gridDatasStore, gridOptionStore, selectedImageStore } from '../store/workSpace_store'
+import {
+  customGridOptions,
+  gridDatasStore,
+  gridOptionStore,
+  selectedImageStore
+} from '../store/workSpace_store'
 import type {
   GridDataInterface,
   GridOptionInterface,
@@ -10,7 +15,6 @@ import type {
 } from '../interface/workSpace_store_interface'
 import type { SelectValue } from 'ant-design-vue/es/select'
 import type { AlbumDataInterface } from '@/components/pages/work-space/utils/interface/interface'
-import type { ChangeEvent } from 'ant-design-vue/es/_util/EventInterface'
 
 export default function useWorkSpace() {
   const apiKey = import.meta.env.VITE_API_URL
@@ -340,6 +344,7 @@ export default function useWorkSpace() {
     handleGridDrag,
     handleGridGap,
     handleDelete,
+
     handleClear,
     downloadImage
   }

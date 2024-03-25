@@ -1,18 +1,53 @@
 <script setup lang="ts">
-import { onMounted } from 'vue'
+import { watch } from 'vue'
 import useWorkSpace from '../utils/hooks/useWorkSpace'
-import { gridDatasStore } from '../utils/store/workSpace_store'
-import CustomGrid from './CustomGrid.vue'
-const { handleDragEnd, gridInit, gridOption, handleGridDrag } = useWorkSpace()
+import { customGridDatas, customGridOptions } from '../utils/store/workSpace_store'
 
-onMounted(() => {
-  gridInit()
-})
+const { handleDragEnd, gridOption, handleGridDrag } = useWorkSpace()
+
+watch(
+  () => customGridOptions.type,
+  (newValue, oldValue) => {
+    if (newValue !== oldValue) {
+      customGridDatas.customGridDatas = []
+    }
+
+    if (newValue !== 'onlySmall' && customGridDatas.customGridDatas.length === 0) {
+      customGridDatas.customGridDatas.push(
+        {
+          col: 5,
+          count: 0,
+          grids: [],
+          type: 'large'
+        },
+        {
+          col: 6,
+          count: 0,
+          grids: [],
+          type: 'middle'
+        },
+        {
+          col: 10,
+          count: 0,
+          grids: [],
+          type: 'small'
+        }
+      )
+    }
+
+    if (newValue === 'onlySmall' && customGridDatas.customGridDatas.length === 0) {
+      customGridDatas.customGridDatas.push({
+        col: 10,
+        count: 0,
+        grids: [{ width: 0, height: 0, imagePath: '', title: '', key: `1`, artist: '' }]
+      })
+    }
+  }
+)
 </script>
 
 <template>
   <article
-    v-show="gridOption.gridType !== 'custom'"
     class="flex w-full h-full"
     :style="{
       backgroundColor: gridOption.backgroundColor
@@ -32,9 +67,8 @@ onMounted(() => {
           gridTemplateColumns: `repeat(${gridData.col}, minmax(0, 1fr))`,
           gap: `${gridOption.gridGap > 0 ? gridOption.gridGap + 3 : 0}px`
         }"
-        v-for="(gridData, index) in gridDatasStore.gridDatas"
+        v-for="(gridData, index) in customGridDatas.customGridDatas"
         :key="`large-${index}`"
-        v-show="gridData.count > 0"
       >
         <div
           v-for="(value, gridIndex) in gridData.grids"
@@ -80,7 +114,7 @@ onMounted(() => {
       v-if="gridOption.tooltipOption === 'side'"
       :style="{ backgroundColor: gridOption.backgroundColor, color: gridOption.textColor }"
     >
-      <div v-for="(gridData, index) in gridDatasStore.gridDatas" :key="`tootip-${index}`">
+      <div v-for="(gridData, index) in customGridDatas.customGridDatas" :key="`tootip-${index}`">
         <div
           v-show="value.artist && value.title"
           v-for="(value, index) in gridData.grids"
@@ -93,6 +127,4 @@ onMounted(() => {
       </div>
     </div>
   </article>
-
-  <CustomGrid v-if="gridOption.gridType === 'custom'" />
 </template>

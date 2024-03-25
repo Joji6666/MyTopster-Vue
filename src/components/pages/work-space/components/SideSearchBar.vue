@@ -9,6 +9,10 @@ const { searchData, handleChange, handleSearch } = useWorkSpace()
 
 <template>
   <div class="flex flex-col bg-slate-800 h-full mr-5 overflow-y-auto">
+    <span class="w-full flex items-center justify-center font-bold text-white mt-1"
+      >Try Search</span
+    >
+
     <form @submit.prevent="handleSearch" class="flex w-full mt-5">
       <Input
         type="text"
