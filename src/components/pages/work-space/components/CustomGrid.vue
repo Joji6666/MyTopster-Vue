@@ -16,14 +16,6 @@ watch(
     if (newValue !== 'onlySmall' && customGridDatas.customGridDatas.length === 0) {
       customGridDatas.customGridDatas.push(
         {
-          col: 5,
-          count: 0,
-          grids: [],
-          type: 'large',
-          width: '20%',
-          height: '225px'
-        },
-        {
           col: 6,
           count: 0,
           grids: [],

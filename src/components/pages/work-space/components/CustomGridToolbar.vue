@@ -43,7 +43,7 @@ const customGridTypeOptions = [
         :min="0"
         :max="20"
         v-on:change="(e) => handleCustomGridRowAndCol(e, 'col')"
-        :default-value="1"
+        :default-value="0"
       />
     </div>
   </div>

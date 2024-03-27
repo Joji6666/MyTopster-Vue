@@ -25,12 +25,57 @@ const useCustomGrid = () => {
         {
           customGridOptions.largeTileCount = e
 
-          const customLargeGridData = customGridDatas.customGridDatas.find(
+          const customLargeGridDatas = customGridDatas.customGridDatas.filter(
             (gridData: GridDataInterface) => gridData.type === 'large'
           )
 
+          if (customLargeGridDatas.length === 0) {
+            customGridDatas.customGridDatas.splice(0, 0, {
+              col: 5,
+              count: 0,
+              grids: [],
+              type: 'large',
+              width: '20%',
+              height: '225px'
+            })
+
+            customGridDatas.customGridDatas[0].grids.push({
+              width: 0,
+              height: 0,
+              imagePath: '',
+              title: '',
+              key: `${totalCount}`,
+              artist: ''
+            })
+          }
+
+          const lastIndex = customLargeGridDatas.length - 1
+          const targetLargeGridData = customLargeGridDatas[lastIndex]
+
+          if (targetLargeGridData.grids.length === 4 && e > prevLargeTileCount) {
+            customGridDatas.customGridDatas.splice(lastIndex + 1, 0, {
+              col: 5,
+              count: 0,
+              grids: [],
+              type: 'large',
+              width: '20%',
+              height: '225px'
+            })
+
+            customLargeGridDatas[customLargeGridDatas.length - 1].grids.push({
+              width: 0,
+              height: 0,
+              imagePath: '',
+              title: '',
+              key: `${totalCount}`,
+              artist: ''
+            })
+
+            return
+          }
+
           if (e > prevLargeTileCount) {
-            customLargeGridData?.grids.push({
+            targetLargeGridData?.grids.push({
               width: 0,
               height: 0,
               imagePath: '',
@@ -39,7 +84,17 @@ const useCustomGrid = () => {
               artist: ''
             })
           } else {
-            customLargeGridData?.grids.pop()
+            customLargeGridDatas[customLargeGridDatas.length - 1].grids.pop()
+
+            console.log(targetLargeGridData)
+
+            if (targetLargeGridData.grids.length === 0) {
+              const filteredGridDatas = customGridDatas.customGridDatas.filter(
+                (gridData: GridDataInterface) => gridData.grids.length !== 0
+              )
+
+              customGridDatas.customGridDatas = filteredGridDatas
+            }
           }
         }
 
