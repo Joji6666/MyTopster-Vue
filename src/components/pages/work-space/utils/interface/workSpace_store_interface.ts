@@ -26,6 +26,8 @@ export interface GridDataInterface {
   count: number
   grids: GridPropertiesInterface[]
   type?: string
+  width?: number | string
+  height?: number | string
 }
 
 export interface GridDatasInterface {

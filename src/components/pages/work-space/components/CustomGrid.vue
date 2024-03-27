@@ -18,19 +18,25 @@ watch(
           col: 5,
           count: 0,
           grids: [],
-          type: 'large'
+          type: 'large',
+          width: '225px',
+          height: '225px'
         },
         {
           col: 6,
           count: 0,
           grids: [],
-          type: 'middle'
+          type: 'middle',
+          width: '187px',
+          height: '187px'
         },
         {
           col: 10,
           count: 0,
           grids: [],
-          type: 'small'
+          type: 'small',
+          width: '112px',
+          height: '112px'
         }
       )
     }
@@ -62,9 +68,10 @@ watch(
       }"
     >
       <div
-        class="grid mb-2"
+        class="grid grid-flow-col items-center justify-center mb-2"
         :style="{
-          gridTemplateColumns: `repeat(${gridData.col}, minmax(0, 1fr))`,
+          gridAutoColumns: `minmax(${gridData.width}, ${gridData.height})`,
+
           gap: `${gridOption.gridGap > 0 ? gridOption.gridGap + 3 : 0}px`
         }"
         v-for="(gridData, index) in customGridDatas.customGridDatas"
