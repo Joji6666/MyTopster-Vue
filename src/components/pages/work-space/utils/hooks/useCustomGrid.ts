@@ -104,12 +104,63 @@ const useCustomGrid = () => {
         {
           customGridOptions.middleTileCount = e
 
-          const customMiddleGridData = customGridDatas.customGridDatas.find(
+          const customMiddleGridDatas = customGridDatas.customGridDatas.filter(
             (gridData: GridDataInterface) => gridData.type === 'middle'
           )
 
+          if (customMiddleGridDatas.length === 0) {
+            const customLargeGridDatas = customGridDatas.customGridDatas.filter(
+              (gridData: GridDataInterface) => gridData.type === 'large'
+            )
+            customGridDatas.customGridDatas.splice(customLargeGridDatas.length, 0, {
+              col: 5,
+              count: 0,
+              grids: [],
+              type: 'middle',
+              width: '16.622%',
+              height: '186px'
+            })
+
+            customGridDatas.customGridDatas[customLargeGridDatas.length].grids.push({
+              width: 0,
+              height: 0,
+              imagePath: '',
+              title: '',
+              key: `${totalCount}`,
+              artist: ''
+            })
+          }
+
+          const lastIndex = customMiddleGridDatas.length - 1
+          const targetMiddleGridData = customMiddleGridDatas[lastIndex]
+
+          if (targetMiddleGridData.grids.length === 5 && e > prevMiddleTileCount) {
+            const customLargeGridDatas = customGridDatas.customGridDatas.filter(
+              (gridData: GridDataInterface) => gridData.type === 'large'
+            )
+            customGridDatas.customGridDatas.splice(lastIndex + 1 + customLargeGridDatas.length, 0, {
+              col: 5,
+              count: 0,
+              grids: [],
+              type: 'middle',
+              width: '16.622%',
+              height: '186px'
+            })
+
+            customMiddleGridDatas[customMiddleGridDatas.length - 1].grids.push({
+              width: 0,
+              height: 0,
+              imagePath: '',
+              title: '',
+              key: `${totalCount}`,
+              artist: ''
+            })
+
+            return
+          }
+
           if (e > prevMiddleTileCount) {
-            customMiddleGridData?.grids.push({
+            targetMiddleGridData?.grids.push({
               width: 0,
               height: 0,
               imagePath: '',
@@ -118,7 +169,15 @@ const useCustomGrid = () => {
               artist: ''
             })
           } else {
-            customMiddleGridData?.grids.pop()
+            customMiddleGridDatas[customMiddleGridDatas.length - 1].grids.pop()
+
+            if (targetMiddleGridData.grids.length === 0) {
+              const filteredGridDatas = customGridDatas.customGridDatas.filter(
+                (gridData: GridDataInterface) => gridData.grids.length !== 0
+              )
+
+              customGridDatas.customGridDatas = filteredGridDatas
+            }
           }
         }
 
@@ -128,12 +187,83 @@ const useCustomGrid = () => {
         {
           customGridOptions.smallTileCount = e
 
-          const customSmallGridData = customGridDatas.customGridDatas.find(
+          const customSmallGridDatas = customGridDatas.customGridDatas.filter(
             (gridData: GridDataInterface) => gridData.type === 'small'
           )
 
+          if (customSmallGridDatas.length === 0) {
+            const customMiddleGridDatas = customGridDatas.customGridDatas.filter(
+              (gridData: GridDataInterface) => gridData.type === 'middle'
+            )
+
+            const customLargeGridDatas = customGridDatas.customGridDatas.filter(
+              (gridData: GridDataInterface) => gridData.type === 'large'
+            )
+
+            customGridDatas.customGridDatas.splice(
+              customMiddleGridDatas.length + customLargeGridDatas.length,
+              0,
+              {
+                col: 5,
+                count: 0,
+                grids: [],
+                type: 'small',
+                width: '9.83%',
+                height: '110px'
+              }
+            )
+
+            customGridDatas.customGridDatas[
+              customMiddleGridDatas.length + customLargeGridDatas.length
+            ].grids.push({
+              width: 0,
+              height: 0,
+              imagePath: '',
+              title: '',
+              key: `${totalCount}`,
+              artist: ''
+            })
+          }
+
+          const lastIndex = customSmallGridDatas.length - 1
+          const targetSmallGridData = customSmallGridDatas[lastIndex]
+
+          if (targetSmallGridData.grids.length === 9 && e > prevSmallTileCount) {
+            const customMiddleGridDatas = customGridDatas.customGridDatas.filter(
+              (gridData: GridDataInterface) => gridData.type === 'middle'
+            )
+
+            const customLargeGridDatas = customGridDatas.customGridDatas.filter(
+              (gridData: GridDataInterface) => gridData.type === 'large'
+            )
+
+            customGridDatas.customGridDatas.splice(
+              lastIndex + 1 + customMiddleGridDatas.length + customLargeGridDatas.length,
+              0,
+              {
+                col: 5,
+                count: 0,
+                grids: [],
+                type: 'small',
+                width: '9.83%',
+                height: '110px'
+              }
+            )
+
+            customSmallGridDatas[customSmallGridDatas.length - 1].grids.push({
+              width: 0,
+              height: 0,
+              imagePath: '',
+              title: '',
+              key: `${totalCount}`,
+              artist: ''
+            })
+
+            return
+          }
+
           if (e > prevSmallTileCount) {
-            customSmallGridData?.grids.push({
+            targetSmallGridData?.grids.push({
               width: 0,
               height: 0,
               imagePath: '',
@@ -142,7 +272,15 @@ const useCustomGrid = () => {
               artist: ''
             })
           } else {
-            customSmallGridData?.grids.pop()
+            customSmallGridDatas[customSmallGridDatas.length - 1].grids.pop()
+
+            if (targetSmallGridData.grids.length === 0) {
+              const filteredGridDatas = customGridDatas.customGridDatas.filter(
+                (gridData: GridDataInterface) => gridData.grids.length !== 0
+              )
+
+              customGridDatas.customGridDatas = filteredGridDatas
+            }
           }
         }
 
