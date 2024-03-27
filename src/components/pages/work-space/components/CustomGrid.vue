@@ -12,6 +12,7 @@ watch(
       customGridDatas.customGridDatas = []
     }
 
+    // 9.77
     if (newValue !== 'onlySmall' && customGridDatas.customGridDatas.length === 0) {
       customGridDatas.customGridDatas.push(
         {
@@ -19,7 +20,7 @@ watch(
           count: 0,
           grids: [],
           type: 'large',
-          width: '225px',
+          width: '20%',
           height: '225px'
         },
         {
@@ -27,16 +28,16 @@ watch(
           count: 0,
           grids: [],
           type: 'middle',
-          width: '187px',
-          height: '187px'
+          width: '16.622%',
+          height: '186px'
         },
         {
           col: 10,
           count: 0,
           grids: [],
           type: 'small',
-          width: '112px',
-          height: '112px'
+          width: '9.83%',
+          height: '110px'
         }
       )
     }

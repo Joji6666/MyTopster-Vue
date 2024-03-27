@@ -182,8 +182,26 @@ export default function useWorkSpace() {
   }
 
   const handleTooltip = (e: SelectValue) => {
+    console.log(e, 'e @@@@@@')
+
     if (e && typeof e === 'string') {
       gridOptionStore.tooltipOption = e
+
+      if (e === 'side' && gridOptionStore.isCustom) {
+        customGridDatas.customGridDatas.forEach((gridData: GridDataInterface) => {
+          if (gridData.type === 'small') {
+            gridData.width = '9.77%'
+          }
+        })
+      }
+
+      if (e !== 'side' && gridOptionStore.isCustom) {
+        customGridDatas.customGridDatas.forEach((gridData: GridDataInterface) => {
+          if (gridData.type === 'small') {
+            gridData.width = '9.83%'
+          }
+        })
+      }
     }
   }
 
