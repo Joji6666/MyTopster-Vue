@@ -15,7 +15,8 @@ export const gridOptionStore = reactive<GridOptionInterface>({
   tooltipOption: 'none',
   tooltipBackgroundColor: '#000000',
   textColor: '#ffffff',
-  gridGap: 1
+  gridGap: 1,
+  isCustom: false
 })
 
 export const topsterDataStore = reactive<TopsterDatasInterface>({

@@ -9,6 +9,7 @@ export interface GridOptionInterface {
   tooltipBackgroundColor: string
   textColor: string
   gridGap: number
+  isCustom: boolean
 }
 
 export interface GridPropertiesInterface {

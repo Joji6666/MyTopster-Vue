@@ -14,6 +14,12 @@ const useCustomGrid = () => {
     const prevMiddleTileCount = structuredClone(customGridOptions.middleTileCount)
     const prevSmallTileCount = structuredClone(customGridOptions.smallTileCount)
 
+    let totalCount = 0
+
+    customGridDatas.customGridDatas.forEach((gridData: GridDataInterface) => {
+      totalCount += gridData.grids.length
+    })
+
     switch (type) {
       case 'large':
         {
@@ -29,7 +35,7 @@ const useCustomGrid = () => {
               height: 0,
               imagePath: '',
               title: '',
-              key: `${customLargeGridData.grids.length + 1}`,
+              key: `${totalCount}`,
               artist: ''
             })
           } else {
@@ -53,7 +59,7 @@ const useCustomGrid = () => {
               height: 0,
               imagePath: '',
               title: '',
-              key: `${customMiddleGridData.grids.length + 1}`,
+              key: `${totalCount}`,
               artist: ''
             })
           } else {
@@ -77,7 +83,7 @@ const useCustomGrid = () => {
               height: 0,
               imagePath: '',
               title: '',
-              key: `${customSmallGridData.grids.length + 1}`,
+              key: `${totalCount}`,
               artist: ''
             })
           } else {
@@ -95,8 +101,12 @@ const useCustomGrid = () => {
   const handleCustomGridRowAndCol = (e: any, type: string) => {
     const prevRow = structuredClone(customGridOptions.row)
     const prevCol = structuredClone(customGridOptions.col)
+    let totalCount = 0
 
-    if (type === 'row') {
+    customGridDatas.customGridDatas.forEach((gridData: GridDataInterface) => {
+      totalCount += gridData.grids.length
+    })
+    if (type === 'col') {
       customGridOptions.row = e
 
       if (e > prevRow) {
@@ -112,7 +122,7 @@ const useCustomGrid = () => {
             height: 0,
             imagePath: '',
             title: '',
-            key: `${1}`,
+            key: `${totalCount}`,
             artist: ''
           })
         }
@@ -129,7 +139,7 @@ const useCustomGrid = () => {
             height: 0,
             imagePath: '',
             title: '',
-            key: `${gridData.grids.length + 1}`,
+            key: `${totalCount}`,
             artist: ''
           })
         })

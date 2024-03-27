@@ -52,7 +52,7 @@ watch(
     :style="{
       backgroundColor: gridOption.backgroundColor
     }"
-    id="captureArea"
+    id="customCaptureArea"
   >
     <div
       class="h-full p-8"
@@ -82,7 +82,7 @@ watch(
             @drop.prevent="handleDragEnd"
             draggable="true"
             @dragstart="() => handleGridDrag(value)"
-            :accesskey="value.key"
+            :accesskey="value.key.toString()"
           >
             <img
               v-if="value.imagePath"
@@ -91,7 +91,7 @@ watch(
               @dragover.prevent
               @drop="handleDragEnd"
               @drop.prevent="handleDragEnd"
-              :accesskey="value.key"
+              :accesskey="value.key.toString()"
             />
           </div>
 

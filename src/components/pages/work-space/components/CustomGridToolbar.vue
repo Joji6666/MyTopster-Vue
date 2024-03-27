@@ -29,7 +29,7 @@ const customGridTypeOptions = [
       <Slider
         class="w-[65%]"
         :min="0"
-        :max="15"
+        :max="10"
         v-on:change="(e) => handleCustomGridRowAndCol(e, 'row')"
         :default-value="1"
       />
@@ -41,7 +41,7 @@ const customGridTypeOptions = [
       <Slider
         class="w-[65%]"
         :min="0"
-        :max="15"
+        :max="20"
         v-on:change="(e) => handleCustomGridRowAndCol(e, 'col')"
         :default-value="1"
       />

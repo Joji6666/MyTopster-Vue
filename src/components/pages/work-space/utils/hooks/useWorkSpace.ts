@@ -3,6 +3,7 @@ import html2canvas from 'html2canvas'
 import { ref } from 'vue'
 
 import {
+  customGridDatas,
   customGridOptions,
   gridDatasStore,
   gridOptionStore,
@@ -133,7 +134,7 @@ export default function useWorkSpace() {
 
   const handleSelect = (e: SelectValue, key: string) => {
     gridType.value = e
-
+    gridOptionStore.isCustom = false
     switch (e) {
       case 'basic':
         createGrids(10, 12, 20, 5, 6, 10)
@@ -168,6 +169,11 @@ export default function useWorkSpace() {
       case 'top50_small':
         createGrids(0, 0, 50, 5, 6, 10)
 
+        break
+
+      case 'custom':
+        customGridOptions.type = 'onlySmall'
+        gridOptionStore.isCustom = true
         break
 
       default:
@@ -233,8 +239,13 @@ export default function useWorkSpace() {
 
   const handleDragEnd = (e: any) => {
     const accessKey = e.target.accessKey
+    const targetDatas = !gridOptionStore.isCustom
+      ? gridDatasStore.gridDatas
+      : customGridDatas.customGridDatas
 
-    gridDatasStore.gridDatas.forEach((gridData: GridDataInterface) => {
+    console.log(gridOptionStore.isCustom, targetDatas)
+
+    targetDatas.forEach((gridData: GridDataInterface) => {
       const foundTile = gridData.grids.find(
         (grid: GridPropertiesInterface) => grid.key === accessKey
       )
@@ -248,7 +259,7 @@ export default function useWorkSpace() {
           foundTile.artist = selectedImageStore.seletedGrid.artist
 
           if (foundTile.imagePath) {
-            gridDatasStore.gridDatas.forEach((gridData: GridDataInterface) => {
+            targetDatas.forEach((gridData: GridDataInterface) => {
               const prevGrid = gridData.grids.find(
                 (grid: GridPropertiesInterface) => grid.key === selectedImageStore.seletedGrid?.key
               )
@@ -286,6 +297,8 @@ export default function useWorkSpace() {
     selectedImageStore.seletedGrid = null
     selectedImageStore.seletedImage = null
     selectedImageStore.isGridDrag = false
+
+    console.log(targetDatas, 'target Datas @@')
   }
 
   const handleGridDrag = (grid: GridPropertiesInterface) => {
@@ -302,7 +315,9 @@ export default function useWorkSpace() {
   }
 
   const downloadImage = async (key: string) => {
-    const captureArea: HTMLElement | null = document.querySelector('#captureArea')
+    const captureArea: HTMLElement | null = gridOptionStore.isCustom
+      ? document.querySelector('#customCaptureArea')
+      : document.querySelector('#captureArea')
     const type = key === 'png' ? 'image/png' : 'image/jpeg'
 
     if (captureArea) {
