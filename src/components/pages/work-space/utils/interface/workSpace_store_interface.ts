@@ -10,6 +10,7 @@ export interface GridOptionInterface {
   textColor: string
   gridGap: number
   isCustom: boolean
+  selectedWork: string
 }
 
 export interface GridPropertiesInterface {
@@ -32,6 +33,15 @@ export interface GridDataInterface {
 
 export interface GridDatasInterface {
   gridDatas: GridDataInterface[]
+}
+
+export interface StorageDataInterface {
+  name: string
+  gridDatas: GridDataInterface[]
+}
+
+export interface StorageDatasInterface {
+  storageData: StorageDataInterface[]
 }
 
 export interface CustomGridDatasInterface {

@@ -1,18 +1,20 @@
 import axios from 'axios'
 import html2canvas from 'html2canvas'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 
 import {
   customGridDatas,
   customGridOptions,
   gridDatasStore,
   gridOptionStore,
-  selectedImageStore
+  selectedImageStore,
+  storageData
 } from '../store/workSpace_store'
 import type {
   GridDataInterface,
   GridOptionInterface,
-  GridPropertiesInterface
+  GridPropertiesInterface,
+  StorageDataInterface
 } from '../interface/workSpace_store_interface'
 import type { SelectValue } from 'ant-design-vue/es/select'
 import type { AlbumDataInterface } from '@/components/pages/work-space/utils/interface/interface'
@@ -112,6 +114,8 @@ export default function useWorkSpace() {
       }
     }
     gridDatasStore.gridDatas = [largeGridData, middleGridData, smallGridData]
+
+    return [largeGridData, middleGridData, smallGridData]
   }
 
   const gridInit = () => {
@@ -366,6 +370,7 @@ export default function useWorkSpace() {
     gridType,
     gridTypeOptions,
     tooltipOptions,
+
     gridInit,
     handleChange,
     handleSearch,
@@ -377,8 +382,8 @@ export default function useWorkSpace() {
     handleGridDrag,
     handleGridGap,
     handleDelete,
-
     handleClear,
+
     downloadImage
   }
 }

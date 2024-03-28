@@ -4,6 +4,8 @@ import { Select, Slider, Popconfirm } from 'ant-design-vue'
 import { SaveOutlined, DeleteOutlined, ClearOutlined } from '@ant-design/icons-vue'
 import useWorkSpace from '../utils/hooks/useWorkSpace'
 import { downloadButtonStyle } from '@/components/common/common_styles'
+import { onMounted } from 'vue'
+import useStorage from '../utils/hooks/useStorage'
 
 const {
   handleSelect,
@@ -17,12 +19,43 @@ const {
   gridOption,
   tooltipOptions
 } = useWorkSpace()
+
+const { createLocalStorage, getLocalStorage, storageOptions, handleWork } = useStorage()
+
+onMounted(() => {
+  if (!localStorage.getItem('datas')) {
+    createLocalStorage()
+  }
+
+  getLocalStorage()
+})
 </script>
 
 <template class="w-full">
   <article class="bg-slate-800 w-full h-full">
     <div class="w-full flex flex-col space-y-5 p-1">
       <span class="w-full flex items-center justify-center font-bold text-white">Options</span>
+
+      <div class="flex items-center justify-between mt-10">
+        <label class="ml-2 text-white font-bold"> My Works </label>
+        <Select
+          :options="storageOptions"
+          v-model:value="gridOption.selectedWork"
+          class="w-[65%]"
+          @change="(e) => handleWork(e, 'work')"
+        >
+        </Select>
+      </div>
+
+      <div class="flex space-x-1 w-full items-center justify-end">
+        <div :class="downloadButtonStyle" @click="() => downloadImage('png')">
+          <span>Add Work</span>
+        </div>
+
+        <div :class="downloadButtonStyle" @click="() => downloadImage('jpeg')">
+          <span>Delete Work</span>
+        </div>
+      </div>
 
       <div class="flex items-center justify-between mt-10">
         <label class="ml-2 text-white font-bold"> Type </label>

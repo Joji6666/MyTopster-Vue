@@ -5,6 +5,7 @@ import type {
   GridDatasInterface,
   GridOptionInterface,
   SelectedImageStoreInterface,
+  StorageDatasInterface,
   TopsterDatasInterface
 } from '../interface/workSpace_store_interface'
 
@@ -16,7 +17,8 @@ export const gridOptionStore = reactive<GridOptionInterface>({
   tooltipBackgroundColor: '#000000',
   textColor: '#ffffff',
   gridGap: 1,
-  isCustom: false
+  isCustom: false,
+  selectedWork: 'work1'
 })
 
 export const topsterDataStore = reactive<TopsterDatasInterface>({
@@ -25,6 +27,10 @@ export const topsterDataStore = reactive<TopsterDatasInterface>({
 
 export const gridDatasStore = reactive<GridDatasInterface>({
   gridDatas: []
+})
+
+export const storageData = reactive<StorageDatasInterface>({
+  storageData: []
 })
 
 export const customGridDatas = reactive<CustomGridDatasInterface>({
