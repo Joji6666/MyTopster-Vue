@@ -20,7 +20,7 @@ const {
   tooltipOptions
 } = useWorkSpace()
 
-const { createLocalStorage, getLocalStorage, storageOptions, handleWork } = useStorage()
+const { createLocalStorage, getLocalStorage, storageOptions, handleWork, addWork } = useStorage()
 
 onMounted(() => {
   if (!localStorage.getItem('datas')) {
@@ -48,7 +48,7 @@ onMounted(() => {
       </div>
 
       <div class="flex space-x-1 w-full items-center justify-end">
-        <div :class="downloadButtonStyle" @click="() => downloadImage('png')">
+        <div :class="downloadButtonStyle" @click="() => addWork()">
           <span>Add Work</span>
         </div>
 

@@ -58,7 +58,8 @@ export default function useWorkSpace() {
     smallGridCount: number,
     largeGridCol: number,
     middleGridCol: number,
-    smallGridCol: number
+    smallGridCol: number,
+    isAddWork: boolean = false
   ) => {
     const largeGridData: GridDataInterface = {
       col: largeGridCol,
@@ -113,7 +114,10 @@ export default function useWorkSpace() {
         })
       }
     }
-    gridDatasStore.gridDatas = [largeGridData, middleGridData, smallGridData]
+
+    if (!isAddWork) {
+      gridDatasStore.gridDatas = [largeGridData, middleGridData, smallGridData]
+    }
 
     return [largeGridData, middleGridData, smallGridData]
   }
@@ -383,7 +387,7 @@ export default function useWorkSpace() {
     handleGridGap,
     handleDelete,
     handleClear,
-
+    createGrids,
     downloadImage
   }
 }

@@ -56,7 +56,27 @@ const useStorage = () => {
     }
   }
 
-  return { storageOptions, getLocalStorage, createLocalStorage, handleWork }
+  const addWork = () => {
+    const getStorageDatas = localStorage.getItem('datas')
+
+    if (getStorageDatas) {
+      const parsedData = JSON.parse(getStorageDatas)
+
+      const gridDatas: GridDataInterface[] = createGrids(10, 12, 20, 5, 6, 10, true)
+      const storageDatas = {
+        name: `work${parsedData.length + 1}`,
+        gridDatas
+      }
+
+      parsedData.push(storageDatas)
+
+      localStorage.setItem('datas', JSON.stringify(parsedData))
+
+      getLocalStorage()
+    }
+  }
+
+  return { storageOptions, getLocalStorage, createLocalStorage, handleWork, addWork }
 }
 
 export default useStorage
