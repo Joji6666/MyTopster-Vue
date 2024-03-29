@@ -306,7 +306,9 @@ const useCustomGrid = () => {
         customGridDatas.customGridDatas.push({
           col: 10,
           count: 0,
-          grids: []
+          grids: [],
+          width: '9.83%',
+          height: '110px'
         })
 
         for (let index = 0; index < prevCol; index++) {

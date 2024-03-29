@@ -182,6 +182,16 @@ export default function useWorkSpace() {
       case 'custom':
         customGridOptions.type = 'onlySmall'
         gridOptionStore.isCustom = true
+        customGridDatas.customGridDatas.push({
+          col: 10,
+          count: 0,
+          grids: [
+            { width: '9.83%', height: '110px', imagePath: '', title: '', key: `0`, artist: '' }
+          ],
+          width: '9.83%',
+          height: '110px'
+        })
+
         break
 
       default:

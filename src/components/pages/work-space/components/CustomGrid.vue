@@ -11,14 +11,13 @@ watch(
     if (newValue !== oldValue) {
       customGridDatas.customGridDatas = []
     }
+  }
+)
 
-    if (newValue === 'onlySmall' && customGridDatas.customGridDatas.length === 0) {
-      customGridDatas.customGridDatas.push({
-        col: 10,
-        count: 0,
-        grids: [{ width: 0, height: 0, imagePath: '', title: '', key: `1`, artist: '' }]
-      })
-    }
+watch(
+  () => customGridDatas,
+  (newValue, oldValue) => {
+    console.log(newValue, oldValue)
   }
 )
 </script>
