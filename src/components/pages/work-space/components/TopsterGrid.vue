@@ -17,14 +17,15 @@ onMounted(() => {
     v-show="gridOption.gridType !== 'custom'"
     class="flex w-full h-full"
     :style="{
-      backgroundColor: gridOption.backgroundColor
+      backgroundColor: gridOption.backgroundColor,
+      backgroundImage: `url(${gridOption.backgroundImagePath})`,
+      backgroundSize: 'cover'
     }"
     id="captureArea"
   >
     <div
-      class="h-full p-8"
+      :class="`h-full p-8 `"
       :style="{
-        backgroundColor: gridOption.backgroundColor,
         width: gridOption.tooltipOption !== 'side' ? '100%' : '75%'
       }"
     >
@@ -66,6 +67,7 @@ onMounted(() => {
           <div
             v-if="gridOption.tooltipOption === 'bottom'"
             :style="{ color: gridOption.textColor }"
+            class="max-h-[100px]"
           >
             <span
               v-show="value.artist && value.title"
@@ -78,9 +80,9 @@ onMounted(() => {
       </div>
     </div>
     <div
-      class="w-[25%] h-full flex flex-col"
+      class="w-[25%] h-full flex flex-col z-30"
       v-if="gridOption.tooltipOption === 'side'"
-      :style="{ backgroundColor: gridOption.backgroundColor, color: gridOption.textColor }"
+      :style="{ color: gridOption.textColor }"
     >
       <div v-for="(gridData, index) in gridDatasStore.gridDatas" :key="`tootip-${index}`">
         <div

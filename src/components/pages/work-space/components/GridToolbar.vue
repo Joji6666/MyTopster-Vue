@@ -14,6 +14,7 @@ const {
   handleGridGap,
   handleDelete,
   handleClear,
+  handleBackgroundImage,
   downloadImage,
   gridTypeOptions,
   gridOption,
@@ -101,7 +102,17 @@ onMounted(() => {
 
       <div class="flex items-center justify-between">
         <label class="w-[35%] ml-2 text-white font-bold"> Background Color </label>
-        <input class="w-[65%]" type="color" @change="(e) => handleColor(e, 'background')" />
+        <input
+          v-model="gridOption.backgroundColor"
+          class="w-[65%]"
+          type="color"
+          @change="(e) => handleColor(e, 'background')"
+        />
+      </div>
+
+      <div class="flex items-center justify-between">
+        <label class="w-[35%] ml-2 text-white font-bold"> Background Image </label>
+        <input class="w-[65%]" type="file" @change="handleBackgroundImage" />
       </div>
 
       <!-- <div class="flex items-center justify-between" v-if="gridOption.tooltipOption !== 'none'">
@@ -111,7 +122,12 @@ onMounted(() => {
 
       <div class="flex items-center justify-between" v-if="gridOption.tooltipOption !== 'none'">
         <label class="w-[35%] ml-2 text-white font-bold"> Tooltip Text Color </label>
-        <input class="w-[65%]" type="color" @change="(e) => handleColor(e, 'text')" />
+        <input
+          class="w-[65%]"
+          type="color"
+          v-model="gridOption.textColor"
+          @change="(e) => handleColor(e, 'text')"
+        />
       </div>
 
       <div class="flex items-center justify-between">

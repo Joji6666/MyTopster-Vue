@@ -75,6 +75,7 @@ watch(
           <div
             v-if="gridOption.tooltipOption === 'bottom'"
             :style="{ color: gridOption.textColor }"
+            class="max-h-[100px]"
           >
             <span
               v-show="value.artist && value.title"

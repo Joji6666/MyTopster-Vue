@@ -18,7 +18,8 @@ export const gridOptionStore = reactive<GridOptionInterface>({
   textColor: '#ffffff',
   gridGap: 1,
   isCustom: false,
-  selectedWork: 'work1'
+  selectedWork: 'work1',
+  backgroundImagePath: ''
 })
 
 export const topsterDataStore = reactive<TopsterDatasInterface>({

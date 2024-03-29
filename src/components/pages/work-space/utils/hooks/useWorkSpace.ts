@@ -1,20 +1,18 @@
 import axios from 'axios'
 import html2canvas from 'html2canvas'
-import { computed, ref } from 'vue'
+import { ref } from 'vue'
 
 import {
   customGridDatas,
   customGridOptions,
   gridDatasStore,
   gridOptionStore,
-  selectedImageStore,
-  storageData
+  selectedImageStore
 } from '../store/workSpace_store'
 import type {
   GridDataInterface,
   GridOptionInterface,
-  GridPropertiesInterface,
-  StorageDataInterface
+  GridPropertiesInterface
 } from '../interface/workSpace_store_interface'
 import type { SelectValue } from 'ant-design-vue/es/select'
 import type { AlbumDataInterface } from '@/components/pages/work-space/utils/interface/interface'
@@ -376,6 +374,20 @@ export default function useWorkSpace() {
     }
   }
 
+  const handleBackgroundImage = (e: any) => {
+    const files = e.target.files
+
+    if (files.length > 0) {
+      if (files.length > 0) {
+        const objectURL = URL.createObjectURL(files[0])
+
+        console.log(objectURL, 'url @')
+
+        gridOptionStore.backgroundImagePath = objectURL
+      }
+    }
+  }
+
   return {
     albumName,
     artist,
@@ -397,6 +409,7 @@ export default function useWorkSpace() {
     handleGridGap,
     handleDelete,
     handleClear,
+    handleBackgroundImage,
     createGrids,
     downloadImage
   }

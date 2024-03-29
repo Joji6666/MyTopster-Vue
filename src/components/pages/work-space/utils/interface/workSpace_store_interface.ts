@@ -11,6 +11,7 @@ export interface GridOptionInterface {
   gridGap: number
   isCustom: boolean
   selectedWork: string
+  backgroundImagePath: string
 }
 
 export interface GridPropertiesInterface {
