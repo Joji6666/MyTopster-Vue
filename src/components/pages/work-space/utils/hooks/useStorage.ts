@@ -1,5 +1,5 @@
 import { computed } from 'vue'
-import { gridOptionStore, storageData } from '../store/workSpace_store'
+import { gridDatasStore, gridOptionStore, storageData } from '../store/workSpace_store'
 import type {
   GridDataInterface,
   StorageDataInterface
@@ -26,15 +26,46 @@ const useStorage = () => {
     )
   })
 
+  const saveStorage = () => {
+    const targetWork = storageData.storageData.find(
+      (storageData: StorageDataInterface) => storageData.name === gridOptionStore.selectedWork
+    )
+
+    if (targetWork) {
+      targetWork.gridDatas = gridDatasStore.gridDatas
+    }
+
+    localStorage.setItem('datas', JSON.stringify(storageData.storageData))
+    localStorage.setItem('selectedWork', JSON.stringify(gridOptionStore.selectedWork))
+  }
+
+  const deleteStorage = () => {
+    const filteredStorage = storageData.storageData.filter(
+      (storageData: StorageDataInterface) => storageData.name !== gridOptionStore.selectedWork
+    )
+
+    localStorage.setItem('datas', JSON.stringify(filteredStorage))
+
+    storageData.storageData = filteredStorage
+    gridOptionStore.selectedWork = `work${filteredStorage.length}`
+    const firstWork = storageData.storageData[filteredStorage.length]
+
+    gridDatasStore.gridDatas = firstWork.gridDatas
+  }
+
   const getLocalStorage = async () => {
     const getStorageDatas = localStorage.getItem('datas')
+
+    const selectedWork = localStorage.getItem('selectedWork')
+
+    if (selectedWork) {
+      gridOptionStore.selectedWork = JSON.parse(selectedWork)
+    }
 
     if (getStorageDatas) {
       const parsedData = JSON.parse(getStorageDatas)
 
       storageData.storageData = parsedData
-
-      console.log(parsedData, 'storage Datas @')
     }
   }
 
@@ -53,6 +84,16 @@ const useStorage = () => {
   const handleWork = (e: SelectValue, key: string) => {
     if (e && typeof e === 'string') {
       gridOptionStore.selectedWork = e
+
+      const targetWork = storageData.storageData.find(
+        (storageData: StorageDataInterface) => storageData.name === gridOptionStore.selectedWork
+      )
+
+      if (targetWork) {
+        gridDatasStore.gridDatas = targetWork?.gridDatas
+      }
+
+      saveStorage()
     }
   }
 
@@ -73,10 +114,20 @@ const useStorage = () => {
       localStorage.setItem('datas', JSON.stringify(parsedData))
 
       getLocalStorage()
+
+      saveStorage()
     }
   }
 
-  return { storageOptions, getLocalStorage, createLocalStorage, handleWork, addWork }
+  return {
+    storageOptions,
+    deleteStorage,
+    saveStorage,
+    getLocalStorage,
+    createLocalStorage,
+    handleWork,
+    addWork
+  }
 }
 
 export default useStorage

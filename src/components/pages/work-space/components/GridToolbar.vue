@@ -20,7 +20,15 @@ const {
   tooltipOptions
 } = useWorkSpace()
 
-const { createLocalStorage, getLocalStorage, storageOptions, handleWork, addWork } = useStorage()
+const {
+  createLocalStorage,
+  deleteStorage,
+  saveStorage,
+  getLocalStorage,
+  storageOptions,
+  handleWork,
+  addWork
+} = useStorage()
 
 onMounted(() => {
   if (!localStorage.getItem('datas')) {
@@ -28,6 +36,8 @@ onMounted(() => {
   }
 
   getLocalStorage()
+
+  window.addEventListener('beforeunload', saveStorage)
 })
 </script>
 
@@ -48,13 +58,23 @@ onMounted(() => {
       </div>
 
       <div class="flex space-x-1 w-full items-center justify-end">
-        <div :class="downloadButtonStyle" @click="() => addWork()">
+        <div :class="downloadButtonStyle" @click="addWork">
           <span>Add Work</span>
         </div>
 
-        <div :class="downloadButtonStyle" @click="() => downloadImage('jpeg')">
-          <span>Delete Work</span>
-        </div>
+        <Popconfirm
+          title="Are you sure to delete?"
+          placement="rightTop"
+          ok-text="Yes"
+          cancel-text="No"
+          @confirm="deleteStorage"
+          ok-type="danger"
+          v-if="storageOptions.length > 1"
+        >
+          <div :class="downloadButtonStyle">
+            <span>Delete Work</span>
+          </div>
+        </Popconfirm>
       </div>
 
       <div class="flex items-center justify-between mt-10">
