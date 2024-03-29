@@ -26,9 +26,11 @@ const useStorage = () => {
     )
   })
 
-  const saveStorage = () => {
+  const saveStorage = (target: string = '') => {
+    const targetValue = target !== '' ? target : gridOptionStore.selectedWork
+
     const targetWork = storageData.storageData.find(
-      (storageData: StorageDataInterface) => storageData.name === gridOptionStore.selectedWork
+      (storageData: StorageDataInterface) => storageData.name === targetValue
     )
 
     if (targetWork) {
@@ -36,7 +38,7 @@ const useStorage = () => {
     }
 
     localStorage.setItem('datas', JSON.stringify(storageData.storageData))
-    localStorage.setItem('selectedWork', JSON.stringify(gridOptionStore.selectedWork))
+    localStorage.setItem('selectedWork', JSON.stringify(targetValue))
   }
 
   const deleteStorage = () => {
@@ -47,8 +49,9 @@ const useStorage = () => {
     localStorage.setItem('datas', JSON.stringify(filteredStorage))
 
     storageData.storageData = filteredStorage
-    gridOptionStore.selectedWork = `work${filteredStorage.length}`
-    const firstWork = storageData.storageData[filteredStorage.length]
+
+    const firstWork = storageData.storageData[storageData.storageData.length - 1]
+    gridOptionStore.selectedWork = firstWork.name
 
     gridDatasStore.gridDatas = firstWork.gridDatas
   }
@@ -58,14 +61,22 @@ const useStorage = () => {
 
     const selectedWork = localStorage.getItem('selectedWork')
 
-    if (selectedWork) {
-      gridOptionStore.selectedWork = JSON.parse(selectedWork)
-    }
-
     if (getStorageDatas) {
       const parsedData = JSON.parse(getStorageDatas)
 
       storageData.storageData = parsedData
+
+      if (selectedWork) {
+        gridOptionStore.selectedWork = JSON.parse(selectedWork)
+
+        const targetWork = parsedData.find(
+          (storageData: StorageDataInterface) => storageData.name === JSON.parse(selectedWork)
+        )
+
+        if (targetWork) {
+          gridDatasStore.gridDatas = targetWork?.gridDatas
+        }
+      }
     }
   }
 
@@ -104,18 +115,32 @@ const useStorage = () => {
       const parsedData = JSON.parse(getStorageDatas)
 
       const gridDatas: GridDataInterface[] = createGrids(10, 12, 20, 5, 6, 10, true)
+
+      let name = `work${parsedData.length + 1}`
+
+      if (
+        parsedData.find(
+          (data: StorageDataInterface) => data.name === `work${parsedData.length + 1}`
+        )
+      ) {
+        name = `work${parsedData.length + 2}`
+      }
+
       const storageDatas = {
-        name: `work${parsedData.length + 1}`,
+        name,
         gridDatas
       }
 
       parsedData.push(storageDatas)
 
+      gridOptionStore.selectedWork = name
+
       localStorage.setItem('datas', JSON.stringify(parsedData))
-
+      localStorage.setItem('selectedWork', JSON.stringify(name))
       getLocalStorage()
+      saveStorage(`work${parsedData.length - 1}`)
 
-      saveStorage()
+      gridDatasStore.gridDatas = gridDatas
     }
   }
 

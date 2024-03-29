@@ -1,12 +1,14 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
 import useWorkSpace from '../utils/hooks/useWorkSpace'
-import { gridDatasStore } from '../utils/store/workSpace_store'
+import { gridDatasStore, storageData } from '../utils/store/workSpace_store'
 import CustomGrid from './CustomGrid.vue'
 const { handleDragEnd, gridInit, gridOption, handleGridDrag } = useWorkSpace()
 
 onMounted(() => {
-  gridInit()
+  if (storageData.storageData.length === 0) {
+    gridInit()
+  }
 })
 </script>
 
