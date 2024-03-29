@@ -3,6 +3,7 @@ import html2canvas from 'html2canvas'
 import { ref } from 'vue'
 
 import {
+  autoColumnsGridDatasStore,
   customGridDatas,
   customGridOptions,
   gridDatasStore,
@@ -16,6 +17,19 @@ import type {
 } from '../interface/workSpace_store_interface'
 import type { SelectValue } from 'ant-design-vue/es/select'
 import type { AlbumDataInterface } from '@/components/pages/work-space/utils/interface/interface'
+
+interface AutoColumnGridSettingInterface {
+  totalCount: number
+  largeColCount: number
+  middleColCount: number
+  smallColCount: number
+  largeRowCount: number
+  middleRowCount: number
+  smallRowCount: number
+  largeCount: number
+  middleCount: number
+  smallCount: number
+}
 
 export default function useWorkSpace() {
   const apiKey = import.meta.env.VITE_API_URL
@@ -34,7 +48,7 @@ export default function useWorkSpace() {
   const gridTypeOptions = [
     { label: 'basic', value: 'basic' },
     { label: 'Top10', value: 'top10' },
-    { label: 'Top30', value: 'top30' },
+    { label: 'Top25', value: 'top25' },
     { label: 'Top50', value: 'top50' },
     { label: 'Top100', value: 'top100' },
     { label: 'Top100 Small Box', value: 'top100_small' },
@@ -120,6 +134,182 @@ export default function useWorkSpace() {
     return [largeGridData, middleGridData, smallGridData]
   }
 
+  const autoColumnGridSetting = (option: AutoColumnGridSettingInterface) => {
+    const gridDatas: GridDataInterface[] = []
+    let totalCount: number = 0
+    Object.entries(option).forEach(([key, value], entriIndex: number) => {
+      console.log(key, value, entriIndex)
+      if (key !== 'totalCount') {
+        if (key.includes('Col')) {
+          for (let index = 0; index < value; index++) {
+            if (entriIndex === 1) {
+              gridDatas.push({
+                col: 5,
+                count: 0,
+                grids: [],
+                type: 'large',
+                width: '20%',
+                height: '225px'
+              })
+            }
+
+            if (entriIndex === 2) {
+              gridDatas.push({
+                col: 5,
+                count: 0,
+                grids: [],
+                type: 'middle',
+                width: '16.622%',
+                height: '186px'
+              })
+            }
+
+            if (entriIndex === 3) {
+              gridDatas.push({
+                col: 5,
+                count: 0,
+                grids: [],
+                type: 'small',
+                width: '9.83%',
+                height: '110px'
+              })
+            }
+          }
+        }
+
+        if (key.includes('Row')) {
+          if (entriIndex === 4) {
+            for (let index = 0; index < option.largeCount; index++) {
+              gridDatas
+                .find(
+                  (data: GridDataInterface) =>
+                    data.type === 'large' && data.grids.length < option.largeRowCount
+                )
+                ?.grids.push({
+                  width: 0,
+                  height: 0,
+                  imagePath: '',
+                  title: '',
+                  key: `${totalCount}`,
+                  artist: ''
+                })
+              totalCount++
+            }
+          }
+
+          if (entriIndex === 5) {
+            for (let index = 0; index < option.middleCount; index++) {
+              gridDatas
+                .find(
+                  (data: GridDataInterface) =>
+                    data.type === 'middle' && data.grids.length < option.middleRowCount
+                )
+                ?.grids.push({
+                  width: 0,
+                  height: 0,
+                  imagePath: '',
+                  title: '',
+                  key: `${totalCount}`,
+                  artist: ''
+                })
+              totalCount++
+            }
+          }
+
+          if (entriIndex === 6) {
+            for (let index = 0; index < option.smallCount; index++) {
+              gridDatas
+                .find(
+                  (data: GridDataInterface) =>
+                    data.type === 'small' && data.grids.length < option.smallRowCount
+                )
+                ?.grids.push({
+                  width: 0,
+                  height: 0,
+                  imagePath: '',
+                  title: '',
+                  key: `${totalCount}`,
+                  artist: ''
+                })
+              totalCount++
+            }
+          }
+        }
+      }
+    })
+
+    console.log(gridDatas, 'gird Datas@')
+
+    return gridDatas
+  }
+
+  const createAutoCoulmnsGrid = (type: string) => {
+    switch (type) {
+      case 'top10':
+        {
+          const option: AutoColumnGridSettingInterface = {
+            totalCount: 10,
+            largeColCount: 2,
+            middleColCount: 0,
+            smallColCount: 0,
+            largeRowCount: 5,
+            middleRowCount: 0,
+            smallRowCount: 0,
+            largeCount: 10,
+            middleCount: 0,
+            smallCount: 0
+          }
+
+          autoColumnsGridDatasStore.gridDatas = autoColumnGridSetting(option)
+        }
+
+        break
+
+      case 'top25':
+        {
+          const option: AutoColumnGridSettingInterface = {
+            totalCount: 25,
+            largeColCount: 1,
+            middleColCount: 2,
+            smallColCount: 1,
+            largeRowCount: 5,
+            middleRowCount: 6,
+            smallRowCount: 10,
+            largeCount: 5,
+            middleCount: 10,
+            smallCount: 10
+          }
+
+          autoColumnsGridDatasStore.gridDatas = autoColumnGridSetting(option)
+        }
+
+        break
+
+      case 'top50_small':
+        {
+          const option: AutoColumnGridSettingInterface = {
+            totalCount: 50,
+            largeColCount: 0,
+            middleColCount: 0,
+            smallColCount: 5,
+            largeRowCount: 0,
+            middleRowCount: 0,
+            smallRowCount: 10,
+            largeCount: 0,
+            middleCount: 0,
+            smallCount: 50
+          }
+
+          autoColumnsGridDatasStore.gridDatas = autoColumnGridSetting(option)
+        }
+
+        break
+
+      default:
+        break
+    }
+  }
+
   const gridInit = () => {
     createGrids(10, 12, 20, 5, 6, 10)
   }
@@ -141,6 +331,7 @@ export default function useWorkSpace() {
   const handleSelect = (e: SelectValue, key: string) => {
     gridType.value = e
     gridOptionStore.isCustom = false
+    gridOptionStore.isAutoColumnsGrid = false
     switch (e) {
       case 'basic':
         createGrids(10, 12, 20, 5, 6, 10)
@@ -148,12 +339,14 @@ export default function useWorkSpace() {
         break
 
       case 'top10':
-        createGrids(10, 0, 0, 5, 6, 10)
-
+        createAutoCoulmnsGrid(e)
+        gridOptionStore.isAutoColumnsGrid = true
         break
 
-      case 'top30':
-        createGrids(12, 18, 0, 4, 6, 10)
+      case 'top25':
+        createAutoCoulmnsGrid(e)
+
+        gridOptionStore.isAutoColumnsGrid = true
 
         break
 
@@ -173,7 +366,8 @@ export default function useWorkSpace() {
         break
 
       case 'top50_small':
-        createGrids(0, 0, 50, 5, 6, 10)
+        createAutoCoulmnsGrid(e)
+        gridOptionStore.isAutoColumnsGrid = true
 
         break
 
@@ -198,8 +392,6 @@ export default function useWorkSpace() {
   }
 
   const handleTooltip = (e: SelectValue) => {
-    console.log(e, 'e @@@@@@')
-
     if (e && typeof e === 'string') {
       gridOptionStore.tooltipOption = e
 
@@ -273,11 +465,11 @@ export default function useWorkSpace() {
 
   const handleDragEnd = (e: any) => {
     const accessKey = e.target.accessKey
-    const targetDatas = !gridOptionStore.isCustom
-      ? gridDatasStore.gridDatas
-      : customGridDatas.customGridDatas
-
-    console.log(gridOptionStore.isCustom, targetDatas)
+    const targetDatas = gridOptionStore.isCustom
+      ? customGridDatas.customGridDatas
+      : gridOptionStore.isAutoColumnsGrid
+        ? autoColumnsGridDatasStore.gridDatas
+        : gridDatasStore.gridDatas
 
     targetDatas.forEach((gridData: GridDataInterface) => {
       const foundTile = gridData.grids.find(
@@ -351,7 +543,9 @@ export default function useWorkSpace() {
   const downloadImage = async (key: string) => {
     const captureArea: HTMLElement | null = gridOptionStore.isCustom
       ? document.querySelector('#customCaptureArea')
-      : document.querySelector('#captureArea')
+      : gridOptionStore.isAutoColumnsGrid
+        ? document.querySelector('#autoColumnCaptureArea')
+        : document.querySelector('#captureArea')
     const type = key === 'png' ? 'image/png' : 'image/jpeg'
 
     if (captureArea) {
@@ -396,7 +590,6 @@ export default function useWorkSpace() {
     gridType,
     gridTypeOptions,
     tooltipOptions,
-
     gridInit,
     handleChange,
     handleSearch,

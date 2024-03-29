@@ -12,6 +12,7 @@ export interface GridOptionInterface {
   isCustom: boolean
   selectedWork: string
   backgroundImagePath: string
+  isAutoColumnsGrid: boolean
 }
 
 export interface GridPropertiesInterface {
@@ -33,6 +34,10 @@ export interface GridDataInterface {
 }
 
 export interface GridDatasInterface {
+  gridDatas: GridDataInterface[]
+}
+
+export interface AutoColumnGridDatasInterface {
   gridDatas: GridDataInterface[]
 }
 

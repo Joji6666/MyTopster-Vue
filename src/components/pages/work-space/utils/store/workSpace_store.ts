@@ -1,5 +1,6 @@
 import { reactive } from 'vue'
 import type {
+  AutoColumnGridDatasInterface,
   CustomGridDatasInterface,
   CustomGridOptionsInterface,
   GridDatasInterface,
@@ -19,7 +20,8 @@ export const gridOptionStore = reactive<GridOptionInterface>({
   gridGap: 1,
   isCustom: false,
   selectedWork: 'work1',
-  backgroundImagePath: ''
+  backgroundImagePath: '',
+  isAutoColumnsGrid: false
 })
 
 export const topsterDataStore = reactive<TopsterDatasInterface>({
@@ -27,6 +29,10 @@ export const topsterDataStore = reactive<TopsterDatasInterface>({
 })
 
 export const gridDatasStore = reactive<GridDatasInterface>({
+  gridDatas: []
+})
+
+export const autoColumnsGridDatasStore = reactive<AutoColumnGridDatasInterface>({
   gridDatas: []
 })
 

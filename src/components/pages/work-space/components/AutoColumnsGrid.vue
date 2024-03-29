@@ -1,44 +1,34 @@
 <script setup lang="ts">
-import { onMounted } from 'vue'
 import useWorkSpace from '../utils/hooks/useWorkSpace'
-import { gridDatasStore, gridOptionStore, storageData } from '../utils/store/workSpace_store'
-import CustomGrid from './CustomGrid.vue'
-import AutoColumnsGrid from './AutoColumnsGrid.vue'
-const { handleDragEnd, gridInit, gridOption, handleGridDrag } = useWorkSpace()
+import { autoColumnsGridDatasStore } from '../utils/store/workSpace_store'
 
-onMounted(() => {
-  if (storageData.storageData.length === 0) {
-    gridInit()
-  }
-})
+const { handleDragEnd, gridOption, handleGridDrag } = useWorkSpace()
 </script>
 
 <template>
   <article
-    v-if="gridOption.gridType !== 'custom' && !gridOption.isAutoColumnsGrid"
     class="flex w-full h-full"
     :style="{
-      backgroundColor: gridOption.backgroundColor,
-      backgroundImage: `url(${gridOption.backgroundImagePath})`,
-      backgroundSize: 'cover'
+      backgroundColor: gridOption.backgroundColor
     }"
-    id="captureArea"
+    id="autoColumnCaptureArea"
   >
     <div
-      :class="`h-full p-8 `"
+      class="h-full p-8"
       :style="{
+        backgroundColor: gridOption.backgroundColor,
         width: gridOption.tooltipOption !== 'side' ? '100%' : '75%'
       }"
     >
       <div
-        class="grid mb-2"
+        class="grid grid-flow-col items-center justify-center mb-2"
         :style="{
-          gridTemplateColumns: `repeat(${gridData.col}, minmax(0, 1fr))`,
+          gridAutoColumns: `minmax(${gridData.width}, ${gridData.height})`,
+
           gap: `${gridOption.gridGap > 0 ? gridOption.gridGap + 3 : 0}px`
         }"
-        v-for="(gridData, index) in gridDatasStore.gridDatas"
+        v-for="(gridData, index) in autoColumnsGridDatasStore.gridDatas"
         :key="`large-${index}`"
-        v-show="gridData.count > 0"
       >
         <div
           v-for="(value, gridIndex) in gridData.grids"
@@ -52,7 +42,7 @@ onMounted(() => {
             @drop.prevent="handleDragEnd"
             draggable="true"
             @dragstart="() => handleGridDrag(value)"
-            :accesskey="value.key"
+            :accesskey="value.key.toString()"
           >
             <img
               v-if="value.imagePath"
@@ -61,7 +51,7 @@ onMounted(() => {
               @dragover.prevent
               @drop="handleDragEnd"
               @drop.prevent="handleDragEnd"
-              :accesskey="value.key"
+              :accesskey="value.key.toString()"
             />
           </div>
 
@@ -81,11 +71,14 @@ onMounted(() => {
       </div>
     </div>
     <div
-      class="w-[25%] h-full flex flex-col z-30"
+      class="w-[25%] h-full flex flex-col"
       v-if="gridOption.tooltipOption === 'side'"
-      :style="{ color: gridOption.textColor }"
+      :style="{ backgroundColor: gridOption.backgroundColor, color: gridOption.textColor }"
     >
-      <div v-for="(gridData, index) in gridDatasStore.gridDatas" :key="`tootip-${index}`">
+      <div
+        v-for="(gridData, index) in autoColumnsGridDatasStore.gridDatas"
+        :key="`tootip-${index}`"
+      >
         <div
           v-show="value.artist && value.title"
           v-for="(value, index) in gridData.grids"
@@ -98,6 +91,4 @@ onMounted(() => {
       </div>
     </div>
   </article>
-  <AutoColumnsGrid v-if="gridOptionStore.isAutoColumnsGrid" />
-  <CustomGrid v-if="gridOption.gridType === 'custom'" />
 </template>
