@@ -13,13 +13,6 @@ watch(
     }
   }
 )
-
-watch(
-  () => customGridDatas,
-  (newValue, oldValue) => {
-    console.log(newValue, oldValue)
-  }
-)
 </script>
 
 <template>
@@ -75,7 +68,7 @@ watch(
           <div
             v-if="gridOption.tooltipOption === 'bottom'"
             :style="{ color: gridOption.textColor }"
-            class="min-h-[60px]"
+            class="min-h-[45px]"
           >
             <span
               v-show="value.artist && value.title"

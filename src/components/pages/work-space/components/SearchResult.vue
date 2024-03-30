@@ -19,8 +19,8 @@ const { handleDragOn } = useWorkSpace()
       :key="index"
       class="flex p-1"
       :src="albumData.image[3]['#text']"
-      width="90px"
-      height="90px"
+      width="80px"
+      height="80px"
       draggable="true"
       @dragstart="() => handleDragOn(albumData)"
     />

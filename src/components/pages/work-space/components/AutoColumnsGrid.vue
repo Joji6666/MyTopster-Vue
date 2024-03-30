@@ -7,7 +7,7 @@ const { handleDragEnd, gridOption, handleGridDrag } = useWorkSpace()
 
 <template>
   <article
-    class="flex w-full h-full min-h-[700px] items-center justify-center"
+    class="flex w-full h-full items-center justify-center"
     :style="{
       backgroundColor: gridOption.backgroundColor
     }"
@@ -58,7 +58,7 @@ const { handleDragEnd, gridOption, handleGridDrag } = useWorkSpace()
           <div
             v-if="gridOption.tooltipOption === 'bottom'"
             :style="{ color: gridOption.textColor }"
-            class="min-h-[60px]"
+            class="min-h-[45px]"
           >
             <span
               v-show="value.artist && value.title"

@@ -1,4 +1,4 @@
-import { computed } from 'vue'
+import { computed, watch } from 'vue'
 import {
   autoColumnsGridDatasStore,
   customGridDatas,
@@ -23,8 +23,6 @@ const useStorage = () => {
   const { createGrids } = useWorkSpace()
 
   const storageOptions = computed(() => {
-    console.log(storageData.storageData, 'storage data')
-
     return storageData.storageData.reduce(
       (cur: SelectOptionInterface[], data: StorageDataInterface) => {
         cur.push({ label: data.name, value: data.name })
@@ -73,9 +71,24 @@ const useStorage = () => {
     storageData.storageData = filteredStorage
 
     const firstWork = storageData.storageData[storageData.storageData.length - 1]
-    gridOptionStore.selectedWork = firstWork.name
 
-    gridDatasStore.gridDatas = firstWork.gridDatas
+    if (firstWork?.options) {
+      Object.entries(firstWork.options).forEach(([key, value]) => {
+        gridOptionStore[key] = value
+      })
+    }
+    gridOptionStore.selectedWork = firstWork.name
+    if (firstWork.options.isAutoColumnsGrid) {
+      autoColumnsGridDatasStore.gridDatas = firstWork.gridDatas
+    }
+
+    if (firstWork.options.isCustom) {
+      customGridDatas.customGridDatas = firstWork.gridDatas
+    }
+
+    if (!firstWork.options.isCustom && !firstWork.options.isAutoColumnsGrid) {
+      gridDatasStore.gridDatas = firstWork.gridDatas
+    }
   }
 
   const getLocalStorage = async () => {
@@ -95,8 +108,6 @@ const useStorage = () => {
           (storageData: StorageDataInterface) => storageData.name === JSON.parse(selectedWork)
         )
 
-        console.log(targetWork, 'target Work @@')
-
         if (targetWork) {
           gridDatasStore.gridDatas = targetWork?.gridDatas
 
@@ -107,7 +118,6 @@ const useStorage = () => {
           }
 
           if (targetWork?.options && targetWork?.options?.isAutoColumnsGrid) {
-            console.log('is work????')
             autoColumnsGridDatasStore.gridDatas = targetWork.gridDatas
             gridOptionStore.isAutoColumnsGrid = true
           }
@@ -144,6 +154,7 @@ const useStorage = () => {
     ]
 
     localStorage.setItem('datas', JSON.stringify(storageDatas))
+    localStorage.setItem('selectedWork', 'work1')
   }
 
   const handleWork = (e: SelectValue, key: string) => {
@@ -161,7 +172,6 @@ const useStorage = () => {
       gridOptionStore.selectedWork = e
       localStorage.setItem('selectedWork', JSON.stringify(e))
 
-      console.log(gridOptionStore.selectedWork)
       const targetWork = storageData.storageData.find(
         (storageData: StorageDataInterface) => storageData.name === gridOptionStore.selectedWork
       )
@@ -249,6 +259,10 @@ const useStorage = () => {
       gridDatasStore.gridDatas = gridDatas
     }
   }
+
+  watch(gridOptionStore, (oldValue, newValue) => {
+    saveStorage()
+  })
 
   return {
     storageOptions,

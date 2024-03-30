@@ -48,7 +48,7 @@ export default function useWorkSpace() {
   const gridTypeOptions = [
     { label: 'basic', value: 'basic' },
     { label: 'Top10', value: 'top10' },
-    { label: 'Top25', value: 'top25' },
+    // { label: 'Top25', value: 'top25' },
     { label: 'Top50', value: 'top50' },
     { label: 'Top100', value: 'top100' },
     { label: 'Top100 Small Box', value: 'top100_small' },
@@ -138,7 +138,6 @@ export default function useWorkSpace() {
     const gridDatas: GridDataInterface[] = []
     let totalCount: number = 0
     Object.entries(option).forEach(([key, value], entriIndex: number) => {
-      console.log(key, value, entriIndex)
       if (key !== 'totalCount') {
         if (key.includes('Col')) {
           for (let index = 0; index < value; index++) {
@@ -238,8 +237,6 @@ export default function useWorkSpace() {
       }
     })
 
-    console.log(gridDatas, 'gird Datas@')
-
     return gridDatas
   }
 
@@ -332,6 +329,10 @@ export default function useWorkSpace() {
     gridType.value = e
     gridOptionStore.isCustom = false
     gridOptionStore.isAutoColumnsGrid = false
+    if (e && typeof e === 'string') {
+      gridOptionStore.gridType = e
+    }
+
     switch (e) {
       case 'basic':
         createGrids(10, 12, 20, 5, 6, 10)
@@ -523,8 +524,6 @@ export default function useWorkSpace() {
     selectedImageStore.seletedGrid = null
     selectedImageStore.seletedImage = null
     selectedImageStore.isGridDrag = false
-
-    console.log(targetDatas, 'target Datas @@')
   }
 
   const handleGridDrag = (grid: GridPropertiesInterface) => {
@@ -575,16 +574,10 @@ export default function useWorkSpace() {
       if (files.length > 0) {
         const objectURL = URL.createObjectURL(files[0])
 
-        console.log(objectURL, 'url @')
-
         gridOptionStore.backgroundImagePath = objectURL
       }
     }
   }
-
-  watch(gridOptionStore, (newValue, oldValue) => {
-    console.log(newValue, 'newVal', oldValue, 'old Val')
-  })
 
   return {
     albumName,

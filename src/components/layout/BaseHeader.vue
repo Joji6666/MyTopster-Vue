@@ -9,11 +9,13 @@ const router = useRouter()
 
 <template class="w-screen">
   <header class="w-screen bg-slate-950">
-    <h2
-      class="flex items-center justify-center w-full text-[80px] bg-gradient-to-r from-blue-500 to-green-500 bg-clip-text text-transparent"
-    >
-      My Topster
-    </h2>
+    <div class="w-full bg-slate-950 fixed z-50">
+      <h2
+        class="flex items-center justify-center w-full text-[80px] bg-gradient-to-r from-blue-500 to-green-500 bg-clip-text text-transparent"
+      >
+        My Topster
+      </h2>
+    </div>
 
     <!-- <Row class="w-full h-[80px] flex">
       <img

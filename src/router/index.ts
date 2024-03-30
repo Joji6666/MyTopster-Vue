@@ -11,28 +11,28 @@ const router = createRouter({
     {
       path: '/',
       name: 'main',
-      component: MainView
-    },
-    {
-      path: '/notice',
-      name: 'notice',
-      component: NoticeView
-    },
-    {
-      path: '/ranking',
-      name: 'ranking',
-      component: RankingView
-    },
-    {
-      path: '/tutorial',
-      name: 'tutorial',
-      component: TutorialView
-    },
-    {
-      path: '/work-space',
-      name: 'work-space',
       component: WorkSpaceView
     }
+    // {
+    //   path: '/notice',
+    //   name: 'notice',
+    //   component: NoticeView
+    // },
+    // {
+    //   path: '/ranking',
+    //   name: 'ranking',
+    //   component: RankingView
+    // },
+    // {
+    //   path: '/tutorial',
+    //   name: 'tutorial',
+    //   component: TutorialView
+    // },
+    // {
+    //   path: '/work-space',
+    //   name: 'work-space',
+    //   component: WorkSpaceView
+    // }
   ]
 })
 
