@@ -451,7 +451,13 @@ export default function useWorkSpace() {
   }
 
   const handleDelete = () => {
-    gridDatasStore.gridDatas.forEach((gridData: GridDataInterface) => {
+    const targetDatas = gridOptionStore.isAutoColumnsGrid
+      ? autoColumnsGridDatasStore.gridDatas
+      : gridOptionStore.isCustom
+        ? customGridDatas.customGridDatas
+        : gridDatasStore.gridDatas
+
+    targetDatas.forEach((gridData: GridDataInterface) => {
       const foundTile = gridData.grids.find(
         (grid: GridPropertiesInterface) => grid.key === selectedImageStore.seletedGrid?.key
       )
