@@ -7,14 +7,14 @@ const { handleDragEnd, gridOption, handleGridDrag } = useWorkSpace()
 
 <template>
   <article
-    class="flex w-full h-full"
+    class="flex w-full h-full min-h-[700px] items-center justify-center"
     :style="{
       backgroundColor: gridOption.backgroundColor
     }"
     id="autoColumnCaptureArea"
   >
     <div
-      class="h-full p-8"
+      class="h-full p-8 flex flex-col items-center justify-center"
       :style="{
         backgroundColor: gridOption.backgroundColor,
         width: gridOption.tooltipOption !== 'side' ? '100%' : '75%'
@@ -58,7 +58,7 @@ const { handleDragEnd, gridOption, handleGridDrag } = useWorkSpace()
           <div
             v-if="gridOption.tooltipOption === 'bottom'"
             :style="{ color: gridOption.textColor }"
-            class="max-h-[100px]"
+            class="min-h-[60px]"
           >
             <span
               v-show="value.artist && value.title"

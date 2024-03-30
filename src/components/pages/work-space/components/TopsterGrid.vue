@@ -68,7 +68,7 @@ onMounted(() => {
           <div
             v-if="gridOption.tooltipOption === 'bottom'"
             :style="{ color: gridOption.textColor }"
-            class="max-h-[100px]"
+            class="min-h-[60px]"
           >
             <span
               v-show="value.artist && value.title"

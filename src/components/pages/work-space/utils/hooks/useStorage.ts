@@ -1,7 +1,14 @@
 import { computed } from 'vue'
-import { gridDatasStore, gridOptionStore, storageData } from '../store/workSpace_store'
+import {
+  autoColumnsGridDatasStore,
+  customGridDatas,
+  gridDatasStore,
+  gridOptionStore,
+  storageData
+} from '../store/workSpace_store'
 import type {
   GridDataInterface,
+  GridOptionInterface,
   StorageDataInterface
 } from '../interface/workSpace_store_interface'
 import useWorkSpace from './useWorkSpace'
@@ -16,6 +23,8 @@ const useStorage = () => {
   const { createGrids } = useWorkSpace()
 
   const storageOptions = computed(() => {
+    console.log(storageData.storageData, 'storage data')
+
     return storageData.storageData.reduce(
       (cur: SelectOptionInterface[], data: StorageDataInterface) => {
         cur.push({ label: data.name, value: data.name })
@@ -26,7 +35,7 @@ const useStorage = () => {
     )
   })
 
-  const saveStorage = (target: string = '') => {
+  const saveStorage = (target: string = '', isClose: boolean = false, option: any = {}) => {
     const targetValue = target !== '' ? target : gridOptionStore.selectedWork
 
     const targetWork = storageData.storageData.find(
@@ -35,10 +44,23 @@ const useStorage = () => {
 
     if (targetWork) {
       targetWork.gridDatas = gridDatasStore.gridDatas
+
+      if (targetWork?.options && targetWork?.options?.isAutoColumnsGrid) {
+        targetWork.gridDatas = autoColumnsGridDatasStore.gridDatas
+      }
+
+      if (targetWork?.options && targetWork?.options?.isCustom) {
+        targetWork.gridDatas = customGridDatas.customGridDatas
+      }
+
+      targetWork.options = Object.keys(option).length > 0 ? option : gridOptionStore
     }
 
     localStorage.setItem('datas', JSON.stringify(storageData.storageData))
-    localStorage.setItem('selectedWork', JSON.stringify(targetValue))
+
+    if (isClose) {
+      localStorage.setItem('selectedWork', JSON.stringify(targetValue))
+    }
   }
 
   const deleteStorage = () => {
@@ -69,12 +91,31 @@ const useStorage = () => {
       if (selectedWork) {
         gridOptionStore.selectedWork = JSON.parse(selectedWork)
 
-        const targetWork = parsedData.find(
+        const targetWork: StorageDataInterface = parsedData.find(
           (storageData: StorageDataInterface) => storageData.name === JSON.parse(selectedWork)
         )
 
+        console.log(targetWork, 'target Work @@')
+
         if (targetWork) {
           gridDatasStore.gridDatas = targetWork?.gridDatas
+
+          if (targetWork?.options) {
+            Object.entries(targetWork.options).forEach(([key, value]) => {
+              gridOptionStore[key] = value
+            })
+          }
+
+          if (targetWork?.options && targetWork?.options?.isAutoColumnsGrid) {
+            console.log('is work????')
+            autoColumnsGridDatasStore.gridDatas = targetWork.gridDatas
+            gridOptionStore.isAutoColumnsGrid = true
+          }
+
+          if (targetWork?.options && targetWork?.options?.isCustom) {
+            customGridDatas.customGridDatas = targetWork.gridDatas
+            gridOptionStore.isCustom = true
+          }
         }
       }
     }
@@ -85,7 +126,20 @@ const useStorage = () => {
     const storageDatas = [
       {
         name: 'work1',
-        gridDatas
+        gridDatas,
+        options: {
+          backgroundColor: '#000000',
+          tileLimit: 42,
+          gridType: 'basic',
+          tooltipOption: 'none',
+          tooltipBackgroundColor: '#000000',
+          textColor: '#ffffff',
+          gridGap: 1,
+          isCustom: false,
+          selectedWork: 'work1',
+          backgroundImagePath: '',
+          isAutoColumnsGrid: false
+        }
       }
     ]
 
@@ -93,23 +147,71 @@ const useStorage = () => {
   }
 
   const handleWork = (e: SelectValue, key: string) => {
+    const prevTarget = localStorage.getItem('selectedWork')
+    const prevOption: any = {}
+    Object.entries(gridOptionStore).forEach(([key, value]) => {
+      prevOption[key] = value
+    })
+
+    if (prevTarget) {
+      saveStorage(JSON.parse(prevTarget), false, prevOption)
+    }
+
     if (e && typeof e === 'string') {
       gridOptionStore.selectedWork = e
+      localStorage.setItem('selectedWork', JSON.stringify(e))
 
+      console.log(gridOptionStore.selectedWork)
       const targetWork = storageData.storageData.find(
         (storageData: StorageDataInterface) => storageData.name === gridOptionStore.selectedWork
       )
 
       if (targetWork) {
         gridDatasStore.gridDatas = targetWork?.gridDatas
-      }
 
-      saveStorage()
+        if (targetWork?.options && targetWork?.options?.isAutoColumnsGrid) {
+          autoColumnsGridDatasStore.gridDatas = targetWork.gridDatas
+          gridOptionStore.isAutoColumnsGrid = true
+        } else {
+          gridOptionStore.isAutoColumnsGrid = false
+        }
+
+        if (targetWork?.options && targetWork?.options?.isCustom) {
+          customGridDatas.customGridDatas = targetWork.gridDatas
+          gridOptionStore.isCustom = true
+        } else {
+          gridOptionStore.isCustom = false
+        }
+      }
     }
   }
 
   const addWork = () => {
     const getStorageDatas = localStorage.getItem('datas')
+    const prevOption: any = {}
+    Object.entries(gridOptionStore).forEach(([key, value]) => {
+      prevOption[key] = value
+    })
+    const prevTarget = localStorage.getItem('selectedWork')
+
+    console.log(prevOption, 'prevOption @@')
+    if (prevTarget) {
+      saveStorage(JSON.parse(prevTarget), false, prevOption)
+    }
+
+    const starndardOption: GridOptionInterface = {
+      backgroundColor: '#000000',
+      tileLimit: 42,
+      gridType: 'basic',
+      tooltipOption: 'none',
+      tooltipBackgroundColor: '#000000',
+      textColor: '#ffffff',
+      gridGap: 1,
+      isCustom: false,
+      selectedWork: '',
+      backgroundImagePath: '',
+      isAutoColumnsGrid: false
+    }
 
     if (getStorageDatas) {
       const parsedData = JSON.parse(getStorageDatas)
@@ -126,19 +228,23 @@ const useStorage = () => {
         name = `work${parsedData.length + 2}`
       }
 
-      const storageDatas = {
+      const storageDatas: StorageDataInterface = {
         name,
-        gridDatas
+        gridDatas,
+        options: starndardOption
       }
+      storageDatas.options.selectedWork = name
 
       parsedData.push(storageDatas)
 
-      gridOptionStore.selectedWork = name
+      Object.entries(starndardOption).forEach(([key, value]) => {
+        gridOptionStore[key] = value
+      })
 
+      gridOptionStore.selectedWork = name
+      storageData.storageData = parsedData
       localStorage.setItem('datas', JSON.stringify(parsedData))
       localStorage.setItem('selectedWork', JSON.stringify(name))
-      getLocalStorage()
-      saveStorage(`work${parsedData.length - 1}`)
 
       gridDatasStore.gridDatas = gridDatas
     }

@@ -38,7 +38,7 @@ onMounted(() => {
 
   getLocalStorage()
 
-  window.addEventListener('beforeunload', () => saveStorage())
+  window.addEventListener('beforeunload', () => saveStorage('', true))
 })
 </script>
 

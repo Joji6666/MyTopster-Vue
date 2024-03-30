@@ -1,6 +1,6 @@
 import axios from 'axios'
 import html2canvas from 'html2canvas'
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 
 import {
   autoColumnsGridDatasStore,
@@ -581,6 +581,10 @@ export default function useWorkSpace() {
       }
     }
   }
+
+  watch(gridOptionStore, (newValue, oldValue) => {
+    console.log(newValue, 'newVal', oldValue, 'old Val')
+  })
 
   return {
     albumName,

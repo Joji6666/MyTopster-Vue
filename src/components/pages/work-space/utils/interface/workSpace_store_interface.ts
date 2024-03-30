@@ -2,6 +2,7 @@ import type { SelectValue } from 'ant-design-vue/es/select'
 import type { AlbumDataInterface } from './interface'
 
 export interface GridOptionInterface {
+  [key: string]: string | number | boolean
   backgroundColor: string
   tileLimit: number
   gridType: string
@@ -44,6 +45,7 @@ export interface AutoColumnGridDatasInterface {
 export interface StorageDataInterface {
   name: string
   gridDatas: GridDataInterface[]
+  options: GridOptionInterface
 }
 
 export interface StorageDatasInterface {

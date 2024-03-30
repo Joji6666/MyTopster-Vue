@@ -9,7 +9,13 @@ const router = useRouter()
 
 <template class="w-screen">
   <header class="w-screen bg-slate-950">
-    <Row class="w-full h-[80px] flex">
+    <h2
+      class="flex items-center justify-center w-full text-[80px] bg-gradient-to-r from-blue-500 to-green-500 bg-clip-text text-transparent"
+    >
+      My Topster
+    </h2>
+
+    <!-- <Row class="w-full h-[80px] flex">
       <img
         @click="router.push(`/`)"
         src="../../../public/logo.png"
@@ -29,6 +35,6 @@ const router = useRouter()
           </span>
         </div>
       </Col>
-    </Row>
+    </Row> -->
   </header>
 </template>
