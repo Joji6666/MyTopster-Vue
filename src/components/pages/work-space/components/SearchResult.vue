@@ -23,6 +23,8 @@ const { handleDragOn } = useWorkSpace()
       height="80px"
       draggable="true"
       @dragstart="() => handleDragOn(albumData)"
+      @touchstart="() => handleDragOn(albumData)"
+      @touchstart.prevent
     />
   </article>
 </template>

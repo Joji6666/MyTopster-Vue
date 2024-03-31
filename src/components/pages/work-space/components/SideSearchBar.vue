@@ -8,7 +8,7 @@ const { searchData, handleChange, handleSearch } = useWorkSpace()
 </script>
 
 <template>
-  <div class="flex flex-col bg-slate-800 h-full mr-5 overflow-y-auto">
+  <div class="flex flex-col bg-slate-800 h-full overflow-y-auto">
     <span class="w-full flex items-center justify-center font-bold text-white mt-1"
       >Try Search</span
     >

@@ -34,30 +34,36 @@ const useStorage = () => {
   })
 
   const saveStorage = (target: string = '', isClose: boolean = false, option: any = {}) => {
-    const targetValue = target !== '' ? target : gridOptionStore.selectedWork
+    console.log(storageData.storageData, 'stroage data@')
+    if (storageData.storageData.length > 0) {
+      const targetValue = target !== '' ? target : gridOptionStore.selectedWork
 
-    const targetWork = storageData.storageData.find(
-      (storageData: StorageDataInterface) => storageData.name === targetValue
-    )
+      console.log(targetValue, 'yarget value@')
 
-    if (targetWork) {
-      targetWork.gridDatas = gridDatasStore.gridDatas
+      const targetWork = storageData.storageData.find(
+        (storageData: StorageDataInterface) => storageData.name === targetValue
+      )
 
-      if (targetWork?.options && targetWork?.options?.isAutoColumnsGrid) {
-        targetWork.gridDatas = autoColumnsGridDatasStore.gridDatas
+      console.log(targetWork, 'save Storage target value@')
+      if (targetWork) {
+        targetWork.gridDatas = gridDatasStore.gridDatas
+
+        if (targetWork?.options && targetWork?.options?.isAutoColumnsGrid) {
+          targetWork.gridDatas = autoColumnsGridDatasStore.gridDatas
+        }
+
+        if (targetWork?.options && targetWork?.options?.isCustom) {
+          targetWork.gridDatas = customGridDatas.customGridDatas
+        }
+
+        targetWork.options = Object.keys(option).length > 0 ? option : gridOptionStore
       }
 
-      if (targetWork?.options && targetWork?.options?.isCustom) {
-        targetWork.gridDatas = customGridDatas.customGridDatas
+      localStorage.setItem('datas', JSON.stringify(storageData.storageData))
+
+      if (isClose) {
+        localStorage.setItem('selectedWork', JSON.stringify(targetValue))
       }
-
-      targetWork.options = Object.keys(option).length > 0 ? option : gridOptionStore
-    }
-
-    localStorage.setItem('datas', JSON.stringify(storageData.storageData))
-
-    if (isClose) {
-      localStorage.setItem('selectedWork', JSON.stringify(targetValue))
     }
   }
 
@@ -102,10 +108,10 @@ const useStorage = () => {
       storageData.storageData = parsedData
 
       if (selectedWork) {
-        gridOptionStore.selectedWork = JSON.parse(selectedWork)
+        gridOptionStore.selectedWork = selectedWork
 
         const targetWork: StorageDataInterface = parsedData.find(
-          (storageData: StorageDataInterface) => storageData.name === JSON.parse(selectedWork)
+          (storageData: StorageDataInterface) => storageData.name === selectedWork
         )
 
         if (targetWork) {
@@ -155,6 +161,7 @@ const useStorage = () => {
 
     localStorage.setItem('datas', JSON.stringify(storageDatas))
     localStorage.setItem('selectedWork', 'work1')
+    storageData.storageData = storageDatas
   }
 
   const handleWork = (e: SelectValue, key: string) => {
@@ -205,8 +212,10 @@ const useStorage = () => {
     const prevTarget = localStorage.getItem('selectedWork')
 
     console.log(prevOption, 'prevOption @@')
+
+    console.log(prevTarget, 'prevTarger@')
     if (prevTarget) {
-      saveStorage(JSON.parse(prevTarget), false, prevOption)
+      saveStorage(prevTarget, false, prevOption)
     }
 
     const starndardOption: GridOptionInterface = {

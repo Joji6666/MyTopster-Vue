@@ -53,6 +53,8 @@ onMounted(() => {
             draggable="true"
             @dragstart="() => handleGridDrag(value)"
             :accesskey="value.key"
+            @touchend="handleDragEnd"
+            @touchstart="() => handleGridDrag(value)"
           >
             <img
               v-if="value.imagePath"
@@ -62,6 +64,7 @@ onMounted(() => {
               @drop="handleDragEnd"
               @drop.prevent="handleDragEnd"
               :accesskey="value.key"
+              @touchend="handleDragEnd"
             />
           </div>
 
