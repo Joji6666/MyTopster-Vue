@@ -8,12 +8,14 @@ import {
   customGridOptions,
   gridDatasStore,
   gridOptionStore,
-  selectedImageStore
+  selectedImageStore,
+  storageData
 } from '../store/workSpace_store'
 import type {
   GridDataInterface,
   GridOptionInterface,
-  GridPropertiesInterface
+  GridPropertiesInterface,
+  StorageDataInterface
 } from '../interface/workSpace_store_interface'
 import type { SelectValue } from 'ant-design-vue/es/select'
 import type { AlbumDataInterface } from '@/components/pages/work-space/utils/interface/interface'
@@ -542,7 +544,27 @@ export default function useWorkSpace() {
   }
 
   const handleClear = () => {
-    handleSelect(gridType.value, 'clear')
+    if (gridOptionStore.isAutoColumnsGrid) {
+      autoColumnsGridDatasStore.gridDatas = []
+    }
+
+    if (gridOptionStore.isCustom) {
+      customGridDatas.customGridDatas = []
+    }
+
+    if (!gridOptionStore.isAutoColumnsGrid && !gridOptionStore.isCustom) {
+      gridDatasStore.gridDatas = []
+    }
+
+    const targetStorageData = storageData.storageData.find(
+      (data: StorageDataInterface) => data.name === gridOptionStore.selectedWork
+    )
+
+    if (targetStorageData) {
+      targetStorageData.gridDatas = []
+
+      localStorage.setItem('datas', JSON.stringify(storageData.storageData))
+    }
   }
 
   const downloadImage = async (key: string) => {

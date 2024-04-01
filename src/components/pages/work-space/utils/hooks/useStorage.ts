@@ -58,7 +58,7 @@ const useStorage = () => {
       localStorage.setItem('datas', JSON.stringify(storageData.storageData))
 
       if (isClose) {
-        localStorage.setItem('selectedWork', JSON.stringify(targetValue))
+        localStorage.setItem('selectedWork', targetValue)
       }
     }
   }
@@ -173,7 +173,7 @@ const useStorage = () => {
 
     if (e && typeof e === 'string') {
       gridOptionStore.selectedWork = e
-      localStorage.setItem('selectedWork', JSON.stringify(e))
+      localStorage.setItem('selectedWork', e)
 
       const targetWork = storageData.storageData.find(
         (storageData: StorageDataInterface) => storageData.name === gridOptionStore.selectedWork
@@ -256,7 +256,7 @@ const useStorage = () => {
       gridOptionStore.selectedWork = name
       storageData.storageData = parsedData
       localStorage.setItem('datas', JSON.stringify(parsedData))
-      localStorage.setItem('selectedWork', JSON.stringify(name))
+      localStorage.setItem('selectedWork', name)
 
       gridDatasStore.gridDatas = gridDatas
     }
