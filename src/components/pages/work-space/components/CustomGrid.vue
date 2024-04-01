@@ -10,6 +10,8 @@ watch(
   (newValue, oldValue) => {
     if (newValue !== oldValue) {
       customGridDatas.customGridDatas = []
+      customGridOptions.row = 1
+      customGridOptions.col = 0
     }
   }
 )

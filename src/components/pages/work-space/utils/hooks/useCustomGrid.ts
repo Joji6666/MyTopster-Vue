@@ -297,8 +297,12 @@ const useCustomGrid = () => {
     let totalCount = 0
 
     customGridDatas.customGridDatas.forEach((gridData: GridDataInterface) => {
-      totalCount += gridData.grids.length
+      gridData.grids.forEach(() => {
+        totalCount++
+      })
     })
+
+    console.log(totalCount, 'total count@@')
     if (type === 'col') {
       customGridOptions.row = e
 
@@ -317,7 +321,7 @@ const useCustomGrid = () => {
             height: 0,
             imagePath: '',
             title: '',
-            key: `${totalCount}`,
+            key: ``,
             artist: ''
           })
         }
@@ -334,7 +338,7 @@ const useCustomGrid = () => {
             height: 0,
             imagePath: '',
             title: '',
-            key: `${totalCount}`,
+            key: ``,
             artist: ''
           })
         })
@@ -344,6 +348,17 @@ const useCustomGrid = () => {
         })
       }
     }
+
+    let gridTotalCount: number = 0
+
+    customGridDatas.customGridDatas.forEach((gridData: GridDataInterface) => {
+      gridData.grids.forEach((grid) => {
+        grid.key = gridTotalCount.toString()
+        gridTotalCount++
+      })
+    })
+
+    console.log(customGridDatas.customGridDatas, 'custom datas@')
   }
 
   return {

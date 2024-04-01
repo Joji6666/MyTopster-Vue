@@ -82,14 +82,20 @@ const useStorage = () => {
     gridOptionStore.selectedWork = firstWork.name
     if (firstWork.options.isAutoColumnsGrid) {
       autoColumnsGridDatasStore.gridDatas = firstWork.gridDatas
+      gridDatasStore.gridDatas = []
+      customGridDatas.customGridDatas = []
     }
 
     if (firstWork.options.isCustom) {
       customGridDatas.customGridDatas = firstWork.gridDatas
+      gridDatasStore.gridDatas = []
+      autoColumnsGridDatasStore.gridDatas = []
     }
 
     if (!firstWork.options.isCustom && !firstWork.options.isAutoColumnsGrid) {
       gridDatasStore.gridDatas = firstWork.gridDatas
+      customGridDatas.customGridDatas = []
+      autoColumnsGridDatasStore.gridDatas = []
     }
   }
 

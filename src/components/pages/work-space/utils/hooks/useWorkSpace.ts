@@ -328,11 +328,11 @@ export default function useWorkSpace() {
   }
 
   const handleSelect = (e: SelectValue, key: string) => {
-    gridType.value = e
-    gridOptionStore.isCustom = false
-    gridOptionStore.isAutoColumnsGrid = false
     if (e && typeof e === 'string') {
       gridOptionStore.gridType = e
+      gridOptionStore.isCustom = false
+      gridOptionStore.isAutoColumnsGrid = false
+      gridType.value = e
     }
 
     switch (e) {
