@@ -34,17 +34,13 @@ const useStorage = () => {
   })
 
   const saveStorage = (target: string = '', isClose: boolean = false, option: any = {}) => {
-    console.log(storageData.storageData, 'stroage data@')
     if (storageData.storageData.length > 0) {
       const targetValue = target !== '' ? target : gridOptionStore.selectedWork
-
-      console.log(targetValue, 'yarget value@')
 
       const targetWork = storageData.storageData.find(
         (storageData: StorageDataInterface) => storageData.name === targetValue
       )
 
-      console.log(targetWork, 'save Storage target value@')
       if (targetWork) {
         targetWork.gridDatas = gridDatasStore.gridDatas
 
@@ -172,7 +168,7 @@ const useStorage = () => {
     })
 
     if (prevTarget) {
-      saveStorage(JSON.parse(prevTarget), false, prevOption)
+      saveStorage(prevTarget, false, prevOption)
     }
 
     if (e && typeof e === 'string') {
@@ -211,9 +207,6 @@ const useStorage = () => {
     })
     const prevTarget = localStorage.getItem('selectedWork')
 
-    console.log(prevOption, 'prevOption @@')
-
-    console.log(prevTarget, 'prevTarger@')
     if (prevTarget) {
       saveStorage(prevTarget, false, prevOption)
     }
