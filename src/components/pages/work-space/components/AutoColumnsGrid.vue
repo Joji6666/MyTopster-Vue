@@ -71,7 +71,7 @@ const { handleDragEnd, gridOption, handleGridDrag } = useWorkSpace()
       </div>
     </div>
     <div
-      class="w-[25%] h-full flex flex-col"
+      class="w-[25%] h-full flex flex-col pt-8"
       v-if="gridOption.tooltipOption === 'side'"
       :style="{ backgroundColor: gridOption.backgroundColor, color: gridOption.textColor }"
     >
@@ -79,11 +79,7 @@ const { handleDragEnd, gridOption, handleGridDrag } = useWorkSpace()
         v-for="(gridData, index) in autoColumnsGridDatasStore.gridDatas"
         :key="`tootip-${index}`"
       >
-        <div
-          v-show="value.artist && value.title"
-          v-for="(value, index) in gridData.grids"
-          :key="`tootip-${index}`"
-        >
+        <div v-show="value.title" v-for="(value, index) in gridData.grids" :key="`tootip-${index}`">
           <span class="text-[11.5px] font-bold">
             {{ `${Number(value.key) + 1}. ${value.artist} - ${value.title}` }}
           </span>

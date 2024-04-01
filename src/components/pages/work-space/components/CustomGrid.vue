@@ -81,7 +81,7 @@ watch(
       </div>
     </div>
     <div
-      class="w-[25%] h-full flex flex-col"
+      class="w-[25%] h-full flex flex-col pt-8"
       v-if="gridOption.tooltipOption === 'side'"
       :style="{ backgroundColor: gridOption.backgroundColor, color: gridOption.textColor }"
     >

@@ -84,7 +84,7 @@ onMounted(() => {
       </div>
     </div>
     <div
-      class="w-[25%] h-full flex flex-col z-30"
+      class="w-[25%] h-full flex flex-col pt-8 z-30"
       v-if="gridOption.tooltipOption === 'side'"
       :style="{ color: gridOption.textColor }"
     >
