@@ -43,6 +43,7 @@ export default function useWorkSpace() {
   const artist = ref<string | undefined>('')
   const searchData = ref<AlbumDataInterface[]>([])
   const gridType = ref<string | SelectValue>('basic')
+  const fileRef = ref<any>(null)
   const gridOption: GridOptionInterface = gridOptionStore
 
   // values
@@ -602,9 +603,15 @@ export default function useWorkSpace() {
       if (files.length > 0) {
         const objectURL = URL.createObjectURL(files[0])
 
+        gridOptionStore.backgroundImageFile = files[0]
         gridOptionStore.backgroundImagePath = objectURL
       }
     }
+  }
+
+  const deleteBackgroundImage = () => {
+    gridOptionStore.backgroundImagePath = ''
+    fileRef.value.value = ''
   }
 
   return {
@@ -615,6 +622,7 @@ export default function useWorkSpace() {
     gridType,
     gridTypeOptions,
     tooltipOptions,
+    fileRef,
     gridInit,
     handleChange,
     handleSearch,
@@ -629,6 +637,7 @@ export default function useWorkSpace() {
     handleClear,
     handleBackgroundImage,
     createGrids,
-    downloadImage
+    downloadImage,
+    deleteBackgroundImage
   }
 }

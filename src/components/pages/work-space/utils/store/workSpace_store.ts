@@ -21,7 +21,8 @@ export const gridOptionStore = reactive<GridOptionInterface>({
   isCustom: false,
   selectedWork: 'work1',
   backgroundImagePath: '',
-  isAutoColumnsGrid: false
+  isAutoColumnsGrid: false,
+  backgroundImageFile: null
 })
 
 export const topsterDataStore = reactive<TopsterDatasInterface>({

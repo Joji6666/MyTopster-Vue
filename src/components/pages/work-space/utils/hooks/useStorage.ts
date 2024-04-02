@@ -180,7 +180,8 @@ const useStorage = () => {
           isCustom: false,
           selectedWork: 'work1',
           backgroundImagePath: '',
-          isAutoColumnsGrid: false
+          isAutoColumnsGrid: false,
+          backgroundImageFile: null
         },
         customOptions: standardCustomGridOption
       }
@@ -268,7 +269,8 @@ const useStorage = () => {
       isCustom: false,
       selectedWork: '',
       backgroundImagePath: '',
-      isAutoColumnsGrid: false
+      isAutoColumnsGrid: false,
+      backgroundImageFile: null
     }
 
     const getStorageDatas = await localStorage.getItem('datas')

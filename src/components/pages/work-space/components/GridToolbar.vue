@@ -16,9 +16,11 @@ const {
   handleClear,
   handleBackgroundImage,
   downloadImage,
+  deleteBackgroundImage,
   gridTypeOptions,
   gridOption,
-  tooltipOptions
+  tooltipOptions,
+  fileRef
 } = useWorkSpace()
 
 const {
@@ -112,8 +114,22 @@ onMounted(() => {
 
       <div class="flex items-center justify-between">
         <label class="w-[35%] ml-2 text-white font-bold"> Background Image </label>
-        <input class="w-[65%]" type="file" @change="handleBackgroundImage" />
+        <input class="w-[65%]" ref="fileRef" type="file" @change="handleBackgroundImage" />
       </div>
+
+      <Popconfirm
+        title="Are you sure to delete?"
+        placement="rightTop"
+        ok-text="Yes"
+        cancel-text="No"
+        @confirm="deleteBackgroundImage"
+        ok-type="danger"
+        v-if="gridOption.backgroundImagePath"
+      >
+        <div v-if="gridOption.backgroundImagePath" :class="downloadButtonStyle">
+          <span>Delete Background Image</span>
+        </div>
+      </Popconfirm>
 
       <!-- <div class="flex items-center justify-between" v-if="gridOption.tooltipOption !== 'none'">
         <label class="w-[35%] ml-2 text-white font-bold"> Tooltip Background Color </label>
