@@ -328,7 +328,7 @@ export default function useWorkSpace() {
     }
   }
 
-  const handleSelect = (e: SelectValue, key: string) => {
+  const handleSelect = (e: SelectValue | string, key: string) => {
     if (e && typeof e === 'string') {
       gridOptionStore.gridType = e
       gridOptionStore.isCustom = false
@@ -545,6 +545,8 @@ export default function useWorkSpace() {
   }
 
   const handleClear = () => {
+    console.log(gridOptionStore.gridType, 'grid Type@')
+
     if (gridOptionStore.isAutoColumnsGrid) {
       autoColumnsGridDatasStore.gridDatas = []
     }
@@ -557,15 +559,7 @@ export default function useWorkSpace() {
       gridDatasStore.gridDatas = []
     }
 
-    const targetStorageData = storageData.storageData.find(
-      (data: StorageDataInterface) => data.name === gridOptionStore.selectedWork
-    )
-
-    if (targetStorageData) {
-      targetStorageData.gridDatas = []
-
-      localStorage.setItem('datas', JSON.stringify(storageData.storageData))
-    }
+    handleSelect(gridOptionStore.gridType, 'clear')
   }
 
   const downloadImage = async (key: string) => {
@@ -579,10 +573,7 @@ export default function useWorkSpace() {
     if (captureArea) {
       const originalHeight = captureArea.style.height
 
-      if (gridOption.tooltipOption !== 'side') {
-        captureArea.style.height = 'auto'
-      }
-
+      captureArea.style.height = 'auto'
       const canvas = await html2canvas(captureArea, { allowTaint: true, useCORS: true })
       const image = canvas.toDataURL(type)
       const link = document.createElement('a')
