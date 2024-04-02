@@ -2,11 +2,13 @@ import { computed } from 'vue'
 import {
   autoColumnsGridDatasStore,
   customGridDatas,
+  customGridOptions,
   gridDatasStore,
   gridOptionStore,
   storageData
 } from '../store/workSpace_store'
 import type {
+  CustomGridOptionsInterface,
   GridDataInterface,
   GridOptionInterface,
   StorageDataInterface
@@ -17,6 +19,15 @@ import type { SelectValue } from 'ant-design-vue/es/select'
 interface SelectOptionInterface {
   label: string
   value: string
+}
+
+const standardCustomGridOption: CustomGridOptionsInterface = {
+  largeTileCount: 0,
+  middleTileCount: 0,
+  smallTileCount: 0,
+  row: 1,
+  col: 0,
+  type: 'onlySmall'
 }
 
 const useStorage = () => {
@@ -44,6 +55,12 @@ const useStorage = () => {
       if (targetWork) {
         targetWork.gridDatas = gridDatasStore.gridDatas
         targetWork.options = Object.keys(option).length > 0 ? option : gridOptionStore
+
+        if (targetWork.options.isCustom) {
+          targetWork.customOptions = customGridOptions
+        } else {
+          targetWork.customOptions = standardCustomGridOption
+        }
 
         if (targetWork?.options && targetWork?.options?.isAutoColumnsGrid) {
           targetWork.gridDatas = autoColumnsGridDatasStore.gridDatas
@@ -144,7 +161,7 @@ const useStorage = () => {
 
   const createLocalStorage = async () => {
     const gridDatas: GridDataInterface[] = createGrids(10, 12, 20, 5, 6, 10)
-    const storageDatas = [
+    const storageDatas: StorageDataInterface[] = [
       {
         name: 'work1',
         gridDatas,
@@ -160,7 +177,8 @@ const useStorage = () => {
           selectedWork: 'work1',
           backgroundImagePath: '',
           isAutoColumnsGrid: false
-        }
+        },
+        customOptions: standardCustomGridOption
       }
     ]
 
@@ -171,14 +189,12 @@ const useStorage = () => {
 
   const handleWork = async (e: SelectValue, key: string) => {
     const prevTarget = localStorage.getItem('selectedWork')
-    console.log(prevTarget, 'prev Target')
+
     const prevOption: any = {}
     Object.entries(gridOptionStore).forEach(([key, value]) => {
       prevOption[key] = value
     })
 
-    console.log(prevOption, 'prev option')
-    console.log(e, ' e @@@')
     if (prevTarget) {
       await saveStorage(prevTarget, false, prevOption)
     }
@@ -266,7 +282,8 @@ const useStorage = () => {
       const storageDatas: StorageDataInterface = {
         name,
         gridDatas,
-        options: starndardOption
+        options: starndardOption,
+        customOptions: standardCustomGridOption
       }
       storageDatas.options.selectedWork = name
 

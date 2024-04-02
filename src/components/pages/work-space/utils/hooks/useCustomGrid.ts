@@ -357,8 +357,6 @@ const useCustomGrid = () => {
         gridTotalCount++
       })
     })
-
-    console.log(customGridDatas.customGridDatas, 'custom datas@')
   }
 
   return {

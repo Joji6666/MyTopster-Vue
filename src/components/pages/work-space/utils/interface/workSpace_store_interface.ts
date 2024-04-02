@@ -46,6 +46,7 @@ export interface StorageDataInterface {
   name: string
   gridDatas: GridDataInterface[]
   options: GridOptionInterface
+  customOptions: CustomGridOptionsInterface
 }
 
 export interface StorageDatasInterface {
