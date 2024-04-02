@@ -9,14 +9,15 @@ const { handleDragEnd, gridOption, handleGridDrag } = useWorkSpace()
   <article
     class="flex w-full h-full items-center justify-center"
     :style="{
-      backgroundColor: gridOption.backgroundColor
+      backgroundColor: gridOption.backgroundColor,
+      backgroundImage: `url(${gridOption.backgroundImagePath})`,
+      backgroundSize: 'cover'
     }"
     id="autoColumnCaptureArea"
   >
     <div
       class="h-full p-8 flex flex-col items-center justify-center"
       :style="{
-        backgroundColor: gridOption.backgroundColor,
         width: gridOption.tooltipOption !== 'side' ? '100%' : '75%'
       }"
     >
@@ -73,7 +74,7 @@ const { handleDragEnd, gridOption, handleGridDrag } = useWorkSpace()
     <div
       class="w-[25%] h-full flex flex-col pt-8"
       v-if="gridOption.tooltipOption === 'side'"
-      :style="{ backgroundColor: gridOption.backgroundColor, color: gridOption.textColor }"
+      :style="{ color: gridOption.textColor }"
     >
       <div
         v-for="(gridData, index) in autoColumnsGridDatasStore.gridDatas"

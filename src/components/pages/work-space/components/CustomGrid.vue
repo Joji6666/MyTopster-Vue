@@ -21,14 +21,15 @@ watch(
   <article
     class="flex w-full h-full"
     :style="{
-      backgroundColor: gridOption.backgroundColor
+      backgroundColor: gridOption.backgroundColor,
+      backgroundImage: `url(${gridOption.backgroundImagePath})`,
+      backgroundSize: 'cover'
     }"
     id="customCaptureArea"
   >
     <div
       class="h-full p-8"
       :style="{
-        backgroundColor: gridOption.backgroundColor,
         width: gridOption.tooltipOption !== 'side' ? '100%' : '75%'
       }"
     >
@@ -85,7 +86,7 @@ watch(
     <div
       class="w-[25%] h-full flex flex-col pt-8"
       v-if="gridOption.tooltipOption === 'side'"
-      :style="{ backgroundColor: gridOption.backgroundColor, color: gridOption.textColor }"
+      :style="{ color: gridOption.textColor }"
     >
       <div v-for="(gridData, index) in customGridDatas.customGridDatas" :key="`tootip-${index}`">
         <div

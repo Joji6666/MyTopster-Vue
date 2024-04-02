@@ -8,7 +8,7 @@ import vueJsx from '@vitejs/plugin-vue-jsx'
 export default defineConfig({
   plugins: [vue(), vueJsx()],
   server: {
-    port: 5406 // 원하는 포트 번호로 변경하세요.
+    port: 5407 // 원하는 포트 번호로 변경하세요.
   },
   resolve: {
     alias: {

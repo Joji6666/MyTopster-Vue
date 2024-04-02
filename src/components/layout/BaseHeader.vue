@@ -11,7 +11,7 @@ const router = useRouter()
   <header class="w-screen bg-slate-950">
     <div class="w-full bg-slate-950 fixed z-50">
       <h2
-        class="flex items-center justify-center pt-5 md:pt-0 w-full md:text-[80px] text-[50px] bg-gradient-to-r from-blue-500 to-green-500 bg-clip-text text-transparent"
+        class="flex items-center justify-center md:pt-0 w-full md:text-[60px] text-[50px] bg-gradient-to-r from-blue-500 to-green-500 bg-clip-text text-transparent"
       >
         My Topster
       </h2>
