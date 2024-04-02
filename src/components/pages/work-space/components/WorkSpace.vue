@@ -5,8 +5,30 @@ import TopsterGrid from './TopsterGrid.vue'
 import GridToolbar from './GridToolbar.vue'
 
 import useWorkSpace from '../utils/hooks/useWorkSpace'
+import { onMounted } from 'vue'
+import { isMobile } from '../utils/store/workSpace_store'
 
 const { gridOption } = useWorkSpace()
+
+onMounted(() => {
+  const width = window.innerWidth
+
+  if (width < 640) {
+    isMobile.isMobile = true
+  } else {
+    isMobile.isMobile = false
+  }
+
+  window.addEventListener('resize', function () {
+    const width = window.innerWidth
+
+    if (width < 640) {
+      isMobile.isMobile = true
+    } else {
+      isMobile.isMobile = false
+    }
+  })
+})
 </script>
 
 <template>

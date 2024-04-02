@@ -12,7 +12,7 @@ const customGridTypeOptions = [
 </script>
 
 <template class="w-full">
-  <div class="flex items-center justify-between mt-10">
+  <!-- <div class="flex items-center justify-between mt-10">
     <label class="ml-2 text-white font-bold"> Type </label>
     <Select
       :options="customGridTypeOptions"
@@ -21,7 +21,7 @@ const customGridTypeOptions = [
       @change="(e) => handleCustomGridType(e)"
     >
     </Select>
-  </div>
+  </div> -->
   <div class="flex flex-col" v-if="customGridOptions.type === 'onlySmall'">
     <div class="flex items-center justify-between">
       <label class="w-[35%] ml-2 text-white font-bold"> Rows </label>
@@ -60,7 +60,7 @@ const customGridTypeOptions = [
         :max="50"
         v-on:change="(e) => handleCustomGridTiles(e, 'large')"
         :default-value="0"
-        v-model:value="customGridOptions.largeTileCount"
+        :value="customGridOptions.largeTileCount"
       />
     </div>
 
@@ -73,7 +73,7 @@ const customGridTypeOptions = [
         :max="100"
         v-on:change="(e) => handleCustomGridTiles(e, 'middle')"
         :default-value="0"
-        v-model:value="customGridOptions.middleTileCount"
+        :value="customGridOptions.middleTileCount"
       />
     </div>
 
@@ -86,7 +86,7 @@ const customGridTypeOptions = [
         :max="200"
         v-on:change="(e) => handleCustomGridTiles(e, 'small')"
         :default-value="0"
-        v-model:value="customGridOptions.smallTileCount"
+        :value="customGridOptions.smallTileCount"
       />
     </div>
   </div>

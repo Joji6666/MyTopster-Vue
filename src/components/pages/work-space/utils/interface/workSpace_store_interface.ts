@@ -77,3 +77,12 @@ export interface CustomGridOptionsInterface {
   col: number
   type: string | SelectValue
 }
+
+export interface MobileSelectedImageInterface {
+  data: AlbumDataInterface | null
+  x: string | number
+  y: string | number
+  lastTouchX: number
+  lastTouchY: number
+  isEnd: boolean
+}

@@ -43,6 +43,7 @@ export default function useWorkSpace() {
   const artist = ref<string | undefined>('')
   const searchData = ref<AlbumDataInterface[]>([])
   const gridType = ref<string | SelectValue>('basic')
+
   const fileRef = ref<any>(null)
   const gridOption: GridOptionInterface = gridOptionStore
 
@@ -474,7 +475,7 @@ export default function useWorkSpace() {
   }
 
   const handleDragEnd = (e: any) => {
-    const accessKey = e.target.accessKey
+    const accessKey = typeof e === 'string' ? e : e.target.accessKey
     const targetDatas = gridOptionStore.isCustom
       ? customGridDatas.customGridDatas
       : gridOptionStore.isAutoColumnsGrid
@@ -510,14 +511,15 @@ export default function useWorkSpace() {
         }
       } else {
         if (foundTile && selectedImageStore.seletedImage) {
+          console.log(foundTile, 'fountTile@')
           foundTile.imagePath = selectedImageStore.seletedImage.image[3]['#text']
           foundTile.title = selectedImageStore.seletedImage.name
           foundTile.artist = selectedImageStore.seletedImage.artist
         }
 
-        const files = e.dataTransfer.files
+        const files = e?.dataTransfer?.files
 
-        if (files.length > 0 && files[0].type.startsWith('image/') && foundTile) {
+        if (files?.length > 0 && files[0]?.type?.startsWith('image/') && foundTile) {
           const fileReader = new FileReader()
           fileReader.readAsDataURL(files[0])
           fileReader.onload = (e: any) => {
@@ -614,6 +616,7 @@ export default function useWorkSpace() {
     gridTypeOptions,
     tooltipOptions,
     fileRef,
+
     gridInit,
     handleChange,
     handleSearch,

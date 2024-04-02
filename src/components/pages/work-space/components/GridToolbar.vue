@@ -147,7 +147,7 @@ onMounted(() => {
       </div>
 
       <div class="flex items-center justify-between">
-        <label class="w-[35%] ml-2 text-white font-bold"> Grid Gap </label>
+        <label class="w-[35%] ml-2 text-white font-bold"> Gap </label>
 
         <Slider
           v-model:value="gridOption.gridGap"

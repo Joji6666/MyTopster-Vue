@@ -28,7 +28,7 @@ watch(
     id="customCaptureArea"
   >
     <div
-      class="h-full p-8"
+      class="h-full p-5 md:p-8"
       :style="{
         width: gridOption.tooltipOption !== 'side' ? '100%' : '75%'
       }"

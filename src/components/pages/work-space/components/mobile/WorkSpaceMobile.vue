@@ -22,7 +22,7 @@ const { gridOption } = useWorkSpace()
       </Col>
     </Row>
 
-    <Row class="w-full h-[55%]">
+    <Row class="w-full h-full mt-[50px]">
       <div class="h-full w-[50%]">
         <GridToolbar />
       </div>
@@ -33,4 +33,3 @@ const { gridOption } = useWorkSpace()
     </Row>
   </article>
 </template>
-

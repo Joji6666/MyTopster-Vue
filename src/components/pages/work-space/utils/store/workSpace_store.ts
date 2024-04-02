@@ -5,6 +5,7 @@ import type {
   CustomGridOptionsInterface,
   GridDatasInterface,
   GridOptionInterface,
+  MobileSelectedImageInterface,
   SelectedImageStoreInterface,
   StorageDatasInterface,
   TopsterDatasInterface
@@ -51,6 +52,10 @@ export const selectedImageStore = reactive<SelectedImageStoreInterface>({
   isGridDrag: false
 })
 
+export const isMobile = reactive({
+  isMobile: false
+})
+
 export const customGridOptions = reactive<CustomGridOptionsInterface>({
   largeTileCount: 0,
   middleTileCount: 0,
@@ -58,4 +63,13 @@ export const customGridOptions = reactive<CustomGridOptionsInterface>({
   row: 0,
   col: 0,
   type: 'onlySmall'
+})
+
+export const mobileSelectedImage = reactive<MobileSelectedImageInterface>({
+  data: null,
+  x: 0,
+  y: 0,
+  lastTouchX: 0,
+  lastTouchY: 0,
+  isEnd: false
 })

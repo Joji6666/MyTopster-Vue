@@ -16,7 +16,7 @@ onMounted(() => {
 <template>
   <article
     v-if="!gridOptionStore.isCustom && !gridOptionStore.isAutoColumnsGrid"
-    class="flex w-full h-full"
+    class="flex w-full h-full overflow-y-auto"
     :style="{
       backgroundColor: gridOption.backgroundColor,
       backgroundImage: `url(${gridOption.backgroundImagePath})`,
@@ -25,7 +25,7 @@ onMounted(() => {
     id="captureArea"
   >
     <div
-      :class="`h-full p-8 `"
+      :class="`h-full p-5  md:p-8 `"
       :style="{
         width: gridOption.tooltipOption !== 'side' ? '100%' : '75%'
       }"

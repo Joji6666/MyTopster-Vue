@@ -9,7 +9,7 @@ import BaseFooter from './components/layout/BaseFooter.vue'
     <header class="w-screen h-[10%] fixed top-0 z-50">
       <BaseHeader />
     </header>
-    <main class="w-screen h-[90%] mt-24">
+    <main class="w-screen h-full md:h-[90%] mt-24">
       <RouterView />
     </main>
 

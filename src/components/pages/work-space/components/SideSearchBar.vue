@@ -17,12 +17,11 @@ const { searchData, handleChange, handleSearch } = useWorkSpace()
       <Input
         type="text"
         @input="(e) => handleChange(e, 'album')"
-        placeholder="enter: song, album, artist ..."
+        placeholder="enter: album, artist ..."
       />
 
       <button type="submit" class="bg-blue-800 p-1 rounded-xl">search</button>
     </form>
-    <span class="p-1 text-white text-[12px] font-bold">You can also drop your image</span>
 
     <SearchResult :searchData="searchData" />
   </div>

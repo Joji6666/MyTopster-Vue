@@ -16,7 +16,7 @@ const { handleDragEnd, gridOption, handleGridDrag } = useWorkSpace()
     id="autoColumnCaptureArea"
   >
     <div
-      class="h-full p-8 flex flex-col items-center justify-center"
+      class="h-full p-5 md:p-8 flex flex-col items-center justify-center"
       :style="{
         width: gridOption.tooltipOption !== 'side' ? '100%' : '75%'
       }"
