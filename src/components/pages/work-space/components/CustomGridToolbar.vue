@@ -29,9 +29,10 @@ const customGridTypeOptions = [
       <Slider
         class="w-[65%]"
         :min="0"
-        :max="10"
+        :max="30"
         v-on:change="(e) => handleCustomGridRowAndCol(e, 'row')"
         :default-value="1"
+        :value="customGridOptions.row"
       />
     </div>
 
@@ -41,9 +42,10 @@ const customGridTypeOptions = [
       <Slider
         class="w-[65%]"
         :min="0"
-        :max="20"
+        :max="10"
         v-on:change="(e) => handleCustomGridRowAndCol(e, 'col')"
-        :default-value="0"
+        :default-value="1"
+        :value="customGridOptions.col"
       />
     </div>
   </div>
@@ -58,6 +60,7 @@ const customGridTypeOptions = [
         :max="50"
         v-on:change="(e) => handleCustomGridTiles(e, 'large')"
         :default-value="0"
+        v-model:value="customGridOptions.largeTileCount"
       />
     </div>
 
@@ -70,6 +73,7 @@ const customGridTypeOptions = [
         :max="100"
         v-on:change="(e) => handleCustomGridTiles(e, 'middle')"
         :default-value="0"
+        v-model:value="customGridOptions.middleTileCount"
       />
     </div>
 
@@ -82,6 +86,7 @@ const customGridTypeOptions = [
         :max="200"
         v-on:change="(e) => handleCustomGridTiles(e, 'small')"
         :default-value="0"
+        v-model:value="customGridOptions.smallTileCount"
       />
     </div>
   </div>

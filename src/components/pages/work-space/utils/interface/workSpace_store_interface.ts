@@ -68,6 +68,7 @@ export interface SelectedImageStoreInterface {
 }
 
 export interface CustomGridOptionsInterface {
+  [key: string]: string | number | boolean | SelectValue
   largeTileCount: number
   middleTileCount: number
   smallTileCount: number

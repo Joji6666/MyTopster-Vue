@@ -26,7 +26,7 @@ const standardCustomGridOption: CustomGridOptionsInterface = {
   middleTileCount: 0,
   smallTileCount: 0,
   row: 1,
-  col: 0,
+  col: 1,
   type: 'onlySmall'
 }
 
@@ -141,6 +141,10 @@ const useStorage = () => {
             })
           }
 
+          Object.entries(targetWork.customOptions).forEach(([key, value]) => {
+            customGridOptions[key] = value
+          })
+
           if (targetWork?.options && targetWork?.options?.isAutoColumnsGrid) {
             autoColumnsGridDatasStore.gridDatas = targetWork.gridDatas
             gridOptionStore.isAutoColumnsGrid = true
@@ -233,6 +237,11 @@ const useStorage = () => {
         }
 
         gridOptionStore.selectedWork = e
+
+        const customOptionKeys = Object.keys(targetWork.customOptions)
+        for (const key of customOptionKeys) {
+          customGridOptions[key] = targetWork.customOptions[key]
+        }
       }
     }
   }
@@ -291,6 +300,10 @@ const useStorage = () => {
 
       Object.entries(starndardOption).forEach(([key, value]) => {
         gridOptionStore[key] = value
+      })
+
+      Object.entries(standardCustomGridOption).forEach(([key, value]) => {
+        customGridOptions[key] = value
       })
 
       gridOptionStore.selectedWork = name

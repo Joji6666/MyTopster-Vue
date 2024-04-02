@@ -294,19 +294,13 @@ const useCustomGrid = () => {
   const handleCustomGridRowAndCol = (e: any, type: string) => {
     const prevRow = structuredClone(customGridOptions.row)
     const prevCol = structuredClone(customGridOptions.col)
-    let totalCount = 0
 
-    customGridDatas.customGridDatas.forEach((gridData: GridDataInterface) => {
-      gridData.grids.forEach(() => {
-        totalCount++
-      })
-    })
+    console.log(e, 'e@@', prevRow, 'prevRow', prevCol, 'prev Col@', type, 'type@')
 
-    console.log(totalCount, 'total count@@')
-    if (type === 'col') {
+    if (type === 'row') {
       customGridOptions.row = e
 
-      if (e > prevRow) {
+      if (e > prevRow - 1) {
         customGridDatas.customGridDatas.push({
           col: 10,
           count: 0,
@@ -331,7 +325,7 @@ const useCustomGrid = () => {
     } else {
       customGridOptions.col = e
 
-      if (e > prevCol) {
+      if (e > prevCol - 1) {
         customGridDatas.customGridDatas.forEach((gridData) => {
           gridData.grids.push({
             width: 0,
