@@ -4,8 +4,10 @@ import useWorkSpace from '../utils/hooks/useWorkSpace'
 import { gridDatasStore, gridOptionStore, storageData } from '../utils/store/workSpace_store'
 import CustomGrid from './CustomGrid.vue'
 import AutoColumnsGrid from './AutoColumnsGrid.vue'
+import useMobile from '../utils/hooks/useMobile'
+import { mobileSelectedImage } from '../utils/store/workSpace_store'
 const { handleDragEnd, gridInit, gridOption, handleGridDrag } = useWorkSpace()
-
+const { handleTouchGridEnd, handleTouchGridMove, handleTouchGridStart } = useMobile()
 onMounted(() => {
   if (storageData.storageData.length === 0) {
     gridInit()
@@ -53,8 +55,10 @@ onMounted(() => {
             draggable="true"
             @dragstart="() => handleGridDrag(value)"
             :accesskey="value.key"
-            @touchend="handleDragEnd"
-            @touchstart="() => handleGridDrag(value)"
+            @touchstart="(e) => handleTouchGridStart(value, e)"
+            @touchmove="(e) => handleTouchGridMove(e)"
+            @touchend="handleTouchGridEnd"
+            @touchstart.prevent
           >
             <img
               v-if="value.imagePath"
@@ -64,7 +68,6 @@ onMounted(() => {
               @drop="handleDragEnd"
               @drop.prevent="handleDragEnd"
               :accesskey="value.key"
-              @touchend="handleDragEnd"
             />
           </div>
 
@@ -100,6 +103,20 @@ onMounted(() => {
         </div>
       </div>
     </div>
+
+    <img
+      v-if="mobileSelectedImage.gridData"
+      class="absolute"
+      width="80px"
+      height="80px"
+      :src="mobileSelectedImage.gridData.imagePath"
+      :style="{
+        left: `${mobileSelectedImage.x}px`,
+        top: `${mobileSelectedImage.y}px`,
+        visibility: mobileSelectedImage.isEnd ? 'hidden' : 'visible',
+        zIndex: mobileSelectedImage.isEnd ? -20 : 100
+      }"
+    />
   </article>
   <AutoColumnsGrid v-if="gridOptionStore.isAutoColumnsGrid" />
   <CustomGrid v-if="gridOptionStore.isCustom" />

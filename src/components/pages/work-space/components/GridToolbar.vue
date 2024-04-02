@@ -6,6 +6,7 @@ import useWorkSpace from '../utils/hooks/useWorkSpace'
 import { downloadButtonStyle } from '@/components/common/common_styles'
 import { onMounted } from 'vue'
 import useStorage from '../utils/hooks/useStorage'
+import { isMobile } from '../utils/store/workSpace_store'
 
 const {
   handleSelect,
@@ -196,6 +197,15 @@ onMounted(() => {
           <ClearOutlined class="mr-2"></ClearOutlined>
         </Popconfirm>
       </div>
+    </div>
+
+    <div v-if="!isMobile.isMobile" class="w-full flex items-center justify-center mt-24">
+      <span>Bug report : badboykiller666666@gmail.com </span>
+    </div>
+
+    <div v-if="isMobile.isMobile" class="w-full flex flex-col items-center justify-center mt-24">
+      <span>Bug report </span>
+      <span class="text-[12px]">badboykiller666666@gmail.com </span>
     </div>
   </article>
 </template>

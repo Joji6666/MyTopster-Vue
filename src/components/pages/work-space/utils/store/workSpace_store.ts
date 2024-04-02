@@ -71,5 +71,6 @@ export const mobileSelectedImage = reactive<MobileSelectedImageInterface>({
   y: 0,
   lastTouchX: 0,
   lastTouchY: 0,
-  isEnd: false
+  isEnd: false,
+  gridData: null
 })

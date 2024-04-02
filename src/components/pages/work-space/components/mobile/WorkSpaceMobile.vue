@@ -11,7 +11,7 @@ const { gridOption } = useWorkSpace()
 
 <template>
   <article class="flex flex-col w-full h-full justify-between items-center">
-    <Row class="w-full h-[45%] flex items-start justify-center">
+    <Row class="w-full h-[40%] flex items-start justify-center">
       <Col
         class="w-full h-full"
         :style="{
@@ -22,12 +22,12 @@ const { gridOption } = useWorkSpace()
       </Col>
     </Row>
 
-    <Row class="w-full h-full mt-[50px]">
-      <div class="h-full w-[50%]">
+    <Row class="w-full h-[50%]">
+      <div class="h-full w-[50%] overflow-y-auto bg-slate-800">
         <GridToolbar />
       </div>
 
-      <div class="w-[50%] h-full">
+      <div class="w-[50%] h-full overflow-y-auto">
         <SideSearchBarVue />
       </div>
     </Row>

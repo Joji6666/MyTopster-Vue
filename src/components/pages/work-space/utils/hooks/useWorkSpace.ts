@@ -482,6 +482,7 @@ export default function useWorkSpace() {
         ? autoColumnsGridDatasStore.gridDatas
         : gridDatasStore.gridDatas
 
+    console.log(accessKey, 'access Key@')
     targetDatas.forEach((gridData: GridDataInterface) => {
       const foundTile = gridData.grids.find(
         (grid: GridPropertiesInterface) => grid.key === accessKey
@@ -491,6 +492,7 @@ export default function useWorkSpace() {
         if (foundTile && selectedImageStore.seletedGrid) {
           const tempFoundTile = { ...foundTile }
 
+          console.log(foundTile, 'found Tile@')
           foundTile.imagePath = selectedImageStore.seletedGrid.imagePath
           foundTile.title = selectedImageStore.seletedGrid.title
           foundTile.artist = selectedImageStore.seletedGrid.artist
@@ -511,7 +513,6 @@ export default function useWorkSpace() {
         }
       } else {
         if (foundTile && selectedImageStore.seletedImage) {
-          console.log(foundTile, 'fountTile@')
           foundTile.imagePath = selectedImageStore.seletedImage.image[3]['#text']
           foundTile.title = selectedImageStore.seletedImage.name
           foundTile.artist = selectedImageStore.seletedImage.artist

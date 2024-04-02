@@ -85,4 +85,5 @@ export interface MobileSelectedImageInterface {
   lastTouchX: number
   lastTouchY: number
   isEnd: boolean
+  gridData: GridPropertiesInterface | null
 }
