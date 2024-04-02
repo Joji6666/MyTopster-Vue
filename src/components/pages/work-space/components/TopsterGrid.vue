@@ -15,7 +15,7 @@ onMounted(() => {
 
 <template>
   <article
-    v-if="gridOption.gridType !== 'custom' && !gridOption.isAutoColumnsGrid"
+    v-if="!gridOptionStore.isCustom && !gridOptionStore.isAutoColumnsGrid"
     class="flex w-full h-full"
     :style="{
       backgroundColor: gridOption.backgroundColor,
@@ -102,5 +102,5 @@ onMounted(() => {
     </div>
   </article>
   <AutoColumnsGrid v-if="gridOptionStore.isAutoColumnsGrid" />
-  <CustomGrid v-if="gridOption.gridType === 'custom'" />
+  <CustomGrid v-if="gridOptionStore.isCustom" />
 </template>
