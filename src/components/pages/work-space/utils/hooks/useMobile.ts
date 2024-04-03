@@ -5,7 +5,7 @@ import useWorkSpace from './useWorkSpace'
 import type { GridPropertiesInterface } from '../interface/workSpace_store_interface'
 
 const useMobile = () => {
-  const { handleDragEnd } = useWorkSpace()
+  const { handleDragEnd, handleDelete } = useWorkSpace()
 
   const isEnd = ref<boolean>(false)
   const isGridDragEnd = ref<boolean>(false)
@@ -113,7 +113,13 @@ const useMobile = () => {
       )
 
       if (dropTarget) {
-        handleDragEnd(dropTarget?.accessKey)
+        if (dropTarget?.accessKey && dropTarget?.accessKey === 'delete') {
+          handleDelete()
+        }
+
+        if (dropTarget?.accessKey) {
+          handleDragEnd(dropTarget?.accessKey)
+        }
       }
 
       mobileSelectedImage.isEnd = false

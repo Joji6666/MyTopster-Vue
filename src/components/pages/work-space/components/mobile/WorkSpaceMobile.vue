@@ -21,7 +21,9 @@ const { gridOption } = useWorkSpace()
         <TopsterGrid />
       </Col>
     </Row>
-
+    <span accesskey="delete" class="w-full h-full flex items-center justify-center"
+      >Delete to drag</span
+    >
     <Row class="w-full h-[50%]">
       <div class="h-full w-[50%] overflow-y-auto bg-slate-800">
         <GridToolbar />
