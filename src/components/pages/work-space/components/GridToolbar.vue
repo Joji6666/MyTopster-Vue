@@ -199,11 +199,14 @@ onMounted(() => {
       </div>
     </div>
 
-    <div v-if="!isMobile.isMobile" class="w-full flex items-center justify-center mt-24">
+    <div v-if="!isMobile.isMobile" class="w-full text-white flex items-center justify-center mt-24">
       <span>Bug report : badboykiller666666@gmail.com </span>
     </div>
 
-    <div v-if="isMobile.isMobile" class="w-full flex flex-col items-center justify-center mt-24">
+    <div
+      v-if="isMobile.isMobile"
+      class="w-full fle text-white flex-col items-center justify-center mt-24"
+    >
       <span>Bug report </span>
       <span class="text-[12px]">badboykiller666666@gmail.com </span>
     </div>
