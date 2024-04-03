@@ -72,7 +72,7 @@ const { handleDragEnd, gridOption, handleGridDrag } = useWorkSpace()
       </div>
     </div>
     <div
-      class="w-[25%] h-full flex flex-col pt-8"
+      class="w-[45%] md:w-[25%] h-full flex flex-col pt-0 md:pt-8 scale-50 md:scale-100"
       v-if="gridOption.tooltipOption === 'side'"
       :style="{ color: gridOption.textColor }"
     >
@@ -81,7 +81,7 @@ const { handleDragEnd, gridOption, handleGridDrag } = useWorkSpace()
         :key="`tootip-${index}`"
       >
         <div v-show="value.title" v-for="(value, index) in gridData.grids" :key="`tootip-${index}`">
-          <span class="text-[11.5px] font-bold">
+          <span class="text-[8px] md:text-[11.5px] font-bold">
             {{ `${Number(value.key) + 1}. ${value.artist} - ${value.title}` }}
           </span>
         </div>

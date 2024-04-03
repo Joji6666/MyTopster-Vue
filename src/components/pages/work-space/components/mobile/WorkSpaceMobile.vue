@@ -23,7 +23,7 @@ const { gridOption } = useWorkSpace()
     <span accesskey="delete" class="w-full h-full flex items-center justify-center"
       >Delete to drag</span
     >
-    <Row class="w-full h-[40%] flex items-start justify-center">
+    <Row class="w-full h-[50%] scale-90 flex items-start justify-center">
       <Col
         class="w-full h-full"
         :style="{

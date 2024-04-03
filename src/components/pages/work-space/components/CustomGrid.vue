@@ -84,7 +84,7 @@ watch(
       </div>
     </div>
     <div
-      class="w-[25%] h-full flex flex-col pt-8"
+      class="w-[45%] md:w-[25%] h-full flex flex-col pt-0 scale-50 md:scale-100 md:pt-8"
       v-if="gridOption.tooltipOption === 'side'"
       :style="{ color: gridOption.textColor }"
     >
@@ -94,7 +94,7 @@ watch(
           v-for="(value, index) in gridData.grids"
           :key="`tootip-${index}`"
         >
-          <span class="text-[11.5px] font-bold">
+          <span class="text-[8px] md:text-[11.5px] font-bold">
             {{ `${Number(value.key) + 1}. ${value.artist} - ${value.title}` }}
           </span>
         </div>
