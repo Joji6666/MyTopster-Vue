@@ -18,7 +18,7 @@ onMounted(() => {
 <template>
   <article
     v-if="!gridOptionStore.isCustom && !gridOptionStore.isAutoColumnsGrid"
-    class="flex w-full h-full overflow-y-auto"
+    class="flex w-full h-full"
     :style="{
       backgroundColor: gridOption.backgroundColor,
       backgroundImage: `url(${gridOption.backgroundImagePath})`,

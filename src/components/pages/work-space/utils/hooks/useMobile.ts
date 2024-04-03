@@ -30,7 +30,7 @@ const useMobile = () => {
       selectedImageStore.seletedGrid = gridValue
       selectedImageStore.isGridDrag = true
       mobileSelectedImage.x = touchLocation.pageX - 30
-      mobileSelectedImage.y = touchLocation.pageY - 150
+      mobileSelectedImage.y = touchLocation.pageY - 520
     }
   }
 
@@ -39,7 +39,7 @@ const useMobile = () => {
       const touchLocation = e.touches[0]
       if (mobileSelectedImage.gridData) {
         mobileSelectedImage.x = touchLocation.pageX - 30
-        mobileSelectedImage.y = touchLocation.pageY - 150
+        mobileSelectedImage.y = touchLocation.pageY - 520
       }
     }
   }

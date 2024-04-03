@@ -174,7 +174,10 @@ onMounted(() => {
         </div>
       </div>
 
-      <div class="font-bold rounded-xl flex items-center justify-end w-full mr-2">
+      <div
+        v-if="!isMobile.isMobile"
+        class="font-bold rounded-xl flex items-center justify-end w-full mr-2"
+      >
         <span class="text-[12.5px] text-white font-bold">Drag to Delete</span>
 
         <DeleteOutlined
